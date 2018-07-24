@@ -1,0 +1,20 @@
+.uploadIcon img {
+    position: relative;
+    width: 83%;
+    height: 100%;
+}
+
+.uploadButton {
+    position: relative;
+    top: 4px;
+    margin-right: 3%;
+}
+
+.uploadButton button {
+    font-size: 30px;
+    width: 200px;
+    height: 65px;
+    overflow: hidden;
+    border: 1px solid grey;
+    border-radius: 6px;
+}

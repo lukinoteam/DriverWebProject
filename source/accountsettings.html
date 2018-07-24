@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Settings</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=600px, initial-scale=1">
+
+    <!-- jQuery library -->
+    <script type="text/javascript" src="script/jquery-3.3.1.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script type="text/javascript" src="script/bootstrap.min-3.3.7.js"></script>
+
+    <!-- bootstrap validator library -->
+    <script type="text/javascript" src="validatePlugins/dist/js/bootstrapValidator.js"></script>
+    <script type="text/javascript" src="script/contactBtn.js"></script>
+    <script type="text/javascript" src="script/settingJs.js"></script>
+
+    <!-- Bootstrap library -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min-3.3.7.css">
+
+    <link rel="stylesheet" type="text/css" href="css/styleAccountSetting.css">
+    <link rel="stylesheet" type="text/css" href="css/contactButton.css">
+    <link rel="stylesheet" type="text/css" href="css/avatar.css">
+
+
+</head>
+
+<body>
+    <div class="jumbotron">
+        <a href="home.html">
+            <img src="img/logo1.png" class="img-rounded" width="110px" height="80px" alt="Cinque Terre">
+        </a>
+        <div class="dropdown pull-right" item-width="40px" item-height="40px">
+            <button class="btn toggleAcc avatarDrop" type="button" data-toggle="dropdown">
+                <img id="avatarIcon" src="img/defaultAva.jpg">
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="text-right" href="accountsettings.html">Account Settings</a>
+                </li>
+                <li>
+                    <a class="text-right" href="login.html">Logout</a>
+                </li>
+            </ul>
+        </div>
+
+        <div id="settingLabel">
+            <p> Account Info </p>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3">
+
+                <ul id="infoMenu">
+                    <li>
+                        <div id="accountInfoMenu" class="menu" onclick='changeSettingTab("#accountInfoMenu", "#changePasswordMenu", "#profilePictureMenu", "Account Info");'>
+                            <span> Account Info</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div id="changePasswordMenu" class="menu" onclick='changeSettingTab("#changePasswordMenu", "#accountInfoMenu", "#profilePictureMenu", "Change Password");'>
+                            <span> Change Password</span>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div id="profilePictureMenu" class="menu" onclick='changeSettingTab("#profilePictureMenu", "#changePasswordMenu", "#accountInfoMenu", "Profile Picture");'>
+                            <span> Profile Picture</span>
+                        </div>
+                    </li>
+                </ul>
+
+
+            </div>
+            <div class="col-lg-1"></div>
+            <div class='container'>
+                <div class="col-lg-6">
+                    <div id="accountInfo">
+                        <form id="infoForm" method="POST" class="form-horizontal">
+
+                            <div class='row form-group'>
+                                <label for="fullName">Fullname:</label>
+                                <input id="txtFullName" type="text" class="form-control" name="fullName" />
+                            </div>
+
+                            <div class="row form-group">
+                                <label for="gender">Gender:</label>
+                                <select name="gender" class="form-control" id='txtGenderChoice'>
+                                    <option value="">Select one</option>
+                                    <option value="MALE">Male</option>
+                                    <option value="FEMALE">Female</option>
+                                    <option value="OTHER">Others</option>
+                                </select>
+                            </div>
+
+                            <div class="row form-group">
+                                <label for="bdate">Birth Date:</label>
+                                <input id="txtBirthDate" type="date" class="form-control" name="bdate" />
+                            </div>
+
+                            <div class="row form-group">
+                                <button type='submit' id='infoFormButton' class="confirmButton">Apply Changes</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="changePassword">
+                        <form id="passwordForm" method="POST" class="form-horizontal">
+
+                            <div class="row form-group">
+                                <label for="password">Old Password:</label>
+                                <input id="txtOldPassword" type="password" class="form-control" name="oldPassword" />
+                            </div>
+
+                            <div class="row form-group">
+                                <label for="password">New Password:</label>
+                                <input id="txtNewPassword" type="password" class="form-control" name="newPassword" />
+                            </div>
+
+                            <div class="row form-group">
+                                <label for="confirmPassword">Confirm New Password:</label>
+                                <input id="txtConfirmPassword" type="password" class="form-control" name="confirmPassword" />
+                            </div>
+
+
+                            <div class="row form-group">
+                                <button type='submit' id='passwordFormButton' class="confirmButton">Apply Changes</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="profilePicture" class="center-item"><img class="imgCenter img-rounded" src="img/defaultAva.jpg" width="200" height="200">
+
+                        <form id="profilePictureForm" method="POST" class="form-horizontal">
+
+                            <div class="row form-group">
+                                <p><strong>Change Profile Picture:</strong></p>
+                                <input type="file" class="form-control" name="fileInput" />
+                                <span class="help-block">Choose an image file.</span>
+                            </div>
+
+                            <div class="row form-group">
+                                <button type='submit' id='profilePictureFormButton' class="confirmButton">Apply Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+
+    <!-- Popup contact address (bs3-modal)-->
+    <a href="#contactModal" data-toggle="modal" class="contact">Contact Us</a>
+
+    <div class="modal fade" id="contactModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Donate Thẻ Viettel</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Inbox gửi thẻ</p>
+                    <a href='https://www.facebook.com/buiminh.hieu.771'>https://www.facebook.com/buiminh.hieu.771</a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>

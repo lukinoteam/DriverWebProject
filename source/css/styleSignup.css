@@ -1,0 +1,51 @@
+a:hover {
+    text-decoration: none;
+}
+
+.homeButton {
+    font-size: 50px;
+    width: 200px;
+    height: 85px;
+    border-radius: 0px;
+}
+
+.border-draw {
+    border: 1px solid #a3a3a3;
+    box-shadow: 1px 1px 10px black;
+    border-radius: 5px;
+    margin: auto auto 10% auto;
+}
+
+.row {
+    margin: 3.5% 5% 3% 5%;
+}
+
+.container {
+    margin-top: 2%;
+    width: 35%;
+    padding: 0% 0;
+}
+
+#createButton {
+    background-color: rgba(0, 0, 0, 0.65);
+    border-radius: 8px;
+    width: 100%;
+    color: white;
+    border: 1px solid white;
+    padding: 1em 3em;
+    margin-right: 2px;
+}
+
+#createButton:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    border: 1px solid black;
+    color: black;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.form-group {
+    position: relative;
+    left: 37px;
+    width: 91%;
+}

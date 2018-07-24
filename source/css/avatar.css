@@ -1,0 +1,27 @@
+.jumbotron {
+    padding: 3px 25px 0px 25px;
+    background: 0%;
+}
+
+.avatarDrop img {
+    position: relative;
+    bottom: 5px;
+    right: 15px;
+    width: 180%;
+    height: 125%;
+}
+
+.avatarDrop {
+    position: relative;
+    top: 3px;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.dropdown-menu li {
+    font-size: 16px;
+    width: 200px;
+    padding: 5px;
+}

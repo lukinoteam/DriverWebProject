@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=600px, initial-scale=1">
+
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="-1" />
+
+    <!-- jQuery library -->
+    <script type="text/javascript" src="script/jquery-3.3.1.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script type="text/javascript" src="script/bootstrap.min-3.3.7.js"></script>
+
+    <script type="text/javascript" src="script/homeJs.js"></script>
+    <script type="text/javascript" src="script/contactBtn.js"></script>
+    <script type="text/javascript" src="script/modal_image.js"></script>
+    <script type="text/javascript" src="script/wheelzoom.js"></script>
+
+    <!-- Bootstrap library -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min-3.3.7.css">
+
+    <link rel="stylesheet" type="text/css" href="css/styleHome.css">
+    <link rel="stylesheet" type="text/css" href="css/contactButton.css">
+    <link rel="stylesheet" type="text/css" href="css/avatar.css">
+    <link rel="stylesheet" type="text/css" href="css/uploadButton.css">
+    <link rel="stylesheet" type="text/css" href="css/modal_image.css">
+
+</head>
+
+<body class='noselect'>
+    <div class="jumbotron">
+        <a href="home.html">
+            <img src="img/logo1.png" class="img-rounded" width="110px" height="80px" alt="Cinque Terre">
+        </a>
+        <div class="dropdown pull-right" item-width="40px" item-height="40px">
+            <button class="btn toggleAcc avatarDrop" type="button" data-toggle="dropdown">
+                <img id="avatarIcon" src="img/defaultAva.jpg">
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="text-right" href="accountsettings.html">Account Settings</a>
+                </li>
+                <li>
+                    <a class="text-right" href="login.html">Logout</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="dropdown pull-right uploadButton">
+            <button class="dropdown-toggle uploadIcon btn-primary" type="button" data-toggle="dropdown">UPLOAD</button>
+            <ul class="dropdown-menu">
+                <li><a class="text-left" data-toggle="modal" href='#modalNewFolder'>Create New Folder</a></li>
+                <li><a class="text-left" data-toggle="modal" href='#modalUploadFile'>Upload File</a></li>
+                <li><a class="text-left" data-toggle="modal" href='#modalUploadFolder'>Upload Folder</a></li>
+
+            </ul>
+        </div>
+
+        <div id="toolBar" class="pull-right tool">
+            <div class='btn-toolbar' role='toolbar' aria-label='Toolbar with button groups'>
+                <div id="download" class='btn-group mr-2' role='group' aria-label='First group'>
+                    <button type='button' class='btn btn-secondary'>Download</button>
+                </div>
+                <a id="link" href="" style="display: none;"></a>
+                <div class='btn-group mr-2' role='group' aria-label='Second group'>
+                    <button type='button' class='btn btn-secondary'>Rename</button>
+                    <button type='button' id="btnCopy" class='btn btn-secondary'>Copy</button>
+                    <button type='button' class='btn btn-secondary'>Cut</button>
+                    <button type='button' id="btnPaste" class='btn btn-secondary'>Paste</button>
+                    <button type='button' id="btnDelete" class='btn btn-secondary'>Delete</button>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <form>
+                <input class='hidden-lg-down' id="searchBar" type="text" name="search" placeholder="Search..">
+            </form>
+        </div>
+
+        <div id="folderLabel" class="dropdown">
+
+            <p data-toggle="dropdown"> Drive của tôi ▼</p>
+
+            <ul class="dropdown-menu">
+                <li><a class="text-left" data-toggle="modal" href='#modalNewFolder'>Create New Folder</a></li>
+                <li><a class="text-left" data-toggle="modal" href='#modalUploadFile'>Upload File</a></li>
+                <li><a class="text-left" data-toggle="modal" href='#modalUploadFolder'>Upload Folder</a></li>
+            </ul>
+        </div>
+
+        <div id="infoIcon">
+            <img src="img/info.png">
+        </div>
+
+        <div id="backIcon">
+            <img src="img/backic.png">
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2" id="folderPanel">
+
+                <ul id="folderList">
+
+                </ul>
+
+            </div>
+            <div class="col-lg-7" id="filePanel">
+
+                <ul id="fileList" class="list-inline">
+
+                </ul>
+
+            </div>
+
+            <div class="col-lg-3" id="infoPanel">
+                <div id="infoTip" style="text-align: center">
+                    <img src="img/cloudPen.png" width="150" height="150">
+
+                    <p>Select a file to view its details</p>
+
+                </div>
+
+                <div id="info">
+                    <p id="infoFileName"></p>
+                    <p id="infoFileType"></p>
+                    <p id="infoFileSize"></p>
+                    <p id="infoFileDate"></p>
+                    <p id="infoFileDesc"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <a href="#" class="contact">Contact Us</a>
+
+
+    <!-- model create new folder -->
+    <div class="modal fade" id="modalNewFolder">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Create New Folder</h4>
+                </div>
+                <div class="modal-body" style="height: 140px;">
+                    <div class="row">
+                        <div class="col-lg-3"><label for="folderName">Folder Name:</label></div>
+
+                        <div class="col-lg-9"><input id="folderName" size="45" type="text" name="folderName" /></div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3"><label for="desc" style="margin-top: 15px;">Description:</label></div>
+
+                        <div class="col-lg-9"><input id="txtFolderDesc" size="45" type="text" name="desc" style="margin-top: 15px;" /></div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="createFolderConfirm" type="button" class="btn btn-primary" data-dismiss="modal">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- modal upload file-->
+    <div class="modal fade" id="modalUploadFile">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Upload File</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-lg-3"><label for="inputFile">Select File:</label></div>
+
+                        <div class="col-lg-9"><input id="inputFile" name="inputFile" type="file" class="file" data-show-preview="false"></div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3"><label for="desc" style="margin-top: 15px;">Description:</label></div>
+
+                        <div class="col-lg-9"><input id="txtFileDesc" size="45" type="text" name="desc" style="margin-top: 15px;" /></div>
+
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="uploadConfirm" type="button" class="btn btn-primary" data-dismiss="modal">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal upload folder-->
+    <div class="modal fade" id="modalUploadFolder">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Upload Folder</h4>
+                </div>
+                <div class="modal-body">
+                    <input id="input-b2" name="input-b2" type="file" class="file" data-show-preview="false">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div id="modalImg" class="custom-modal">
+
+        <!-- The Close Button -->
+        <span id="close">&times;</span>
+
+        <!-- Modal Content (The Image) -->
+        <img class="custom-modal-content" id="preview-img">
+
+        <!-- Modal Caption (Image Text) -->
+        <div id="caption"><p></p></div>
+    </div>
+
+</body>
+
+</html>

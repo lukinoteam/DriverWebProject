@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Create New Account</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=600px, initial-scale=1">
+
+    <!-- jQuery library -->
+    <script type="text/javascript" src="script/jquery-3.3.1.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script type="text/javascript" src="script/bootstrap.min-3.3.7.js"></script>
+
+    <!-- bootstrap validator library -->
+    <script type="text/javascript" src="validatePlugins/dist/js/bootstrapValidator.js"></script>
+    <script type="text/javascript" src="script/contactBtn.js"></script>
+
+    <script type="text/javascript" src="script/signUpJs.js"></script>
+
+    <!-- Bootstrap library -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min-3.3.7.css">
+
+    <link rel="stylesheet" type="text/css" href="css/styleSignup.css">
+    <link rel="stylesheet" type="text/css" href="css/contactButton.css">
+
+
+    <style>
+        body {
+            background: url("img/background01.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container border-draw">
+        <form id="defaultForm" method="POST" class="form-horizontal" action="login.html">
+
+            <div class='row form-group'>
+                <label for="fullName">Fullname:</label>
+                <input id="txtFullName" type="text" class="form-control" name="fullName" />
+            </div>
+
+
+            <div class='row form-group'>
+                <label for="email">Email Address:</label>
+                <input id="txtEmail" type="text" class="form-control" name="email" />
+            </div>
+
+            <div class="row form-group">
+                <label for="password">Password:</label>
+                <input id="txtPassword" type="password" class="form-control" name="password" />
+            </div>
+
+            <div class="row form-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input id="txtConfirmPassword" type="password" class="form-control" name="confirmPassword" />
+            </div>
+
+            <div class="row form-group">
+                <label for="gender">Gender:</label>
+                <select name="gender" class="form-control" id='txtGenderChoice'>
+                    <option value="">Select one</option>
+                    <option value="MALE">Male</option>
+                    <option value="FEMALE">Female</option>
+                    <option value="OTHER">Others</option>
+                </select>
+            </div>
+
+            <div class="row form-group">
+                <label for="bdate">Birth Date:</label>
+                <input id="txtBirthDate" type="date" class="form-control" name="bdate" />
+            </div>
+
+            <div class="row form-group checkbox">
+                <label>
+                    <input type="checkbox" name="agreement" /> Agree to license and privacy statement
+                </label>
+            </div>
+
+            <div class="row form-group">
+                <button type='submit' id="createButton">CREATE ACCOUNT</button>
+            </div>
+    </div>
+
+    </form>
+    </div>
+
+</body>
+
+</html>

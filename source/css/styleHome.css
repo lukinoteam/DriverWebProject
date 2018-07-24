@@ -1,0 +1,232 @@
+.fileList {
+    list-style-type: none;
+}
+
+.well {
+    background: 0%;
+}
+
+.row {
+    margin: 0px auto;
+}
+
+.button a {
+    color: white;
+}
+
+.imgCenter {
+    margin: 0 auto;
+}
+
+.tool {
+    position: fixed;
+    top: 76px;
+    left: 38%;
+    margin-right: 3%;
+    display: none;
+}
+
+#searchBar {
+    position: fixed;
+    top: 1.1%;
+    left: 17.6%;
+    width: 50%;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    padding: 12px 20px;
+}
+
+.fileItem {
+    background-color: #ebebd7;
+    width: 130px;
+    height: 110px;
+    border: 1px solid #919180;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    border-radius: 5%;
+    overflow: hidden;
+}
+
+.fileItem img {
+    width: 128px;
+    height: 108px;
+}
+
+.fileCaption {
+    padding: 9px 0px 5px 0px;
+    border: 1px solid #ebebd7;
+    text-align: center;
+}
+
+.fileCaption p{
+    text-overflow: ellipsis;
+    display: block;
+    width: 125px;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 0px 5px;
+}
+
+#fileList li {
+    margin: 1% 0% 2% 0px;
+}
+
+.container-fluid {
+    border-top: 1px solid #c4c4c4;
+}
+
+.folderItem {
+    margin-top: 8px;
+    padding: 12px 0px;
+    width: 100%;
+    height: 20%;
+    background-color: #f2f2f2;
+}
+
+.folderItem span {
+    font-size: 16px;
+    margin-left: 10px;
+    text-overflow: ellipsis;
+    display: block;
+    width: 125px;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 0px 5px;
+}
+
+#folderList {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.modal {
+    text-align: center;
+    padding: 0!important;
+}
+
+
+.modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+}
+
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+
+#folderLabel {
+    position: absolute;
+    top: 80px;
+    left: 17.6%;
+}
+
+#folderLabel p {
+    border: 1px solid white;
+}
+
+#folderLabel p:hover {
+    color: #0035d5;
+    background-color: #dddddd;
+    border: 1px solid #bcbcbc;
+}
+
+#infoIcon {
+    width: 35px;
+    height: 35px;
+    background-color: white;
+    position: absolute;
+    top: 76px;
+    right: 2%;
+    border-radius: 50%;
+}
+
+#infoIcon:hover {
+    background-color: #d3d3d3;
+}
+
+#infoIcon img {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+#folderPanel,
+#filePanel,
+#infoPanel {
+    height: 530px;
+    padding-top: 8px;
+
+}
+
+#folderPanel,
+#filePanel {
+    overflow-y: auto;
+}
+
+#filePanel {
+    border-left: 1px solid #c4c4c4;
+    border-right: 1px solid #c4c4c4;
+}
+
+#infoPanel,
+#folderPanel {
+    border-top: 1px solid white;
+}
+
+#infoPanel{
+    word-wrap: break-word;
+}
+
+#backIcon {
+    width: 40px;
+    height: 30px;
+    background-color: white;
+    position: absolute;
+    top: 82px;
+    left: 1.9%;
+    border-radius: 6px;
+}
+
+#backIcon:hover {
+    border: 2px solid #d3d3d3;
+    background-color: white;
+}
+
+#backIcon img {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+#backIcon:active {
+    background-color: #d3d3d3;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome and Opera */
+  }
