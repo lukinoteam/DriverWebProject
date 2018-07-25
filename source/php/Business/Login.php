@@ -1,6 +1,5 @@
 <?php
-require_once 'Connectdb.php';
-
+require_once __DIR__. "/../Connectdb.php";
 //MARK:- Start session to store Email and ID
 session_start();
 
