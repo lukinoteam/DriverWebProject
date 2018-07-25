@@ -168,7 +168,7 @@ function showInfo(){
 }
 function logOut(){
 	$.ajax({
-		url :'php/Logout.php',
+		url :'php/Business/Logout.php',
 		type : "POST",
 		contentType :false,
 		processData :false,
@@ -188,7 +188,7 @@ function getIdEmail(){
 		console.log(id);
 		}
 	};
-	xmlhttp.open("GET", "php/getHomeInfo.php", true);
+	xmlhttp.open("GET", "php/Business/getUserInfo.php", true);
 	xmlhttp.send();
 }
 function changePassWord(){
@@ -198,7 +198,7 @@ function changePassWord(){
 	formData.append("fieldNewPass",newPass);
 	formData.append("fieldOldPass",oldPass);
 	$.ajax({
-                url: 'php/Business/UpdatePassword.php',   
+                url: 'php/UpdatePassword.php',   
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -224,7 +224,7 @@ function changeAccount(){
 	formData.append("fieldGender",gender);
 	formData.append("fieldDate",date);
 	$.ajax({
-                url: 'php/Business/UpdateAccount.php',   
+                url: 'php/UpdateAccount.php',   
                 type: "POST",
                 data: formData,
                 contentType: false,

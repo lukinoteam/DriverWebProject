@@ -261,7 +261,7 @@ function getIdEmail() {
             console.log(id);
         }
     };
-    xmlhttp.open("GET", "php/getHomeInfo.php", true);
+    xmlhttp.open("GET", "php/getUserInfo.php", true);
     xmlhttp.send();
 }
 
