@@ -24,10 +24,11 @@ $md5Pass = md5($pass);
 //take unique id
 $table = 'users';
 $attribute = 'email';
+$no_condition = "";
 $query = new MySQLDA();
 $GLOBALS['id'] = $query->takeUUID($table);
 //selectQuery = Select email from users;
-$selectQuery=$query->select($table,$attribute);
+$selectQuery=$query->select($table,$attribute,$no_condition);
     if ($selectQuery->num_rows > 0) {
     // output data of each row
         while($row = $selectQuery->fetch_assoc()) {
