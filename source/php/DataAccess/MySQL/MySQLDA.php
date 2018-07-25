@@ -1,17 +1,35 @@
 <?php 
-require_once "Connectdb.php";
+require_once __DIR__. "/../Connectdb.php";
 
 class MySQLDA{
 	//MARK:- Properties
-	private static $da;
+	private static $db;
 	private static $conn;
 
 	public function __construct() {
 		//TO-DO: create MySQL connection 
-		$this->db = MySQLConnectivity::getInstance();
-		$this->conn = $this->$db->getConnection(); 
+		$this->db = MySQLConnectivity::get_instance();
+		$this->conn = $this->db->get_connection(); 
 	}
-
+	public function select($table,$attr,$condition){
+		if($condition == ""){
+			$sql = "SELECT ".$attr." FROM ".$table;
+			return mysqli_query($this->conn,$sql);
+		}
+		else{
+			$sql = "SELECT ".$attr." FROM ".$table." WHERE ".$condition;
+			return mysqli_query($this->conn,$sql);
+		}
+	}
+	public function takeUUID($table){
+		$sql = "SELECT UUID()";
+		$result = mysqli_query($this->conn,$sql);
+		if($result->num_rows >0){
+			while($row = $result->fetch_assoc()){
+				return $row['UUID()'];
+			}
+		}
+	}
 	//MARK:- Functions
 	/* TO-DO: insert function
 	 * @var($table) : String
@@ -35,16 +53,10 @@ class MySQLDA{
 	 * @var($table) : String
 	 * @var($user) array with field and their values
 	 */
-	public function update($table, $user, $where){
-		$sql= "";
-		foreach ($user as $key => $value) {
-			$sql.= "$key = '".$value."'";
-		}
-		trim($sql);
-		$sql = "UPDATE ".$table." SET ".$sql." WHERE ".$where."";
-		return mysqli_query($this->$conn, $sql);
+	public function update($table, $data, $condition){
+		$sql = "UPDATE ".$table." SET ".$data." WHERE ".$condition;
+		return mysqli_query($this->conn, $sql);
 	}
-
 	/* TO-DO: delete function
 	 * @var($table) : String
 	 * @var($user) array with field and their values
