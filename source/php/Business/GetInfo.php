@@ -1,30 +1,25 @@
 <?php
-require_once 'Connectdb.php';
+require_once __DIR__ ."/../DataAccess/MySQL/MySQLDA.php";
 //MARK:- Start session which stored user's info
-session_start();
-
-//MARK:- Variables
-$email = $_SESSION['account'];
-$oldName = "";
-$oldGender = "";
-$oldDate = "";
-
-//TO-DO: connect sql
-$db=MySQLConnectivity:: getInstance();
-$conn=$db->getConnection();
-//@var: SQL query
-$sqlTakeName = "SELECT fullname,gender,dob from users WHERE email = '".$email."'";
-$result = $conn->query($sqlTakeName);
-//TO-DO: Get user's info from MySQL Database
-if($result->num_rows>0){
-	//TO-DO: display data reponsed from server
-	while($row = $result->fetch_assoc()){
-		$GLOBALS['oldName'] = $row['fullname'];
-		$GLOBALS['oldGender'] = $row['gender'];
-		$GLOBALS['oldDate'] = $row['dob'];
-	}
-}
-$myArr = array($oldName,$oldGender,$oldDate);
-$myJSON = json_encode($myArr);
-echo $myJSON;
+	session_start();
+	$email = $_SESSION['account'];
+	$oldName = "";
+	$oldGender = "";
+	$oldDate = "";
+    //select_userdata = "SELECT fullname,gender,dob from users WHERE email = '".$email."'";
+	$query = new MySQLDA();
+	$attr = "fullname,gender,dob";
+	$table = "users";
+	$condition = "email = '".$email."'";
+	$select_userdata = $query->select($table,$attr,$condition);
+    if($select_userdata->num_rows>0){
+    	while($row = $select_userdata->fetch_assoc()){
+    		$GLOBALS['oldName'] = $row['fullname'];
+    		$GLOBALS['oldGender'] = $row['gender'];
+    		$GLOBALS['oldDate'] = $row['dob'];
+    	}
+    }
+    $myArr = array($oldName,$oldGender,$oldDate);
+    $myJSON = json_encode($myArr);
+    echo $myJSON;
 ?>
