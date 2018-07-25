@@ -48,7 +48,7 @@ function getLogin(){
 	formData.append("fieldEmail",email);
 	formData.append("fieldPass",pass);
 	  $.ajax({
-                url: 'php/Login.php',   
+                url: 'php/Business/Login.php',   
                 type: "POST",
                 data: formData,
                 contentType: false,
