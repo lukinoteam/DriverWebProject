@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ ."/../DataAccess/Cassandra/CassandraDA.php";
+require_once __DIR__ . "/../DataAccess/Cassandra/CassandraDA.php";
 require_once 'ThumbGenerator.php';
 
 // init connect to cassandra
@@ -27,7 +27,6 @@ $count->setFileId($data->getFileId());
 
 $part = 0;
 
-
 while (!feof($file)) {
     /*
      *  Read in 500kb chunks. Could make this
@@ -52,7 +51,7 @@ $ext = strtolower($ext);
 $fileInfo = new DataFileInfo();
 $fileInfo->setUserId(new Cassandra\UUID('825af7a2-e66c-4b5b-9289-5e203939ae04'));
 $fileInfo->setFileId($data->getFileId());
-$fileInfo->setName($fileName);
+$fileInfo->setName(pathinfo($fileName, PATHINFO_FILENAME));
 $fileInfo->setSize(filesize($filePath));
 $fileInfo->setDateModify(time());
 $fileInfo->setDescription($fileDesc);
@@ -61,7 +60,6 @@ $fileInfo->setStatus(1);
 $thumb = new DataThumbnail();
 $thumb->setFileId($data->getFileId());
 $thumb->setId(new Cassandra\UUID());
-$thumb->setImage(make_thumb($filePath, $ext));
 $thumb->setStatus(1);
 
 switch ($ext) {
@@ -79,6 +77,12 @@ switch ($ext) {
         $thumb->setType(14);
 }
 
+if ($fileInfo->getType() == 7 || $fileInfo->getType() == 8) {
+    $thumb->setImage(make_thumb($filePath, $ext));
+} else {
+    $thumb->setImage(null);
+}
+
 $connect->insert('file_info', $fileInfo);
 $connect->insert('thumbnail', $thumb);
 
@@ -89,15 +93,15 @@ $folder->setFileId($data->getFileId());
 $connect->insert('folder', $folder);
 
 $statement = new Cassandra\SimpleStatement(
-    "select size from folder_info where user_id = 825af7a2-e66c-4b5b-9289-5e203939ae04 and folder_id = ".$current
+    "select size from folder_info where user_id = 825af7a2-e66c-4b5b-9289-5e203939ae04 and folder_id = " . $current
 );
 
 $result = $connect->get_connection()->execute($statement);
 $newSize = $result[0]['size'] + $fileInfo->getSize();
 
 $statement = new Cassandra\SimpleStatement(
-    "insert into folder_info (user_id, folder_id, size) 
-    values (825af7a2-e66c-4b5b-9289-5e203939ae04, ".$current.", ".$newSize.")"
+    "insert into folder_info (user_id, folder_id, size)
+    values (825af7a2-e66c-4b5b-9289-5e203939ae04, " . $current . ", " . $newSize . ")"
 );
 
 $connect->get_connection()->execute($statement);
