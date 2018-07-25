@@ -104,7 +104,7 @@ function getInfo(){
 	formData.append("fieldGender",gender);
 	formData.append("fieldDate",date);
 	 $.ajax({
-                url: 'php/Signup.php',   
+                url: 'php/Business/Signup.php',   
                 type: "POST",
                 data: formData,
                 contentType: false,
