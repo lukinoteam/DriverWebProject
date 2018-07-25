@@ -12,7 +12,7 @@ class MySQLConnectivity {
     private $_host="127.0.0.1";
     private $_username="root";
     private $_password="";
-    private $_database="manage_user";
+    private $_database="myprojectdb";
 
     //@var: Connection to open
     private $_connection;
