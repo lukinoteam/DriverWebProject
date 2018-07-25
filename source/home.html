@@ -33,7 +33,7 @@
 
 </head>
 
-<body class='noselect'>
+<body>
     <div class="jumbotron">
         <a href="home.html">
             <img src="img/logo1.png" class="img-rounded" width="110px" height="80px" alt="Cinque Terre">
@@ -63,13 +63,13 @@
         </div>
 
         <div id="toolBar" class="pull-right tool">
-            <div class='btn-toolbar' role='toolbar' aria-label='Toolbar with button groups'>
+            <div id="tool" class='btn-toolbar' role='toolbar' aria-label='Toolbar with button groups'>
                 <div id="download" class='btn-group mr-2' role='group' aria-label='First group'>
                     <button type='button' class='btn btn-secondary'>Download</button>
                 </div>
-                <a id="link" href="" style="display: none;"></a>
+                <a id="link" href="" download="" style="display: none;"></a>
                 <div class='btn-group mr-2' role='group' aria-label='Second group'>
-                    <button type='button' class='btn btn-secondary'>Rename</button>
+                    <button type='button' id="btnRename" class='btn btn-secondary' data-toggle="modal" href='#modalRename'>Rename</button>
                     <button type='button' id="btnCopy" class='btn btn-secondary'>Copy</button>
                     <button type='button' class='btn btn-secondary'>Cut</button>
                     <button type='button' id="btnPaste" class='btn btn-secondary'>Paste</button>
@@ -106,27 +106,21 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-2" id="folderPanel">
-
+            <div class="col-xs-2 noselect" id="folderPanel">
                 <ul id="folderList">
 
                 </ul>
-
             </div>
-            <div class="col-lg-7" id="filePanel">
-
+            <div class="col-xs-7 noselect" id="filePanel">
                 <ul id="fileList" class="list-inline">
 
                 </ul>
-
             </div>
 
-            <div class="col-lg-3" id="infoPanel">
+            <div class="col-xs-3" id="infoPanel">
                 <div id="infoTip" style="text-align: center">
                     <img src="img/cloudPen.png" width="150" height="150">
-
                     <p>Select a file to view its details</p>
-
                 </div>
 
                 <div id="info">
@@ -140,10 +134,6 @@
         </div>
     </div>
 
-
-    <a href="#" class="contact">Contact Us</a>
-
-
     <!-- model create new folder -->
     <div class="modal fade" id="modalNewFolder">
         <div class="modal-dialog">
@@ -155,18 +145,12 @@
                 <div class="modal-body" style="height: 140px;">
                     <div class="row">
                         <div class="col-lg-3"><label for="folderName">Folder Name:</label></div>
-
                         <div class="col-lg-9"><input id="folderName" size="45" type="text" name="folderName" /></div>
-
                     </div>
-
                     <div class="row">
                         <div class="col-lg-3"><label for="desc" style="margin-top: 15px;">Description:</label></div>
-
                         <div class="col-lg-9"><input id="txtFolderDesc" size="45" type="text" name="desc" style="margin-top: 15px;" /></div>
-
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -186,23 +170,14 @@
                     <h4 class="modal-title">Upload File</h4>
                 </div>
                 <div class="modal-body">
-
                     <div class="row">
                         <div class="col-lg-3"><label for="inputFile">Select File:</label></div>
-
                         <div class="col-lg-9"><input id="inputFile" name="inputFile" type="file" class="file" data-show-preview="false"></div>
-
                     </div>
-
                     <div class="row">
                         <div class="col-lg-3"><label for="desc" style="margin-top: 15px;">Description:</label></div>
-
                         <div class="col-lg-9"><input id="txtFileDesc" size="45" type="text" name="desc" style="margin-top: 15px;" /></div>
-
                     </div>
-
-
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -231,7 +206,7 @@
         </div>
     </div>
 
-    <!-- The Modal -->
+    <!-- The Modal For Image Preview-->
     <div id="modalImg" class="custom-modal">
 
         <!-- The Close Button -->
@@ -241,9 +216,30 @@
         <img class="custom-modal-content" id="preview-img">
 
         <!-- Modal Caption (Image Text) -->
-        <div id="caption"><p></p></div>
+        <div id="caption">
+            <p></p>
+        </div>
     </div>
 
+    <!-- modal rename-->
+    <div class="modal fade" id="modalRename">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Upload File</h4>
+                </div>
+                <div class="modal-body" style="height: 55px;">
+                    <div class="col-lg-3"><label for="rename">Rename:</label></div>
+                    <div class="col-lg-9"><input id="txtRename" size="45" name="rename" type="text" data-show-preview="false"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="renameConfirm" type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
