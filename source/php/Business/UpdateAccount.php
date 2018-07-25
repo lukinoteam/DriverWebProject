@@ -1,6 +1,10 @@
 <?php
-	require_once __DIR__ ."/../DataAccess/MySQL/MySQLDA.php";
+	require_once 'Connectdb.php';
+	
+	//MARK:- Start session to store Email and ID
 	session_start();
+
+	//MARK:- Variables
 	$name = $_POST['fieldName'];
 	$gender = $_POST['fieldGender'];
 	$date = $_POST['fieldDate'];
@@ -9,23 +13,28 @@
 	$oldName = "";
 	$oldGender = "";
 	$oldDate = "";
-	if($GLOBALS['gender']=="MALE"){
-	$GLOBALS['genderInt'] = 1;
+
+	//MARK:- Functions
+
+	//TO-DO: check Is unique email ??
+	//$isUnique = 1;
+	if($GLOBALS['gender']=="MALE") {
+		$GLOBALS['genderInt'] = 1;
 	}
-	else if($GLOBALS['gender']=="FEMALE"){
-	$GLOBALS['genderInt']  = 2;
+	else if($GLOBALS['gender']=="FEMALE") {
+		$GLOBALS['genderInt']  = 2;
 	}
 	else {
-	$GLOBALS['genderInt']  = 3;
+		$GLOBALS['genderInt']  = 3;
 	}
-	$query = new MySQLDA();
-	//$updateData = "UPDATE users SET fullname = \"".$name."\",gender = ".$genderInt.",dob = CAST("."\"".$date."\""." AS DATE) WHERE email = \"".$email."\"";
-	$data = "fullname = \"".$name."\",gender = ".$genderInt.",dob = CAST("."\"".$date."\""."AS DATE) ";
-	$condition = "email = \"".$email."\"";
-	$table = "users";
-	$updateData = $query->update($table,$data,$condition);
-	if($updateData){
+	
+	//@var: Connectivity's instances
+	$db = MySQLConnectivity:: getInstance();
+	$conn = $db->getConnection();
+	//@var: SQL query
+	$sql = "UPDATE users SET fullname = \"".$name."\", gender = ".$genderInt.", dob = CAST("."\"".$date."\""." AS DATE) WHERE email = \"".$email."\"";
+	//TO-DO: connect sql
+	if($conn->query($sql)==TRUE) {
     	echo "Update account successfully";
     }
-
 ?>
