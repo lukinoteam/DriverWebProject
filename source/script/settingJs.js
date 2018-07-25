@@ -163,7 +163,7 @@ function showInfo(){
 		document.getElementById("txtBirthDate").value = myObj[2];
 		}
 	};
-	xmlhttp.open("GET", "php/getInfo.php", true);
+	xmlhttp.open("GET", "php/Business/getInfo.php", true);
 	xmlhttp.send();
 }
 function logOut(){
@@ -198,7 +198,7 @@ function changePassWord(){
 	formData.append("fieldNewPass",newPass);
 	formData.append("fieldOldPass",oldPass);
 	$.ajax({
-                url: 'php/UpdatePassword.php',   
+                url: 'php/Business/UpdatePassword.php',   
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -224,7 +224,7 @@ function changeAccount(){
 	formData.append("fieldGender",gender);
 	formData.append("fieldDate",date);
 	$.ajax({
-                url: 'php/UpdateAccount.php',   
+                url: 'php/Business/UpdateAccount.php',   
                 type: "POST",
                 data: formData,
                 contentType: false,
