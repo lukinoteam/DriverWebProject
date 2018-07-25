@@ -3,8 +3,8 @@ require_once __DIR__. "/../Connectdb.php";
 
 class MySQLDA{
 	//MARK:- Properties
-	private static $db;
-	private static $conn;
+	private  $db;
+	private $conn;
 
 	public function __construct() {
 		//TO-DO: create MySQL connection 
