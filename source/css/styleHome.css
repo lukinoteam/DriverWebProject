@@ -19,7 +19,7 @@
 }
 
 .tool {
-    position: fixed;
+    position: absolute;
     top: 76px;
     left: 38%;
     margin-right: 3%;
@@ -30,7 +30,7 @@
     position: fixed;
     top: 1.1%;
     left: 17.6%;
-    width: 50%;
+    width: 40%;
     box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 4px;
@@ -38,8 +38,14 @@
     padding: 12px 20px;
 }
 
+@media (min-width: 3%) {
+    #searchBar {
+        width: 50%;
+    }
+}
+
 .fileItem {
-    background-color: #ebebd7;
+    background-color: white;
     width: 130px;
     height: 110px;
     border: 1px solid #919180;
@@ -61,7 +67,7 @@
     text-align: center;
 }
 
-.fileCaption p{
+.fileCaption p {
     text-overflow: ellipsis;
     display: block;
     width: 125px;
@@ -108,7 +114,6 @@
     padding: 0!important;
 }
 
-
 .modal:before {
     content: '';
     display: inline-block;
@@ -149,6 +154,10 @@
     border-radius: 50%;
 }
 
+#infoFileName{
+    font-size: 30px;
+}
+
 #infoIcon:hover {
     background-color: #d3d3d3;
 }
@@ -167,9 +176,8 @@
 #folderPanel,
 #filePanel,
 #infoPanel {
-    height: 530px;
+    height: 86vh;
     padding-top: 8px;
-
 }
 
 #folderPanel,
@@ -187,7 +195,7 @@
     border-top: 1px solid white;
 }
 
-#infoPanel{
+#infoPanel {
     word-wrap: break-word;
 }
 
@@ -222,11 +230,17 @@
 }
 
 .noselect {
-    -webkit-touch-callout: none; /* iOS Safari */
-      -webkit-user-select: none; /* Safari */
-       -khtml-user-select: none; /* Konqueror HTML */
-         -moz-user-select: none; /* Firefox */
-          -ms-user-select: none; /* Internet Explorer/Edge */
-              user-select: none; /* Non-prefixed version, currently
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
                                     supported by Chrome and Opera */
-  }
+}
