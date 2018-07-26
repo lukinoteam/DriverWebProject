@@ -16,6 +16,18 @@ class DataFileInfo
     {
 
     }
+    public function getInfo()
+    {
+        $result = array(
+        'name' => $this->_name,
+        'size' => $this->_size,
+        'date' => $this->_dateModify,
+        'descr' => $this->_description,
+        'type' => $this->_type,
+        'status'=> $this->_status
+        );
+        return $result;
+    }
 
     // All functions below are getters and setters
 
