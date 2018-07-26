@@ -184,11 +184,9 @@ function getIdEmail(){
         var myObj = JSON.parse(this.responseText);
 		var email = myObj[0];
 		var id = myObj[1];
-		console.log(email);
-		console.log(id);
 		}
 	};
-	xmlhttp.open("GET", "php/Business/getUserInfo.php", true);
+	xmlhttp.open("GET", "php/Business/GetUserInfo.php", true);
 	xmlhttp.send();
 }
 function changePassWord(){
@@ -198,7 +196,7 @@ function changePassWord(){
 	formData.append("fieldNewPass",newPass);
 	formData.append("fieldOldPass",oldPass);
 	$.ajax({
-                url: 'php/UpdatePassword.php',   
+                url: 'php/Business/UpdatePassword.php',   
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -224,7 +222,7 @@ function changeAccount(){
 	formData.append("fieldGender",gender);
 	formData.append("fieldDate",date);
 	$.ajax({
-                url: 'php/UpdateAccount.php',   
+                url: 'php/Business/UpdateAccount.php',   
                 type: "POST",
                 data: formData,
                 contentType: false,
