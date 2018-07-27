@@ -27,7 +27,7 @@
 			9: bmp
 			10: html, htm
 			11: css
-			12: php
+			12: xlsx
 			13: mp4
 			14: mp3
    			15: default 
