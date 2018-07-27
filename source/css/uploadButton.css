@@ -11,9 +11,9 @@
 }
 
 .uploadButton button {
-    font-size: 30px;
-    width: 200px;
-    height: 65px;
+    font-size: 25px;
+    width: 150px;
+    height: 55px;
     overflow: hidden;
     border: 1px solid grey;
     border-radius: 6px;

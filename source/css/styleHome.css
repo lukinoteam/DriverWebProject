@@ -26,24 +26,6 @@
     display: none;
 }
 
-/* #searchBar {
-    position: fixed;
-    top: 1.1%;
-    left: 17.6%;
-    height: 6.5vh;
-    width: 40%;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    padding: 12px 20px;
-}
-
-@media (min-width: 3%) {
-    #searchBar {
-        width: 50%;
-    }
-} */
 
 .fileItem {
     background-color: white;
@@ -129,7 +111,7 @@
     vertical-align: middle;
 }
 
-#folderLabel {
+#backIcon {
     padding: 0px;
     position: absolute;
     top: 80px;
@@ -137,13 +119,12 @@
     z-index: 1;
 }
 
-#folderLabel p {
+#backIcon p {
     border: 1px solid white;
     font-size: 20px;
 }
 
-#folderLabel p:hover {
-    color: #0035d5;
+#backIcon p:hover {
     background-color: #dddddd;
     border: 1px solid #bcbcbc;
 }
@@ -203,36 +184,6 @@
     word-wrap: break-word;
 }
 
-#backIcon {
-    width: 40px;
-    height: 30px;
-    background-color: white;
-    position: absolute;
-    top: 82px;
-    left: 1.9%;
-    border-radius: 6px;
-}
-
-#backIcon:hover {
-    border: 2px solid #d3d3d3;
-    background-color: white;
-}
-
-#backIcon img {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
-
-#backIcon:active {
-    background-color: #d3d3d3;
-}
-
 .noselect {
     -webkit-touch-callout: none;
     /* iOS Safari */
@@ -247,4 +198,16 @@
     user-select: none;
     /* Non-prefixed version, currently
                                     supported by Chrome and Opera */
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#recycle-bin-wrapper {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }

@@ -37,7 +37,7 @@
     top: 1.1%;
     left: 16.2%;
     height: 6.5vh;
-    width: 40%;
+    width: 50%;
     box-sizing: border-box;
     border-radius: 4px;
     font-size: 16px;
@@ -49,7 +49,7 @@
     padding-left: 15px;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 893px) {
     #adv-search {
         width: 500px;
         margin: 0 auto;

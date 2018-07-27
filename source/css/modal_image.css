@@ -1,8 +1,8 @@
 /* The Modal (background) */
 .custom-modal {
     display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    position: absolute;
+    z-index: 10000; /* Sit on top */
     padding-top: 20px; /* Location of the box */
     left: 0;
     top: 0;
