@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/../DataAccess/Cassandra/CassandraDA.php";
+require_once __DIR__ ."/../DataAccess/ElasticDataAccess/ElasticDA.php";
 require_once 'ThumbGenerator.php';
 
 // init connect to cassandra
@@ -82,6 +83,20 @@ if ($fileInfo->getType() == 7 || $fileInfo->getType() == 8) {
 } else {
     $thumb->setImage(null);
 }
+
+/*<-------Start Elastic features*/
+$elasticHelper = new ElasticDA();
+$file_input = new DataFileInfo();
+$file_input->setName($fileInfo->getName());
+$file_input->setDescription($fileInfo->getDescription());
+$file_input->setSize($fileInfo->getSize());
+$dt = new DateTime();
+$dt->setTimestamp($fileInfo->getDateModify());
+$file_input->setDateModify($dt);
+$file_input->setType($ext);
+$response = $elasticHelper->indexing($file_input, $filePath);
+echo $response;
+/*End Elastic features---------->*/
 
 $connect->insert('file_info', $fileInfo);
 $connect->insert('thumbnail', $thumb);
