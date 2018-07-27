@@ -108,16 +108,24 @@ function triggerFolderChoosedTools(folder) {
     $("#infoTip").hide();
 }
 
-$(window).scroll(function() {
+// $(window).scroll(function() {
 
-    if ($(this).scrollTop() > 0) {
-        $('#searchBar').fadeOut();
-    } else {
-        $('#searchBar').fadeIn();
-    }
-});
+//     if ($(this).scrollTop() > 0) {
+//         $('#searchBar').fadeOut();
+//     } else {
+//         $('#searchBar').fadeIn();
+//     }
+// });
 
 $(document).ready(function() {
+    if (currenFolder == '415fe87d-9b3b-4a4c-8f64-b380d2b39240'){
+        $("#folderLabel").hide();
+    }
+    else{
+        $("#folderLabel").show();
+    }
+
+    
     getIdEmail();
     getFolderList();
     getFileList();
@@ -269,6 +277,8 @@ function getIdEmail() {
             var myObj = JSON.parse(this.responseText);
             var email = myObj[0];
             var id = myObj[1];
+            console.log(email);
+            console.log(id);
         }
     };
     xmlhttp.open("GET", "php/getHomeInfo.php", true);
