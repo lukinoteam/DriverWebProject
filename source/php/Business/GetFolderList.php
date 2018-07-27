@@ -22,7 +22,7 @@ foreach($result as $row){
         );
         $tmpResult = $connect->get_connection()->execute($statement);
 
-        $tmpArray = array($tmpResult[0]['name'], $tmpResult[0]['folder_id'], $tmpResult[0]['size'], $tmpResult[0]['date_modify'], $tmpResult[0]['description']);
+        $tmpArray = array($tmpResult[0]['name'], $tmpResult[0]['folder_id'], $tmpResult[0]['size'], $tmpResult[0]['date_modify'], $tmpResult[0]['description'], $tmpResult[0]['status']);
 
             
         array_push($data, $tmpArray);
