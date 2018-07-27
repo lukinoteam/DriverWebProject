@@ -59,8 +59,6 @@ create table file_info(
 	primary key((user_id), file_id)
 );
 
-//drop table file_content;
-
 // Store content for each file
 create table file_content(
 	file_id uuid,
@@ -107,10 +105,19 @@ create table folder_info(
 	primary key ((user_id), folder_id)
 );
 
-// insert default home folder
+// insert default home folder and recycle bin
 // fixed user_id for testing only
 INSERT INTO folder_info (user_id, folder_id, name, size, date_modify, description, status)
-VALUES (825af7a2-e66c-4b5b-9289-5e203939ae04, 415fe87d-9b3b-4a4c-8f64-b380d2b39240, 'HOME', 0, dateof(now()), 'DEFAULT', 0);
+VALUES (825af7a2-e66c-4b5b-9289-5e203939ae04,415fe87d-9b3b-4a4c-8f64-b380d2b39240,'HOME',0,dateof(now()),'DEFAULT', 0);
 
 INSERT INTO folder (folder_id, file_id)
 VALUES (415fe87d-9b3b-4a4c-8f64-b380d2b39240, 415fe87d-9b3b-4a4c-8f64-b380d2b39240);
+
+INSERT INTO folder_info (user_id, folder_id, name, size, date_modify, description, status)
+VALUES (825af7a2-e66c-4b5b-9289-5e203939ae04,d2cea1a3-b55e-49ae-956f-1ea7ba9b33a1,'Recycle Bin',0,dateof(now()),'DEFAULT', 0);
+
+INSERT INTO folder (folder_id, file_id)
+VALUES (d2cea1a3-b55e-49ae-956f-1ea7ba9b33a1, d2cea1a3-b55e-49ae-956f-1ea7ba9b33a1);
+
+INSERT INTO folder (folder_id, file_id)
+VALUES (415fe87d-9b3b-4a4c-8f64-b380d2b39240, d2cea1a3-b55e-49ae-956f-1ea7ba9b33a1);
