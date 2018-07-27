@@ -25,7 +25,6 @@ foreach($result as $row){
         $tmpArray = array($tmpResult[0]['name'], $tmpResult[0]['folder_id'], $tmpResult[0]['size'], $tmpResult[0]['date_modify'], $tmpResult[0]['description']);
 
             
-        
         array_push($data, $tmpArray);
     }
 }

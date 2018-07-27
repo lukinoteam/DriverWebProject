@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . "/../DataAccess/Cassandra/CassandraDA.php";
-require_once __DIR__ ."/../DataAccess/ElasticDataAccess/ElasticDA.php";
+require_once 'ParseExtension.php';
 require_once 'ThumbGenerator.php';
 
 // init connect to cassandra
@@ -58,31 +58,10 @@ $fileInfo->setDateModify(time());
 $fileInfo->setDescription($fileDesc);
 $fileInfo->setStatus(1);
 
-$thumb = new DataThumbnail();
-$thumb->setFileId($data->getFileId());
-$thumb->setId(new Cassandra\UUID());
-$thumb->setStatus(1);
+// convert extension from string to int, more details at table.cql and ParseExtension.php
+$extAsInt = extStrToInt($ext);
 
-switch ($ext) {
-    case 'jpg':
-    case 'jpeg':
-        $fileInfo->setType(7);
-        $thumb->setType(7);
-        break;
-    case 'png':
-        $fileInfo->setType(8);
-        $thumb->setType(8);
-        break;
-    default:
-        $fileInfo->setType(14);
-        $thumb->setType(14);
-}
-
-if ($fileInfo->getType() == 7 || $fileInfo->getType() == 8) {
-    $thumb->setImage(make_thumb($filePath, $ext));
-} else {
-    $thumb->setImage(null);
-}
+$fileInfo->setType($extAsInt);
 
 /*<-------Start Elastic features*/
 $elasticHelper = new ElasticDA();
@@ -98,8 +77,18 @@ $response = $elasticHelper->indexing($file_input, $filePath);
 echo $response;
 /*End Elastic features---------->*/
 
+if (($fileInfo->getType() == 7 || $fileInfo->getType() == 8 || $fileInfo->getType() == 9) && $fileInfo->getSize() < 20 * 1024 *1024) {
+    $thumb = new DataThumbnail();
+    $thumb->setFileId($data->getFileId());
+    $thumb->setId(new Cassandra\UUID());
+    $thumb->setStatus(1);
+    $thumb->setImage(make_thumb($filePath, $ext));
+    $thumb->setType($extAsInt);
+    $connect->insert('thumbnail', $thumb);
+
+}
+
 $connect->insert('file_info', $fileInfo);
-$connect->insert('thumbnail', $thumb);
 
 $folder = new DataFolder();
 $folder->setFolderId($current);
