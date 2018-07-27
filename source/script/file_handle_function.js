@@ -94,7 +94,10 @@ function getFolderList() {
         dataType: 'json',
         success: function(json) {
             $("#folderList").empty();
-
+            $("#info p").text("");
+            $("#infoTip").show();
+            $("#toolBar").hide();
+            
             Object.values(json).forEach(function(data) {
                 if (data[1] != null && data[1].uuid != recycle && (data[5] == 0 || data[5] == 1)) {
 
@@ -138,6 +141,9 @@ function getFileList() {
         dataType: 'json',
         success: function(json) {
             $("#fileList").empty();
+            $("#info p").text("");
+            $("#infoTip").show();
+            $("#toolBar").hide();
             Object.values(json).forEach(function(data) {
 
                 if (data[0] != null && (data[7] == 1 || data[7] == 0)) {

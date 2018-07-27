@@ -134,6 +134,7 @@ function triggerFolderChoosedTools(folder) {
                 })
 
                 $("#infoTip").show();
+                $("#infoFileName").text("");
             }
         });
 
