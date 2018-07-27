@@ -281,13 +281,13 @@ function getIdEmail() {
             console.log(id);
         }
     };
-    xmlhttp.open("GET", "php/getHomeInfo.php", true);
+    xmlhttp.open("GET", "php/Business/getUserInfo.php", true);
     xmlhttp.send();
 }
 
 function logOut() {
     $.ajax({
-        url: 'php/Logout.php',
+        url: 'php/Business/Logout.php',
         type: "POST",
         contentType: false,
         processData: false,
