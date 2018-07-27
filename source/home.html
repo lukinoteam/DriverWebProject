@@ -22,6 +22,9 @@
     <script type="text/javascript" src="script/modal_image.js"></script>
     <script type="text/javascript" src="script/wheelzoom.js"></script>
     <script type="text/javascript" src="script/search.js"></script>
+    <script type="text/javascript" src="script/file_handle_function.js"></script>
+    <script type="text/javascript" src="script/generate_link_download.js"></script>
+    <script type="text/javascript" src="script/init_thumbnail.js"></script>
 
     <!-- Bootstrap library -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min-3.3.7.css">
@@ -54,7 +57,7 @@
             </ul>
         </div>
 
-        <div class="dropdown pull-right uploadButton">
+        <div class="dropdown pull-right uploadButton noselect">
             <button class="dropdown-toggle uploadIcon btn-primary" type="button" data-toggle="dropdown">UPLOAD</button>
             <ul class="dropdown-menu">
                 <li><a class="text-left" data-toggle="modal" href='#modalNewFolder'>Create New Folder</a></li>
@@ -67,7 +70,7 @@
         <div id="toolBar" class="pull-right tool">
             <div id="tool" class='btn-toolbar' role='toolbar' aria-label='Toolbar with button groups'>
                 <div id="download" class='btn-group mr-2' role='group' aria-label='First group'>
-                    <button type='button' class='btn btn-secondary'>Download</button>
+                    <button type='button' id="btnDownload" class='btn btn-secondary'>Download</button>
                 </div>
                 <a id="link" href="" download="" style="display: none;"></a>
                 <div class='btn-group mr-2' role='group' aria-label='Second group'>
@@ -113,20 +116,16 @@
         </div>
     </div>
 
-    <div id="folderLabel" class="dropdown">
+    <div id="backIcon" class="noselect">
 
         <p data-toggle="dropdown"><span style="font-size: 20px;">◀</span> BACK</p>
 
-        <ul class="dropdown-menu">
-            <li><a class="text-left" data-toggle="modal" href='#modalNewFolder'>Create New Folder</a></li>
-            <li><a class="text-left" data-toggle="modal" href='#modalUploadFile'>Upload File</a></li>
-            <li><a class="text-left" data-toggle="modal" href='#modalUploadFolder'>Upload Folder</a></li>
-        </ul>
     </div>
 
     <div id="infoIcon">
         <img src="img/info.png">
     </div>
+
 
     <div class="container-fluid">
         <div class="row">
@@ -197,6 +196,10 @@
                     <div class="row">
                         <div class="col-lg-3"><label for="inputFile">Select File:</label></div>
                         <div class="col-lg-9"><input id="inputFile" name="inputFile" type="file" class="file" data-show-preview="false"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3"><label for="filename" style="margin-top: 15px;">File Name:</label></div>
+                        <div class="col-lg-9"><input id="txtFileName" size="45" type="text" name="filename" style="margin-top: 15px;" /></div>
                     </div>
                     <div class="row">
                         <div class="col-lg-3"><label for="desc" style="margin-top: 15px;">Description:</label></div>
