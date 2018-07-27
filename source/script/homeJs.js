@@ -251,8 +251,8 @@ $(document).ready(function() {
             processData: false,
             data: form_data,
             type: 'post',
-            success: function() {
-
+            success: function(msg) {
+                console.log(msg);
                 $("#inputFile").val("");
                 $('#txtFileDesc').val("");
 
