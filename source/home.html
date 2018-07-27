@@ -21,6 +21,7 @@
     <script type="text/javascript" src="script/contactBtn.js"></script>
     <script type="text/javascript" src="script/modal_image.js"></script>
     <script type="text/javascript" src="script/wheelzoom.js"></script>
+    <script type="text/javascript" src="script/search.js"></script>
 
     <!-- Bootstrap library -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min-3.3.7.css">
@@ -30,6 +31,7 @@
     <link rel="stylesheet" type="text/css" href="css/avatar.css">
     <link rel="stylesheet" type="text/css" href="css/uploadButton.css">
     <link rel="stylesheet" type="text/css" href="css/modal_image.css">
+    <link rel="stylesheet" type="text/css" href="css/searchBar.css">
 
 </head>
 
@@ -78,30 +80,57 @@
             </div>
         </div>
 
-        <div>
-            <form>
-                <input class='hidden-lg-down' id="searchBar" type="text" name="search" placeholder="Search..">
-            </form>
+        <div class="input-group" id="adv-search">
+            <input type="text" id="searchBar" class="form-control" placeholder="Search..." />
+            <div class="input-group-btn">
+                <div class="btn-group" role="group">
+                    <div class="dropdown dropdown-lg">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                        <div class="dropdown-menu dropdown-menu-right" role="menu">
+                            <form>
+                                <label class="radio">
+                                  <input id="radioName" type="radio" name="optradio" checked>Name</input>
+                                </label>
+                                <label class="radio">
+                                  <input id="radioSize" type="radio" name="optradio">Size</input>
+                                </label>
+                                <label class="radio">
+                                  <input id="radioDate" type="radio" name="optradio">Date</input>
+                                </label>
+                                <label class="radio">
+                                    <input id="radioExt" type="radio" name="optradio">Extension</input>
+                                </label>
+                                <label class="radio">
+                                    <input id="radioContent" type="radio" name="optradio">Contents</input>
+                                </label>
+                            </form>
+                        </div>
+                    </div>
+                    <button id="btnSearch" type="button" class="btn btn-primary"><span aria-hidden="true">Search</span></button>
+                </div>
+
+            </div>
         </div>
+    </div>
 
-        <div id="folderLabel" class="dropdown">
+    <div id="folderLabel" class="dropdown">
 
-            <p data-toggle="dropdown"> Drive của tôi ▼</p>
+        <p data-toggle="dropdown"><span style="font-size: 20px;">◀</span> BACK</p>
 
-            <ul class="dropdown-menu">
-                <li><a class="text-left" data-toggle="modal" href='#modalNewFolder'>Create New Folder</a></li>
-                <li><a class="text-left" data-toggle="modal" href='#modalUploadFile'>Upload File</a></li>
-                <li><a class="text-left" data-toggle="modal" href='#modalUploadFolder'>Upload Folder</a></li>
-            </ul>
-        </div>
+        <ul class="dropdown-menu">
+            <li><a class="text-left" data-toggle="modal" href='#modalNewFolder'>Create New Folder</a></li>
+            <li><a class="text-left" data-toggle="modal" href='#modalUploadFile'>Upload File</a></li>
+            <li><a class="text-left" data-toggle="modal" href='#modalUploadFolder'>Upload Folder</a></li>
+        </ul>
+    </div>
 
-        <div id="infoIcon">
-            <img src="img/info.png">
-        </div>
+    <div id="infoIcon">
+        <img src="img/info.png">
+    </div>
 
-        <div id="backIcon">
-            <img src="img/backic.png">
-        </div>
+    <!-- <div id="backIcon">
+        <img src="img/backic.png">
+    </div> -->
     </div>
 
     <div class="container-fluid">
