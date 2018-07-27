@@ -209,7 +209,5 @@ final class ElasticDA
             return null;
         }
     }
-    
-    
 
 }
