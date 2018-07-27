@@ -1,12 +1,23 @@
-var currenFolder = '415fe87d-9b3b-4a4c-8f64-b380d2b39240';
+var home = '415fe87d-9b3b-4a4c-8f64-b380d2b39240';
+var recycle = 'd2cea1a3-b55e-49ae-956f-1ea7ba9b33a1';
+var currenFolder = home;
 var choosedFile = "";
 var choosedFolder = "";
 var type = -1;
 
 function setPath(id) {
+    $("#toolBar").hide();
+    $("#infoTip").show();
+    $("#info p").text("");
     currenFolder = id;
     $("#folderList").empty();
     $("#fileList").empty();
+
+    if (currenFolder == home) {
+        $("#backIcon").hide();
+    } else {
+        $("#backIcon").show();
+    }
 
     getFolderList();
     getFileList();
@@ -16,10 +27,14 @@ function setPath(id) {
 function checkOutside(container, e) {
     return !container.is(e.target) &&
         container.has(e.target).length === 0 &&
+        !$("#infoIcon").is(e.target) &&
+        !$("#infoIcon").find("*").is(e.target) &&
         !$("#infoPanel").is(e.target) &&
         !$("#infoPanel").find("*").is(e.target) &&
         !$("#modalRename").is(e.target) &&
         !$("#modalRename").find("*").is(e.target) &&
+        !$("#btnDownload").is(e.target) &&
+        !$("#btnDelete").is(e.target) &&
         !$("#btnRename").is(e.target);
 }
 
@@ -72,65 +87,80 @@ function triggerFileChoosedTools(file) {
 function triggerFolderChoosedTools(folder) {
     var folderId = '#' + folder;
 
-    choosedFolder = folder;
-    type = 1;
+    if (folder != recycle) {
 
-    $("#txtRename").val($(folderId).find(".name").text());
+        choosedFolder = folder;
+        type = 1;
 
-    $("#toolBar").css({
-        "display": "block"
-    });
-    $(folderId).css({
-        "background-color": "#90adff"
-    })
+        $("#txtRename").val($(folderId).find(".name").text());
 
-    $(document).mouseup(function(e) {
-        var container = $(folderId);
+        $("#toolBar").css({
+            "display": "block"
+        });
+        $(folderId).css({
+            "background-color": "#90adff"
+        })
 
-        // if the target of the click isn't the container nor a descendant of the container
-        if (checkOutside(container, e)) {
-            container.css({
-                "background-color": "#f2f2f2"
-            })
+        $(document).mouseup(function(e) {
+            var container = $(folderId);
 
-            $("#info p").text("");
-            $("#infoTip").show();
+            // if the target of the click isn't the container nor a descendant of the container
+            if (checkOutside(container, e)) {
+                container.css({
+                    "background-color": "#f2f2f2"
+                })
 
-            $("#infoFileType").show();
-        }
-    });
+                $("#info p").text("");
+                $("#infoTip").show();
 
-    $("#infoFileName").text($(folderId).find(".name").text());
-    $("#infoFileType").hide();
-    $("#infoFileSize").text("Size: " + $(folderId).find(".size").text());
-    $("#infoFileDate").text("Date modified: " + $(folderId).find(".date").text());
-    $("#infoFileDesc").text("Desciption: " + $(folderId).find(".desc").text());
-    $("#infoTip").hide();
+                $("#infoFileType").show();
+            }
+        });
+
+        $("#infoFileName").text($(folderId).find(".name").text());
+        $("#infoFileType").hide();
+        $("#infoFileSize").text("Size: " + $(folderId).find(".size").text());
+        $("#infoFileDate").text("Date modified: " + $(folderId).find(".date").text());
+        $("#infoFileDesc").text("Desciption: " + $(folderId).find(".desc").text());
+        $("#infoTip").hide();
+    } else {
+        $(document).mouseup(function(e) {
+            var container = $(folderId);
+
+            // if the target of the click isn't the container nor a descendant of the container
+            if (checkOutside(container, e)) {
+                container.css({
+                    "background-color": "#f2f2f2"
+                })
+
+                $("#infoTip").show();
+            }
+        });
+
+        $(folderId).css({
+            "background-color": "#90adff"
+        })
+
+        $("#infoFileName").text($(folderId).find(".name").text());
+        $("#infoTip").hide();
+
+    }
 }
 
-// $(window).scroll(function() {
-
-//     if ($(this).scrollTop() > 0) {
-//         $('#searchBar').fadeOut();
-//     } else {
-//         $('#searchBar').fadeIn();
-//     }
-// });
-
 $(document).ready(function() {
-    if (currenFolder == '415fe87d-9b3b-4a4c-8f64-b380d2b39240'){
-        $("#folderLabel").hide();
-    }
-    else{
-        $("#folderLabel").show();
-    }
 
-    
     getIdEmail();
     getFolderList();
     getFileList();
 
-    $("#download").click(function() {
+    $("#inputFile").change(function() {
+        str = $("#inputFile").val()
+        $("#txtFileName").val(str.substring(12, str.length));
+    });
+
+    $("#backIcon").hide();
+
+    $("#btnDownload").click(function() {
         downFile(choosedFile);
     })
 
@@ -153,6 +183,7 @@ $(document).ready(function() {
     });
 
     $("#infoIcon").on("click", function() {
+
         if ($("#filePanel").attr("class") == "col-xs-7") {
             $("#filePanel").attr("class", "col-xs-10");
             $("#infoPanel").hide();
@@ -186,80 +217,15 @@ $(document).ready(function() {
     });
 
     $("#createFolderConfirm").on("click", function() {
-        var folderName = $("#folderName").val();
-        var desc = $("#txtFolderDesc").val();
-        var form_data = new FormData();
-        form_data.append('folderName', folderName);
-        form_data.append('desc', desc);
-        form_data.append('current', currenFolder);
-
-        $.ajax({
-            url: 'php/Business/NewFolder.php',
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: form_data,
-            type: 'post',
-            success: function() {
-
-                $('#folderName').val("");
-                $('#txtFolderDesc').val("");
-
-                getFolderList();
-            }
-        });
+        createFolder();
     });
 
     $("#backIcon").click(function() {
-        var form_data = new FormData();
-        form_data.append('current', currenFolder);
-        $.ajax({
-            url: 'php/Business/GetParentFolder.php',
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: form_data,
-            type: 'post',
-            dataType: 'json',
-            success: function(json) {
-                currenFolder = String(json[0].uuid);
-                getFolderList();
-                getFileList();
-            }
-        });
+        getParentFolder();
     })
 
     $("#uploadConfirm").click(function() {
-        var data = $("#inputFile").prop("files")[0];
-        var form_data = new FormData();
-        form_data.append('file', data);
-
-        var fullPath = $("#inputFile").val();
-
-        var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
-        var filename = fullPath.substring(startIndex);
-        if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
-            filename = filename.substring(1);
-        }
-        form_data.append('name', filename);
-        form_data.append('desc', $('#txtFileDesc').val());
-        form_data.append('current', currenFolder);
-        $.ajax({
-            url: 'php/Business/UploadFile.php',
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: form_data,
-            type: 'post',
-            success: function(msg) {
-                console.log(msg);
-                $("#inputFile").val("");
-                $('#txtFileDesc').val("");
-
-                getFileList();
-
-            }
-        });
+        uploadFile();
     })
 
     $("#renameConfirm").click(function() {
@@ -267,6 +233,13 @@ $(document).ready(function() {
             rename(type, choosedFile);
         else
             rename(type, choosedFolder);
+    })
+
+    $("#btnDelete").click(function() {
+        if (type == 0)
+            deleteff(type, choosedFile);
+        else
+            deleteff(type, choosedFolder);
     })
 });
 
@@ -293,188 +266,4 @@ function logOut() {
 
         }
     });
-}
-
-const numberWithCommas = (x) => {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
-function getFolderList() {
-    var form_data = new FormData();
-    form_data.append('current', currenFolder);
-    $.ajax({
-        url: 'php/Business/GetFolderList.php',
-        cache: false,
-        contentType: false,
-        processData: false,
-        data: form_data,
-        type: 'post',
-        dataType: 'json',
-        success: function(json) {
-            $("#folderList").empty();
-
-            Object.values(json).forEach(function(data) {
-                if (data[1] != null) {
-
-                    var str = '<li>\
-                <div id="' + data[1].uuid + '" class="folderItem" onclick="triggerFolderChoosedTools(this.id);" ondblclick="setPath(this.id);">\
-                    <span class="name">' + data[0] + '</span>\
-                    <p class="size" style="display: none;">' + parseSize(data[2].value) + '</p>\
-                    <p class="date" style="display: none;">' + parseDate(new Date(data[3].seconds * 1000)) + '</p>\
-                    <p class="desc" style="display: none;">' + data[4] + '</p>\
-                </div>\
-                </li>';
-
-                    $("#folderList").append(str);
-                }
-            });
-
-        }
-    });
-}
-
-function getFileList() {
-    var form_data = new FormData();
-    form_data.append('current', currenFolder);
-    $.ajax({
-        url: 'php/Business/GetFileList.php',
-        cache: false,
-        contentType: false,
-        processData: false,
-        data: form_data,
-        type: 'post',
-        dataType: 'json',
-        success: function(json) {
-            $("#fileList").empty();
-            Object.values(json).forEach(function(data) {
-
-                if (data[0] != null) {
-                    var type;
-                    switch (data[6]) {
-                        case 7:
-                            type = "JPG";
-                            break;
-                        case 8:
-                            type = "PNG";
-                            break;
-                        default:
-                            type = "UNKNOWN";
-                    }
-                    var str = '<li>\
-                <div id="' + data[0].uuid + '" class="fileItem" onclick="triggerFileChoosedTools(this.id);" ondblclick="viewImg(this.id);">\
-                    <div>\
-                        <img src=' + data[5] + '>\
-                    </div>\
-                    <div class="fileCaption">\
-                        <p class="name">' + data[2] + '</p>\
-                        <p class="size" style="display: none;">' + parseSize(data[3].value) + '</p>\
-                        <p class="date" style="display: none;">' + parseDate(new Date(data[1].seconds * 1000)) + '</p>\
-                        <p class="type" style="display: none;">' + type + '</p>\
-                        <p class="desc" style="display: none;">' + data[4] + '</p>\
-                    </div>\
-                </div>\
-            </li>';
-
-                    $("#fileList").append(str);
-                }
-            });
-
-        }
-    });
-}
-
-function parseSize(tmpSize) {
-    if (tmpSize < 1024) {
-        return size = numberWithCommas(tmpSize) + " bytes";
-    } else if (tmpSize < 1024 * 1024) {
-        return parseInt(tmpSize / 1024) + " KB (" + numberWithCommas(tmpSize) + " bytes)";
-    } else if (tmpSize < 1024 * 1024 * 1024) {
-        return parseInt(tmpSize / (1024 * 1024)) + " MB (" + numberWithCommas(tmpSize) + " bytes)";
-    } else {
-        return parseInt(tmpSize / (1024 * 1024 * 1024)) + " GB (" + numberWithCommas(tmpSize) + " bytes)";
-    }
-}
-
-function parseDate(tmpDate) {
-    var day = tmpDate.getDate();
-    var month = (tmpDate.getMonth() + 1 < 10) ? ('0' + (tmpDate.getMonth() + 1)) : (tmpDate.getMonth() + 1);
-    var year = tmpDate.getFullYear();
-    var hour = (tmpDate.getHours() < 10) ? ('0' + tmpDate.getHours()) : tmpDate.getHours();
-    var minute = (tmpDate.getMinutes() < 10) ? ('0' + tmpDate.getMinutes()) : tmpDate.getMinutes();
-    return year + '-' + month + '-' + day + ' at ' + hour + ':' + minute;
-}
-
-function downFile(id) {
-    if (id != "") {
-        var form_data = new FormData();
-        form_data.append('id', id);
-        $.ajax({
-            url: 'php/Business/DownFile.php',
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: form_data,
-            type: 'post',
-            dataType: 'json',
-            success: function(json) {
-                var url;
-                var fileName;
-                if (json[2] == 8) {
-                    url = URL.createObjectURL(dataURItoBlob("data:image/png;base64," + json[1]));
-                    fileName = json[0] + ".png";
-                } else if (json[2] == 7) {
-                    url = URL.createObjectURL(dataURItoBlob("data:image/jpg;base64," + json[1]));
-                    fileName = json[0] + ".png";
-                }
-                $("#link").attr({
-                    "download": fileName,
-                    "href": url
-                }).get(0).click();
-
-            }
-        });
-    }
-}
-
-function rename(type, id) {
-    var form_data = new FormData();
-    var newName = $("#txtRename").val();
-    form_data.append('newName', newName);
-    form_data.append('id', id);
-    form_data.append('type', type);
-
-    $.ajax({
-        url: 'php/Business/RenameFile.php', // point to server-side PHP script 
-        cache: false,
-        contentType: false,
-        processData: false,
-        data: form_data,
-        type: 'post',
-        success: function() {
-            if (type == 0) {
-                getFileList();
-            } else {
-                getFolderList();
-            }
-        }
-    });
-}
-
-function dataURItoBlob(dataURI) {
-    // convert base64 to raw binary data held in a string
-    // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
-    var byteString = atob(dataURI.split(',')[1]);
-    // separate out the mime component
-    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-        // write the bytes of the string to an ArrayBuffer
-    var ab = new ArrayBuffer(byteString.length);
-    // create a view into the buffer
-    var ia = new Uint8Array(ab);
-    // set the bytes of the buffer to the correct values
-    for (var i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-    }
-    // write the ArrayBuffer to a blob, and you're done
-    var blob = new Blob([ab], { type: mimeString });
-    return blob;
 }
