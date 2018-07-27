@@ -25,11 +25,12 @@
 			7: jpg, jpeg
 			8: png
 			9: bmp
-			10: ic
-			11: html, htm
-			12: css
-			13: php
-   			14: default 
+			10: html, htm
+			11: css
+			12: php
+			13: mp4
+			14: mp3
+   			15: default 
    
  * 				
  * 				
