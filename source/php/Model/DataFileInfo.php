@@ -19,6 +19,8 @@ class DataFileInfo
     public function getInfo()
     {
         $result = array(
+        'user_id' => $this->_userId->uuid(),
+        'file_id' => $this->_fileId->uuid(),
         'name' => $this->_name,
         'size' => $this->_size,
         'date' => $this->_dateModify,
