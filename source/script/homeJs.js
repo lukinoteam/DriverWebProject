@@ -45,7 +45,7 @@ function triggerFileChoosedTools(file) {
 
     $("#txtRename").val($(fileId).find(".fileCaption").find(".name").text());
 
-    $(document).mouseup(function(e) {
+    $(document).mouseup(function (e) {
         var container = $(fileId);
 
         // if the target of the click isn't the container nor a descendant of the container
@@ -101,7 +101,7 @@ function triggerFolderChoosedTools(folder) {
             "background-color": "#90adff"
         })
 
-        $(document).mouseup(function(e) {
+        $(document).mouseup(function (e) {
             var container = $(folderId);
 
             // if the target of the click isn't the container nor a descendant of the container
@@ -124,10 +124,9 @@ function triggerFolderChoosedTools(folder) {
         $("#infoFileDesc").text("Desciption: " + $(folderId).find(".desc").text());
         $("#infoTip").hide();
     } else {
-        $(document).mouseup(function(e) {
+        $(document).mouseup(function (e) {
             var container = $(folderId);
-
-            // if the target of the click isn't the container nor a descendant of the container
+            // if the target of the click is neither the container nor a descendant of the container
             if (checkOutside(container, e)) {
                 container.css({
                     "background-color": "#f2f2f2"
@@ -144,37 +143,73 @@ function triggerFolderChoosedTools(folder) {
 
         $("#infoFileName").text($(folderId).find(".name").text());
         $("#infoTip").hide();
+        //get all deleted file:
+        $.ajax({
+            url: 'php/Business/RecycleBin.php',
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'post',
+            dataType: 'json',
+            success: function (json) {
+                $("#fileList").empty();
+                $("#info p").text("");
+                $("#infoTip").show();
+                $("#toolBar").hide();
+                Object.values(json).forEach(function (data) {
+                    if (data[0] != null && (data[7] == -1 || data[7] == 0)) {
+                        console.log('got data');
+                        var str = '<li>\
+                <div id="' + data[0].uuid + '" class="fileItem" onclick="triggerFileChoosedTools(this.id);" ondblclick="viewImg(this.id);">\
+                    <div>\
+                        <img src=' + data[5] + '>\
+                    </div>\
+                    <div class="fileCaption">\
+                        <p class="name">' + data[2] + '</p>\
+                        <p class="size" style="display: none;">' + parseSize(data[3].value) + '</p>\
+                        <p class="date" style="display: none;">' + parseDate(new Date(data[1].seconds * 1000)) + '</p>\
+                        <p class="type" style="display: none;">' + extIntToStr(data[6]) + '</p>\
+                        <p class="desc" style="display: none;">' + data[4] + '</p>\
+                    </div>\
+                </div>\
+            </li>';
+                        $("#fileList").append(str);
+                    }
+                });
+
+            }
+        });
 
     }
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     getIdEmail();
     getFolderList();
     getFileList();
 
-    $("#inputFile").change(function() {
+    $("#inputFile").change(function () {
         str = $("#inputFile").val()
         $("#txtFileName").val(str.substring(12, str.length));
     });
 
     $("#backIcon").hide();
 
-    $("#btnDownload").click(function() {
+    $("#btnDownload").click(function () {
         downFile(choosedFile);
     })
 
-    $('.dropdown').on('show.bs.dropdown', function(e) {
+    $('.dropdown').on('show.bs.dropdown', function (e) {
         $(this).find('.dropdown-menu').first().stop(true, true).slideDown(300);
     });
 
-    $('.dropdown').on('hide.bs.dropdown', function(e) {
+    $('.dropdown').on('hide.bs.dropdown', function (e) {
         $(this).find('.dropdown-menu').first().stop(true, true).slideUp(200);
     });
 
     //Hide tool bar when click outside of it
-    $(document).mouseup(function(e) {
+    $(document).mouseup(function (e) {
         var container = $('#toolBar');
 
         // if the target of the click isn't the container nor a descendant of the container
@@ -183,7 +218,7 @@ $(document).ready(function() {
         }
     });
 
-    $("#infoIcon").on("click", function() {
+    $("#infoIcon").on("click", function () {
 
         if ($("#filePanel").attr("class") == "col-xs-7") {
             $("#filePanel").attr("class", "col-xs-10");
@@ -194,49 +229,49 @@ $(document).ready(function() {
         }
     });
 
-    $('#modalNewFolder').on('shown.bs.modal', function() {
+    $('#modalNewFolder').on('shown.bs.modal', function () {
         $('#folderName').val("");
         $('#folderName').focus();
     });
 
-    $(document).keypress(function(e) {
+    $(document).keypress(function (e) {
         if ($("#modalNewFolder").hasClass('in') && (e.keycode == 13 || e.which == 13)) {
             $('#createFolderConfirm').click();
         }
     });
 
-    $(document).keypress(function(e) {
+    $(document).keypress(function (e) {
         if ($("#modalUploadFile").hasClass('in') && (e.keycode == 13 || e.which == 13)) {
             $('#uploadConfirm').click();
         }
     });
 
-    $(document).keypress(function(e) {
+    $(document).keypress(function (e) {
         if ($("#modalRename").hasClass('in') && (e.keycode == 13 || e.which == 13)) {
             $('#renameConfirm').click();
         }
     });
 
-    $("#createFolderConfirm").on("click", function() {
+    $("#createFolderConfirm").on("click", function () {
         createFolder();
     });
 
-    $("#backIcon").click(function() {
+    $("#backIcon").click(function () {
         getParentFolder();
     })
 
-    $("#uploadConfirm").click(function() {
+    $("#uploadConfirm").click(function () {
         uploadFile();
     })
 
-    $("#renameConfirm").click(function() {
+    $("#renameConfirm").click(function () {
         if (type == 0)
             rename(type, choosedFile);
         else
             rename(type, choosedFolder);
     })
 
-    $("#btnDelete").click(function() {
+    $("#btnDelete").click(function () {
         if (type == 0)
             deleteff(type, choosedFile);
         else
@@ -246,7 +281,7 @@ $(document).ready(function() {
 
 function getIdEmail() {
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var myObj = JSON.parse(this.responseText);
             var email = myObj[0];
@@ -263,7 +298,7 @@ function logOut() {
         type: "POST",
         contentType: false,
         processData: false,
-        success: function(data) {
+        success: function (data) {
 
         }
     });
