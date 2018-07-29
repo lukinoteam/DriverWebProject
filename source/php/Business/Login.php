@@ -28,7 +28,6 @@ $select_email = $query->select($table,$attrEmail,$noCondition);
     }
 //if email existed
     else{
-        //$sqlSelectPass = "SELECT password from users WHERE email = \"".$email."\"";
         $attrPass = "password";
         $condition = "email = \"".$email."\"";
         $select_pass = $query->select($table,$attrPass,$condition);
@@ -40,7 +39,6 @@ $select_email = $query->select($table,$attrEmail,$noCondition);
                 else {
                     //add session email
                     $_SESSION['account'] = $GLOBALS['email'];
-                    //$sql = "SELECT id from users where email = \"".$GLOBALS['email']."\"";
                     $attrID = "id";
                     $con = "email = \"".$GLOBALS['email']."\"";
                     $select_id = $query->select($GLOBALS['table'],$attrID,$con);

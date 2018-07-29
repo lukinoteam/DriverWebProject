@@ -1,7 +1,12 @@
 <?php
 require_once __DIR__ . "/../DataAccess/Cassandra/CassandraDA.php";
 
+// init connect to cassandra
 $connect = new CassandraDA();
+
+//start session to get user-id
+session_start();
+$user_id = $_SESSION['id'];
 
 // GET CURRENT FOLDER FROM CLIENT
 $current = $_POST['current'];
@@ -18,7 +23,7 @@ foreach ($result as $row) {
     if ($row['folder_id'] != $row['file_id']) {
 
         $statement = new Cassandra\SimpleStatement(
-            "select * from file_info where user_id = 825af7a2-e66c-4b5b-9289-5e203939ae04 and file_id = " . $row['file_id']
+            "select * from file_info where user_id = ".$user_id." and file_id = " . $row['file_id']
         );
         $tmpResult = $connect->get_connection()->execute($statement);
 

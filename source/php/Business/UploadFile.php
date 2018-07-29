@@ -7,6 +7,10 @@ require_once 'ThumbGenerator.php';
 // init connect to cassandra
 $connect = new CassandraDA();
 
+//start session to get user-id
+session_start();
+$user_id = $_SESSION['id'];
+
 // empty table (for testing only)
 // $connect->truncate('file_content');
 // $connect->truncate('count_content');
@@ -51,7 +55,7 @@ $ext = pathinfo($fileName, PATHINFO_EXTENSION);
 $ext = strtolower($ext);
 
 $fileInfo = new DataFileInfo();
-$fileInfo->setUserId(new Cassandra\UUID('825af7a2-e66c-4b5b-9289-5e203939ae04'));
+$fileInfo->setUserId(new Cassandra\Uuid($user_id));
 $fileInfo->setFileId($data->getFileId());
 $fileInfo->setName(pathinfo($fileName, PATHINFO_FILENAME));
 $fileInfo->setSize(filesize($filePath));
@@ -81,7 +85,7 @@ $date = $date->format('H:i:s d/m/Y');
 $file_input->setDateModify($date);
 $file_input->setType($ext);
 $response = $elasticHelper->indexing($file_input, $filePath);
-echo $response;
+
 /*End Elastic features---------->*/
 
 if (($fileInfo->getType() == 7 || $fileInfo->getType() == 8 || $fileInfo->getType() == 9) && $fileInfo->getSize() < 20 * 1024 *1024) {
@@ -104,7 +108,7 @@ $folder->setFileId($data->getFileId());
 $connect->insert('folder', $folder);
 
 $statement = new Cassandra\SimpleStatement(
-    "select size from folder_info where user_id = 825af7a2-e66c-4b5b-9289-5e203939ae04 and folder_id = " . $current
+    "select size from folder_info where user_id = ".$user_id." and folder_id = " . $current
 );
 
 $result = $connect->get_connection()->execute($statement);
@@ -112,7 +116,7 @@ $newSize = $result[0]['size'] + $fileInfo->getSize();
 
 $statement = new Cassandra\SimpleStatement(
     "insert into folder_info (user_id, folder_id, size)
-    values (825af7a2-e66c-4b5b-9289-5e203939ae04, " . $current . ", " . $newSize . ")"
+    values (".$user_id.", " . $current . ", " . $newSize . ")"
 );
 
 $connect->get_connection()->execute($statement);

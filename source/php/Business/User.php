@@ -1,6 +1,6 @@
 <?php 
 	class Users{
-		//MARK:- Properties
+//MARK:- Properties
 		private $id="";
 		private $username="";
 		private $password="";
@@ -9,7 +9,7 @@
 		private $dob=0; 
 		private $gender=0;
 		
-		// MARK:- constructor
+// MARK:- constructor
 		public function __construct($id,$username,$password,$fullname,$email,$dob,$gender) {
 			$this->id=$id;
 			$this->username=$username;
@@ -18,9 +18,8 @@
 			$this->email=$email;
 			$this->dob=$dob;
 			$this->gender=$gender;
-		}
-
-		//MARK:- Getter and Setter
+		}	
+//MARK:- Getter and Setter
 		public function getId() {
 			return $this->id;  
 		}

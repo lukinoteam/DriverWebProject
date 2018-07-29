@@ -5,15 +5,24 @@ require_once __DIR__ ."/../DataAccess/ElasticDataAccess/ElasticDA.php";
 $connect = new CassandraDA();
 $eDA = new ElasticDA;
 
+//start session to get user-id
+session_start();
+$user_id = $_SESSION['id'];
+
 $id = $_POST['id'];
 $type = $_POST['type'];
 
 
 
 if ($type == 0){
+    $temp_state = "select * from file_info where user_id = ".$user_id." and file_id = ".$id." ";
+    $temp_state = str_replace('""', '', $temp_state);
+
+    $temp_state = preg_replace('/[^A-Za-z0-9\-*-_]/', ' ', $temp_state);
     $statement = new Cassandra\SimpleStatement(
-        "select * from file_info where user_id = 825af7a2-e66c-4b5b-9289-5e203939ae04 and file_id = ".$id." "
+        $temp_state
     );
+    // var_dump($temp_state);
     
     $result = $connect->get_connection()->execute($statement);
     
@@ -32,7 +41,7 @@ if ($type == 0){
 }
 else if ($type == 1){
     $statement = new Cassandra\SimpleStatement(
-        "select * from folder_info where user_id = 825af7a2-e66c-4b5b-9289-5e203939ae04 and folder_id = ".$id." "
+        "select * from folder_info where user_id = ".$user_id." and folder_id = ".$id." "
     );
     
     $result = $connect->get_connection()->execute($statement);

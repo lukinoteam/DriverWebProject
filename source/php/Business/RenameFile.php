@@ -11,7 +11,7 @@ $newName = $_POST['newName'];
 
 if ($type == 0){
     $statement = new Cassandra\SimpleStatement(
-        "select * from file_info where user_id = 825af7a2-e66c-4b5b-9289-5e203939ae04 and file_id = ".$id." "
+        "select * from file_info where user_id = ".$user_id." and file_id = ".$id." "
     );
     
     $result = $connect->get_connection()->execute($statement);
@@ -30,7 +30,7 @@ if ($type == 0){
 }
 else if ($type == 1){
     $statement = new Cassandra\SimpleStatement(
-        "select * from folder_info where user_id = 825af7a2-e66c-4b5b-9289-5e203939ae04 and folder_id = ".$id." "
+        "select * from folder_info where user_id = ".$user_id." and folder_id = ".$id." "
     );
     
     $result = $connect->get_connection()->execute($statement);
