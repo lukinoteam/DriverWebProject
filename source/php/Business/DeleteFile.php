@@ -1,7 +1,9 @@
 <?php
 require_once __DIR__ ."/../DataAccess/Cassandra/CassandraDA.php";
+require_once __DIR__ ."/../DataAccess/ElasticDataAccess/ElasticDA.php";
 
 $connect = new CassandraDA();
+$eDA = new ElasticDA;
 
 $id = $_POST['id'];
 $type = $_POST['type'];
@@ -25,6 +27,7 @@ if ($type == 0){
     $newInfo->setType($result[0]['type']);
     $newInfo->setStatus(-1);
     
+    $eDA->update_with_status($id, -1);
     $connect->insert('file_info', $newInfo);
 }
 else if ($type == 1){
