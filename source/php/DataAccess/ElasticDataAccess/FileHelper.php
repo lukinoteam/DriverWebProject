@@ -24,7 +24,7 @@ final class FileHelper
             $content = $this->pptx_to_text($fileName);
         } elseif ($type == "pdf") {
             $content = $this->pdf_to_text($fileName);
-        }  else {
+        } else {
             $content = "image";
         }
         return $content;
