@@ -67,12 +67,18 @@ $fileInfo->setType($extAsInt);
 /*<-------Start Elastic features*/
 $elasticHelper = new ElasticDA();
 $file_input = new DataFileInfo();
+$file_input->setUserId($fileInfo->getUserId());
+$file_input->setFileId($fileInfo->getFileId());
 $file_input->setName($fileInfo->getName());
 $file_input->setDescription($fileInfo->getDescription());
 $file_input->setSize($fileInfo->getSize());
-$dt = new DateTime();
-$dt->setTimestamp($fileInfo->getDateModify());
-$file_input->setDateModify($dt);
+$file_input->setStatus($fileInfo->getStatus());
+$date = new DateTime();
+$date->setTimezone(new DateTimeZone('Asia/Ho_Chi_Minh'));
+date_timestamp_set($date, $fileInfo->getDateModify());
+$date = $date->format('H:i:s d/m/Y');
+
+$file_input->setDateModify($date);
 $file_input->setType($ext);
 $response = $elasticHelper->indexing($file_input, $filePath);
 echo $response;
