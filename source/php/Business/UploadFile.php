@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/../DataAccess/Cassandra/CassandraDA.php";
+require_once __DIR__ ."/../DataAccess/ElasticDataAccess/ElasticDA.php";
 require_once 'ParseExtension.php';
 require_once 'ThumbGenerator.php';
 
