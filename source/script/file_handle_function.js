@@ -92,6 +92,7 @@ function uploadFile() {
         processData: false,
         data: form_data,
         success: function(data) {
+            getFileList();
             $("#btnCloseUploadModal").click();
             $("#inputFile").val("");
             $('#txtFileDesc').val("");
@@ -101,7 +102,7 @@ function uploadFile() {
                 width: '0%'
             });
             $('.progress').find(".progress-bar").empty();
-            getFileList();
+            
 
         }
     });
