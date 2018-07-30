@@ -26,7 +26,6 @@
     display: none;
 }
 
-
 .fileItem {
     background-color: white;
     width: 130px;
@@ -139,7 +138,7 @@
     border-radius: 50%;
 }
 
-#infoFileName{
+#infoFileName {
     font-size: 30px;
 }
 
@@ -210,4 +209,8 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
+}
+
+.progress .progress-bar {
+    width: 0%;
 }
