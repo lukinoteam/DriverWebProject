@@ -3,6 +3,9 @@ require_once __DIR__ ."/../DataAccess/Cassandra/CassandraDA.php";
 
 $connect = new CassandraDA();
 
+session_start();
+$user_id = $_SESSION['id'];
+
 $id = $_POST['id'];
 $type = $_POST['type'];
 
