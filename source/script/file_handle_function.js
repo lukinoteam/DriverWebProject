@@ -63,18 +63,44 @@ function uploadFile() {
     form_data.append('desc', $('#txtFileDesc').val());
     form_data.append('current', currenFolder);
     $.ajax({
-        url: 'php/Business/UploadFile.php',
+        xhr: function() {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function(evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = evt.loaded / evt.total;
+                    $('.progress').find(".progress-bar").css({
+                        width: percentComplete * 100 - 1 + '%'
+                    });
+                    $('.progress').find(".progress-bar").text(percentComplete * 100 - 1+ '%');
+                }
+            }, false);
+            xhr.addEventListener("progress", function(evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = evt.loaded / evt.total;
+                    $('.progress').find(".progress-bar").css({
+                        width: percentComplete * 100 - 1 + '%'
+                    });
+                    $('.progress').find(".progress-bar").text(percentComplete * 100 - 1 + '%');
+                }
+            }, false);
+            return xhr;
+        },
+        type: 'POST',
+        url: "php/Business/UploadFile.php",
         cache: false,
         contentType: false,
         processData: false,
         data: form_data,
-        type: 'post',
-        success: function (msg) {
-            // console.log(msg);
+        success: function(data) {
+            $("#btnCloseUploadModal").click();
             $("#inputFile").val("");
             $('#txtFileDesc').val("");
             $("#txtFileName").val("");
 
+            $('.progress').css({
+                width: '0%'
+            });
+            $('.progress').find(".progress-bar").empty();
             getFileList();
 
         }
