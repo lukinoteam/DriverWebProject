@@ -9,7 +9,6 @@ function createFolder() {
     form_data.append('folderName', folderName);
     form_data.append('desc', desc);
     form_data.append('current', currenFolder);
-
     $.ajax({
         url: 'php/Business/NewFolder.php',
         cache: false,
@@ -17,7 +16,7 @@ function createFolder() {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function() {
+        success: function () {
 
             $('#folderName').val("");
             $('#txtFolderDesc').val("");
@@ -25,6 +24,7 @@ function createFolder() {
             getFolderList();
         }
     });
+
 }
 
 function getParentFolder() {
@@ -38,7 +38,7 @@ function getParentFolder() {
         data: form_data,
         type: 'post',
         dataType: 'json',
-        success: function(json) {
+        success: function (json) {
             currenFolder = String(json[0].uuid);
             if (currenFolder == home) {
                 $("#backIcon").hide();
@@ -69,8 +69,8 @@ function uploadFile() {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function(msg) {
-
+        success: function (msg) {
+            // console.log(msg);
             $("#inputFile").val("");
             $('#txtFileDesc').val("");
             $("#txtFileName").val("");
@@ -92,13 +92,13 @@ function getFolderList() {
         data: form_data,
         type: 'post',
         dataType: 'json',
-        success: function(json) {
+        success: function (json) {
             $("#folderList").empty();
             $("#info p").text("");
             $("#infoTip").show();
             $("#toolBar").hide();
-            
-            Object.values(json).forEach(function(data) {
+
+            Object.values(json).forEach(function (data) {
                 if (data[1] != null && data[1].uuid != recycle && (data[5] == 0 || data[5] == 1)) {
 
                     var str = '<li>\
@@ -139,12 +139,12 @@ function getFileList() {
         data: form_data,
         type: 'post',
         dataType: 'json',
-        success: function(json) {
+        success: function (json) {
             $("#fileList").empty();
             $("#info p").text("");
             $("#infoTip").show();
             $("#toolBar").hide();
-            Object.values(json).forEach(function(data) {
+            Object.values(json).forEach(function (data) {
 
                 if (data[0] != null && (data[7] == 1 || data[7] == 0)) {
 
@@ -204,7 +204,7 @@ function downFile(id) {
             data: form_data,
             type: 'post',
             dataType: 'json',
-            success: function(json) {
+            success: function (json) {
                 generateLink(json[2], json[1], json[0]);
             }
         });
@@ -225,7 +225,7 @@ function rename(type, id) {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function() {
+        success: function () {
             if (type == 0) {
                 getFileList();
             } else {
@@ -247,7 +247,7 @@ function deleteff(type, id) {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function(msg) {
+        success: function (msg) {
             console.log(msg);
             if (type == 0) {
                 getFileList();
@@ -264,7 +264,7 @@ function dataURItoBlob(dataURI) {
     var byteString = atob(dataURI.split(',')[1]);
     // separate out the mime component
     var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-        // write the bytes of the string to an ArrayBuffer
+    // write the bytes of the string to an ArrayBuffer
     var ab = new ArrayBuffer(byteString.length);
     // create a view into the buffer
     var ia = new Uint8Array(ab);
@@ -300,6 +300,8 @@ function extIntToStr($ext) {
             return "HTML";
         case 11:
             return "CSS";
+        case 14:
+            return "MP3";
         default:
             return "UNKNOWN";
     }

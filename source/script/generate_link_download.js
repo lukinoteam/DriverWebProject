@@ -50,6 +50,10 @@ function generateLink($type, $data, $name) {
             url = URL.createObjectURL(dataURItoBlob("data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," + $data));
             fileName = $name + ".xlsx";
             break;
+        case 14:
+            url = URL.createObjectURL(dataURItoBlob("data:audio/mpeg;base64," + $data));
+            fileName = $name + ".mp3";
+            break;
         default:
             url = URL.createObjectURL(dataURItoBlob("data:application/octet-stream;base64," + $data));
             fileName = $name;
