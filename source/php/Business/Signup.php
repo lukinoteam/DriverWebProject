@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__ ."/../DataAccess/MySQL/MySQLDA.php";
+require_once 'InitHomeFolder.php';
+
 $name = $_POST['fieldName'];
 $email = $_POST['fieldEmail'];
 $pass = $_POST['fieldPass'];
@@ -51,6 +53,7 @@ $insert = $query->insert($table,$arrayData);
 if($GLOBALS['isUnique']==1){   
     if($GLOBALS['insert']){
         echo "true";
+        init_home_folder($id);
     }
     else{
         echo "fasle";
