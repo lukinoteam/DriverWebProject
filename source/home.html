@@ -203,11 +203,16 @@
                     <div class="row">
                         <div class="col-lg-3"><label for="desc" style="margin-top: 15px;">Description:</label></div>
                         <div class="col-lg-9"><input id="txtFileDesc" size="45" type="text" name="desc" style="margin-top: 15px;" /></div>
-                    </div>
+                    </div><br>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+
+                        </div>
+                      </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="uploadConfirm" type="button" class="btn btn-primary" data-dismiss="modal">Upload</button>
+                    <button id="btnCloseUploadModal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="uploadConfirm" type="button" class="btn btn-primary">Upload</button>
                 </div>
             </div>
         </div>
@@ -253,7 +258,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Upload File</h4>
+                    <h4 class="modal-title">Rename File</h4>
                 </div>
                 <div class="modal-body" style="height: 55px;">
                     <div class="col-lg-3"><label for="rename">Rename:</label></div>
@@ -266,6 +271,7 @@
             </div>
         </div>
     </div>
+
     <script type="text/javascript" src="script/contactBtn.js"></script>
 </body>
 
