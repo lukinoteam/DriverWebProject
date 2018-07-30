@@ -143,43 +143,8 @@ function triggerFolderChoosedTools(folder) {
 
         $("#infoFileName").text($(folderId).find(".name").text());
         $("#infoTip").hide();
-        //get all deleted file:
-        $.ajax({
-            url: 'php/Business/RecycleBin.php',
-            cache: false,
-            contentType: false,
-            processData: false,
-            type: 'post',
-            dataType: 'json',
-            success: function (json) {
-                $("#fileList").empty();
-                $("#info p").text("");
-                $("#infoTip").show();
-                $("#toolBar").hide();
-                Object.values(json).forEach(function (data) {
-                    if (data[0] != null && (data[7] == -1 || data[7] == 0)) {
-                        console.log('got data');
-                        var str = '<li>\
-                <div id="' + data[0].uuid + '" class="fileItem" onclick="triggerFileChoosedTools(this.id);" ondblclick="viewImg(this.id);">\
-                    <div>\
-                        <img src=' + data[5] + '>\
-                    </div>\
-                    <div class="fileCaption">\
-                        <p class="name">' + data[2] + '</p>\
-                        <p class="size" style="display: none;">' + parseSize(data[3].value) + '</p>\
-                        <p class="date" style="display: none;">' + parseDate(new Date(data[1].seconds * 1000)) + '</p>\
-                        <p class="type" style="display: none;">' + extIntToStr(data[6]) + '</p>\
-                        <p class="desc" style="display: none;">' + data[4] + '</p>\
-                    </div>\
-                </div>\
-            </li>';
-                        $("#fileList").append(str);
-                    }
-                });
-
-            }
-        });
-
+        
+        getDeletedFile();
     }
 }
 

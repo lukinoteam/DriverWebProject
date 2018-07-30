@@ -16,7 +16,7 @@ function createFolder() {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function () {
+        success: function() {
 
             $('#folderName').val("");
             $('#txtFolderDesc').val("");
@@ -38,7 +38,7 @@ function getParentFolder() {
         data: form_data,
         type: 'post',
         dataType: 'json',
-        success: function (json) {
+        success: function(json) {
             currenFolder = String(json[0].uuid);
             if (currenFolder == home) {
                 $("#backIcon").hide();
@@ -62,6 +62,7 @@ function uploadFile() {
     form_data.append('name', filename);
     form_data.append('desc', $('#txtFileDesc').val());
     form_data.append('current', currenFolder);
+
     $.ajax({
         xhr: function() {
             var xhr = new window.XMLHttpRequest();
@@ -71,7 +72,7 @@ function uploadFile() {
                     $('.progress').find(".progress-bar").css({
                         width: percentComplete * 100 - 1 + '%'
                     });
-                    $('.progress').find(".progress-bar").text(percentComplete * 100 - 1+ '%');
+                    $('.progress').find(".progress-bar").text(percentComplete * 100 - 1 + '%');
                 }
             }, false);
             xhr.addEventListener("progress", function(evt) {
@@ -102,10 +103,10 @@ function uploadFile() {
                 width: '0%'
             });
             $('.progress').find(".progress-bar").empty();
-            
 
         }
     });
+
 }
 
 function getFolderList() {
@@ -119,36 +120,36 @@ function getFolderList() {
         data: form_data,
         type: 'post',
         dataType: 'json',
-        success: function (json) {
+        success: function(json) {
+            $("#specialFolderList").empty();
             $("#folderList").empty();
             $("#info p").text("");
             $("#infoTip").show();
             $("#toolBar").hide();
 
-            Object.values(json).forEach(function (data) {
+            Object.values(json).forEach(function(data) {
                 if (data[1] != null && data[1].uuid != recycle && (data[5] == 0 || data[5] == 1)) {
 
                     var str = '<li>\
                 <div id="' + data[1].uuid + '" class="folderItem" onclick="triggerFolderChoosedTools(this.id);" ondblclick="setPath(this.id);">\
-                    <span class="name">' + data[0] + '</span>\
+                <img src="img/folderic.png" style="display: inline;"><span class="name" style="display: inline;">' + data[0] + '</span>\
                     <p class="size" style="display: none;">' + parseSize(data[2].value) + '</p>\
                     <p class="date" style="display: none;">' + parseDate(new Date(data[3].seconds * 1000)) + '</p>\
                     <p class="desc" style="display: none;">' + data[4] + '</p>\
                 </div>\
                 </li>';
-
                     $("#folderList").append(str);
                 }
             });
 
             if (currenFolder == home) {
                 var str = '<li>\
-                <div id="' + recycle + '" class="folderItem" onclick="triggerFolderChoosedTools(this.id);" ondblclick="setPath(this.id);">\
-                    <span class="name">Recycle Bin</span>\
+                <div id="' + recycle + '" class="specialFolderItem" onclick="triggerFolderChoosedTools(this.id);" ondblclick="setPath(this.id);">\
+                <img src="img/recycle.png" style="display: inline;"><span class="name" style="display: inline;">Recycle Bin</span>\
                 </div>\
                 </li>';
 
-                $("#folderList").append(str);
+                $("#specialFolderList").append(str);
             }
 
         }
@@ -166,12 +167,12 @@ function getFileList() {
         data: form_data,
         type: 'post',
         dataType: 'json',
-        success: function (json) {
+        success: function(json) {
             $("#fileList").empty();
             $("#info p").text("");
             $("#infoTip").show();
             $("#toolBar").hide();
-            Object.values(json).forEach(function (data) {
+            Object.values(json).forEach(function(data) {
 
                 if (data[0] != null && (data[7] == 1 || data[7] == 0)) {
 
@@ -231,7 +232,7 @@ function downFile(id) {
             data: form_data,
             type: 'post',
             dataType: 'json',
-            success: function (json) {
+            success: function(json) {
                 generateLink(json[2], json[1], json[0]);
             }
         });
@@ -252,7 +253,7 @@ function rename(type, id) {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function () {
+        success: function() {
             if (type == 0) {
                 getFileList();
             } else {
@@ -274,7 +275,7 @@ function deleteff(type, id) {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function (msg) {
+        success: function(msg) {
             console.log(msg);
             if (type == 0) {
                 getFileList();
@@ -285,13 +286,52 @@ function deleteff(type, id) {
     });
 }
 
+//get all deleted file:
+function getDeletedFile() {
+    $.ajax({
+        url: 'php/Business/RecycleBin.php',
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'post',
+        dataType: 'json',
+        success: function(json) {
+            $("#fileList").empty();
+            $("#info p").text("");
+            $("#infoTip").show();
+            $("#toolBar").hide();
+            Object.values(json).forEach(function(data) {
+                if (data[0] != null && (data[7] == -1 || data[7] == 0)) {
+                    console.log('got data');
+                    var str = '<li>\
+            <div id="' + data[0].uuid + '" class="fileItem" onclick="triggerFileChoosedTools(this.id);" ondblclick="viewImg(this.id);">\
+                <div>\
+                    <img src=' + data[5] + '>\
+                </div>\
+                <div class="fileCaption">\
+                    <p class="name">' + data[2] + '</p>\
+                    <p class="size" style="display: none;">' + parseSize(data[3].value) + '</p>\
+                    <p class="date" style="display: none;">' + parseDate(new Date(data[1].seconds * 1000)) + '</p>\
+                    <p class="type" style="display: none;">' + extIntToStr(data[6]) + '</p>\
+                    <p class="desc" style="display: none;">' + data[4] + '</p>\
+                </div>\
+            </div>\
+        </li>';
+                    $("#fileList").append(str);
+                }
+            });
+
+        }
+    });
+}
+
 function dataURItoBlob(dataURI) {
     // convert base64 to raw binary data held in a string
     // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
     var byteString = atob(dataURI.split(',')[1]);
     // separate out the mime component
     var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-    // write the bytes of the string to an ArrayBuffer
+        // write the bytes of the string to an ArrayBuffer
     var ab = new ArrayBuffer(byteString.length);
     // create a view into the buffer
     var ia = new Uint8Array(ab);
