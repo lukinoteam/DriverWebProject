@@ -35,6 +35,7 @@ if ($res[0]['file_id'] == null) {
     insertThumbnail(9, 1, __DIR__ . '/../../img/image.jpg');
     insertThumbnail(10, 1, __DIR__ . '/../../img/html.jpg');
     insertThumbnail(11, 1, __DIR__ . '/../../img/css.jpg');
+    insertThumbnail(12, 1, __DIR__ . '/../../img/sheet.jpg');
     insertThumbnail(15, 1, __DIR__ . '/../../img/fileic.jpg');
 
 }

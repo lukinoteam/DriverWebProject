@@ -54,6 +54,8 @@ else if ($type == 1){
     $newInfo->setDateModify(time());
     $newInfo->setDescription($result[0]['description']);
     $newInfo->setStatus(-1);
+    
+    $eDA->update_folder_with_status($result[0]['folder_id'], -1);
 
     $connect->insert('folder_info', $newInfo);
 }

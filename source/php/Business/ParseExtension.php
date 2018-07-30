@@ -29,6 +29,8 @@ function extStrToInt($ext)
             return 11;
         case 'xlsx':
             return 12;
+        case 'mp3':
+            return 14;
         default:
             return 15;
     }

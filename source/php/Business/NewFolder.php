@@ -1,11 +1,15 @@
 <?php
 require_once __DIR__ . "/../DataAccess/Cassandra/CassandraDA.php";
+require_once __DIR__ ."/../DataAccess/ElasticDataAccess/ElasticDA.php";
 
 // init connect to cassandra
 $connect = new CassandraDA();
+
 //start session to get user-id
 session_start();
 $user_id = $_SESSION['id'];
+//Elastic DataAccess
+$eDA = new ElasticDA();
 
 // get file and filename from client
 $current = new Cassandra\UUID($_POST['current']);
@@ -35,6 +39,7 @@ $folderInfo->setSize(0);
 $folderInfo->setStatus(1);
 
 $connect->insert('folder_info', $folderInfo);
+$eDA->index_folder($newFolder->getFolderId(), 1);
 
 ob_end_clean();
 echo $newFolder->getFolderId();
