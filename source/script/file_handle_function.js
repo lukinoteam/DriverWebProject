@@ -2,6 +2,92 @@ const numberWithCommas = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+function triggerFileChoosedTools(file) {
+    var fileId = '#' + file;
+    choosedFile = file;
+    type = 0;
+
+    $("#txtRename").val($(fileId).find(".fileCaption").find(".name").text());
+
+    $(document).mouseup(function(e) {
+        var container = $(fileId);
+
+        // if the target of the click isn't the container nor a descendant of the container
+        if (checkOutside(container, e)) {
+            container.find(".fileCaption").css({
+                "background-color": "white",
+                "color": "black"
+            });
+            container.css({
+                "border": "1px solid #919180"
+            });
+
+            $("#info p").text("");
+            $("#infoTip").show();
+        }
+    });
+
+    $("#toolBar").css({
+        "display": "block"
+    });
+
+    $(fileId).find(".fileCaption").css({
+        "background-color": "#90adff",
+        "color": "#0035d5"
+    });
+    $(fileId).css({
+        "border": "1px solid #0066ff"
+    });
+
+    $("#infoFileName").text($(fileId).find(".fileCaption").find(".name").text());
+    $("#infoFileType").text("Type: " + $(fileId).find(".fileCaption").find(".type").text());
+    $("#infoFileSize").text("Size: " + $(fileId).find(".fileCaption").find(".size").text());
+    $("#infoFileDate").text("Date modified: " + $(fileId).find(".fileCaption").find(".date").text());
+    $("#infoFileDesc").text("Desciption: " + $(fileId).find(".fileCaption").find(".desc").text());
+
+    $("#infoTip").hide();
+}
+
+function triggerFolderChoosedTools(folder) {
+    var folderId = '#' + folder;
+
+    choosedFolder = folder;
+    type = 1;
+
+    $("#txtRename").val($(folderId).find(".name").text());
+
+    $("#toolBar").css({
+        "display": "block"
+    });
+    $(folderId).css({
+        "background-color": "#90adff"
+    })
+
+    $(document).mouseup(function(e) {
+        var container = $(folderId);
+
+        // if the target of the click isn't the container nor a descendant of the container
+        if (checkOutside(container, e)) {
+            container.css({
+                "background-color": "#f2f2f2"
+            })
+
+            $("#info p").text("");
+            $("#infoTip").show();
+
+            $("#infoFileType").show();
+        }
+    });
+
+    $("#infoFileName").text($(folderId).find(".name").text());
+    $("#infoFileType").hide();
+    $("#infoFileSize").text("Size: " + $(folderId).find(".size").text());
+    $("#infoFileDate").text("Date modified: " + $(folderId).find(".date").text());
+    $("#infoFileDesc").text("Desciption: " + $(folderId).find(".desc").text());
+    $("#infoTip").hide();
+
+}
+
 function createFolder() {
     var folderName = $("#folderName").val();
     var desc = $("#txtFolderDesc").val();
@@ -28,6 +114,8 @@ function createFolder() {
 }
 
 function getParentFolder() {
+    $("#fileList").empty();
+    $("#folderList").empty();
     var form_data = new FormData();
     form_data.append('current', currenFolder);
     $.ajax({
@@ -121,14 +209,11 @@ function getFolderList() {
         type: 'post',
         dataType: 'json',
         success: function(json) {
-            $("#specialFolderList").empty();
             $("#folderList").empty();
-            $("#info p").text("");
-            $("#infoTip").show();
             $("#toolBar").hide();
 
             Object.values(json).forEach(function(data) {
-                if (data[1] != null && data[1].uuid != recycle && (data[5] == 0 || data[5] == 1)) {
+                if (data[1] != null && (data[5] == 0 || data[5] == 1)) {
 
                     var str = '<li>\
                 <div id="' + data[1].uuid + '" class="folderItem" onclick="triggerFolderChoosedTools(this.id);" ondblclick="setPath(this.id);">\
@@ -141,17 +226,6 @@ function getFolderList() {
                     $("#folderList").append(str);
                 }
             });
-
-            if (currenFolder == home) {
-                var str = '<li>\
-                <div id="' + recycle + '" class="specialFolderItem" onclick="triggerFolderChoosedTools(this.id);" ondblclick="setPath(this.id);">\
-                <img src="img/recycle.png" style="display: inline;"><span class="name" style="display: inline;">Recycle Bin</span>\
-                </div>\
-                </li>';
-
-                $("#specialFolderList").append(str);
-            }
-
         }
     });
 }
@@ -169,8 +243,8 @@ function getFileList() {
         dataType: 'json',
         success: function(json) {
             $("#fileList").empty();
-            $("#info p").text("");
-            $("#infoTip").show();
+            // $("#info p").text("");
+            // $("#infoTip").show();
             $("#toolBar").hide();
             Object.values(json).forEach(function(data) {
 
@@ -276,7 +350,6 @@ function deleteff(type, id) {
         data: form_data,
         type: 'post',
         success: function(msg) {
-            console.log(msg);
             if (type == 0) {
                 getFileList();
             } else {
@@ -297,12 +370,13 @@ function getDeletedFile() {
         dataType: 'json',
         success: function(json) {
             $("#fileList").empty();
-            $("#info p").text("");
-            $("#infoTip").show();
+
+            // $("#info p").text("");
+            // $("#infoTip").show();
             $("#toolBar").hide();
             Object.values(json).forEach(function(data) {
                 if (data[0] != null && (data[7] == -1 || data[7] == 0)) {
-                    console.log('got data');
+
                     var str = '<li>\
             <div id="' + data[0].uuid + '" class="fileItem" onclick="triggerFileChoosedTools(this.id);" ondblclick="viewImg(this.id);">\
                 <div>\
@@ -324,6 +398,38 @@ function getDeletedFile() {
         }
     });
 }
+
+function specialFolderAction(id) {
+
+    var folderId = "#" + id;
+    $(document).mouseup(function(e) {
+        var container = $(folderId);
+        // if the target of the click is neither the container nor a descendant of the container
+        if (checkOutside(container, e)) {
+            container.css({
+                "background-color": "#f2f2f2"
+            })
+
+            $("#infoTip").show();
+            $("#infoFileName").text("");
+        }
+    });
+
+    $(folderId).css({
+        "background-color": "#90adff"
+    })
+
+    $("#infoTip").hide();
+
+    $("#infoFileName").text($(folderId).find(".name").text());
+
+
+    if (id == "recycle_feature"){
+        getDeletedFile();
+    }
+}
+
+
 
 function dataURItoBlob(dataURI) {
     // convert base64 to raw binary data held in a string
