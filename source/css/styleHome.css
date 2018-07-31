@@ -206,6 +206,10 @@
     overflow-y: auto;
 }
 
+#folderPanel{
+    overflow-x: hidden;
+}
+
 #filePanel {
     border-left: 1px solid #c4c4c4;
     border-right: 1px solid #c4c4c4;
@@ -244,5 +248,5 @@
 }
 
 .progress .progress-bar {
-    width: 0%;
+    width: 100%;
 }

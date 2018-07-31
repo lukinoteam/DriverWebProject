@@ -1,0 +1,32 @@
+.small-folder-item {
+    margin-top: 8px;
+    padding: 12px 10px;
+    width: 173px;
+    height: 45px;
+    background-color: #f2f2f2;
+}
+
+.small-folder-item span {
+    font-size: 14px;
+    margin-left: 5px;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 0px 5px;
+}
+
+.small-folder-item img{
+    width: 20px;
+    height: 20px;
+}
+
+
+#small-folder-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+
