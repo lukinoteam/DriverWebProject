@@ -77,7 +77,6 @@ class CassandraDA implements DataBaseAccess
                     $options = array('arguments' => $data[0]);
                     $this->_connection->get_connection()->execute($insert, $options);
 
-                    echo "Success!";
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
@@ -105,7 +104,6 @@ class CassandraDA implements DataBaseAccess
                     $options = array('arguments' => $data[0]);
                     $this->_connection->get_connection()->execute($insert, $options);
 
-                    echo "Success!";
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
@@ -128,7 +126,6 @@ class CassandraDA implements DataBaseAccess
                     $options = array('arguments' => $data[0]);
                     $this->_connection->get_connection()->execute($insert, $options);
 
-                    echo "Success!";
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
@@ -160,7 +157,6 @@ class CassandraDA implements DataBaseAccess
                     $options = array('arguments' => $data[0]);
                     $this->_connection->get_connection()->execute($insert, $options);
 
-                    echo "Success!";
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
@@ -182,7 +178,6 @@ class CassandraDA implements DataBaseAccess
                     $options = array('arguments' => $data[0]);
                     $this->_connection->get_connection()->execute($insert, $options);
 
-                    echo "Success!";
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
@@ -210,7 +205,6 @@ class CassandraDA implements DataBaseAccess
                     $options = array('arguments' => $data[0]);
                     $this->_connection->get_connection()->execute($insert, $options);
 
-                    echo "Success!";
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
