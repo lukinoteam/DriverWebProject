@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="css/uploadButton.css">
     <link rel="stylesheet" type="text/css" href="css/modal_image.css">
     <link rel="stylesheet" type="text/css" href="css/searchBar.css">
-
+    
 </head>
 
 <body>
@@ -130,7 +130,32 @@
         <div class="row">
             <div class="col-xs-2 noselect" id="folderPanel">
                 <ul id="specialFolderList">
-
+                    <li>
+                        <div id="home" class="specialFolderItem" onclick="specialFolderAction(this.id);">
+                            <img src="img/mydriveic.png" style="display: inline;"><span class="name" style="display: inline;">My Driver</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div id="share_feature" class="specialFolderItem" onclick="specialFolderAction(this.id);">
+                            <img src="img/shareic.png" style="display: inline;"><span class="name" style="display: inline;">Shared With Me</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div id="fav_feature" class="specialFolderItem" onclick="specialFolderAction(this.id);">
+                            <img src="img/favic.png" style="display: inline;"><span class="name" style="display: inline;">Favorites</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div id="ra_feature" class="specialFolderItem" onclick="specialFolderAction(this.id);">
+                            <img src="img/recenic.png" style="display: inline;"><span class="name" style="display: inline;">Recently Access</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div id="recycle_feature" class="specialFolderItem" onclick="specialFolderAction(this.id);">
+                            <img src="img/recycleic.png" style="display: inline;"><span class="name" style="display: inline;">Recycle Bin</span>
+                        </div>
+                    </li>
+                    
                 </ul>
             </div>
             <div class="col-xs-7 noselect" id="filePanel">
@@ -277,24 +302,26 @@
 
     <!-- modal move-->
     <div class="modal fade" id="modalMove">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Home</h4>
-                    </div>
-                    <div class="modal-body" style="height: 55px;">
-                        <ul id="small-folder-list">
-                            
-                        </ul>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button id="renameConfirm" type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>
-                    </div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Home</h4>
+                </div>
+                <div class="modal-body" style="height: 55px;">
+                    <ul id="small-folder-list">
+
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="renameConfirm" type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>
                 </div>
             </div>
         </div>
+    </div>
+    <!-- The actual snackbar -->
+    <div id="snackbar">Some text some message..</div>
 
     <script type="text/javascript" src="script/contactBtn.js"></script>
 </body>
