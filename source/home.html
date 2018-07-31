@@ -24,6 +24,8 @@
     <script type="text/javascript" src="script/file_handle_function.js"></script>
     <script type="text/javascript" src="script/generate_link_download.js"></script>
     <script type="text/javascript" src="script/init_thumbnail.js"></script>
+    <script type="text/javascript" src="script/small_folder_list.js"></script>
+
 
     <!-- Bootstrap library -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min-3.3.7.css">
@@ -34,7 +36,11 @@
     <link rel="stylesheet" type="text/css" href="css/uploadButton.css">
     <link rel="stylesheet" type="text/css" href="css/modal_image.css">
     <link rel="stylesheet" type="text/css" href="css/searchBar.css">
-    
+    <link rel="stylesheet" type="text/css" href="css/small_folder_list.css">
+    <link rel="stylesheet" type="text/css" href="css/snack_bar.css">
+
+
+
 </head>
 
 <body>
@@ -74,8 +80,8 @@
                 <a id="link" href="" download="" style="display: none;"></a>
                 <div class='btn-group mr-2' role='group' aria-label='Second group'>
                     <button type='button' id="btnRename" class='btn btn-secondary' data-toggle="modal" href='#modalRename'>Rename</button>
-                    <button type='button' id="btnCopy" class='btn btn-secondary'>Copy</button>
-                    <button type='button' id="btnCut" class='btn btn-secondary'>Cut</button>
+                    <button type='button' id="btnCopy" class='btn btn-secondary' data-toggle="modal" href='#modalMove'>Copy</button>
+                    <button type='button' id="btnMove" class='btn btn-secondary' data-toggle="modal" href='#modalMove'>Move</button>
                     <button type='button' id="btnDelete" class='btn btn-secondary'>Delete</button>
                     <button type='button' id="btnPaste" class='btn btn-secondary'>Share</button>
                 </div>
@@ -155,7 +161,7 @@
                             <img src="img/recycleic.png" style="display: inline;"><span class="name" style="display: inline;">Recycle Bin</span>
                         </div>
                     </li>
-                    
+
                 </ul>
             </div>
             <div class="col-xs-7 noselect" id="filePanel">
@@ -232,11 +238,7 @@
                         <div class="col-lg-3"><label for="desc" style="margin-top: 15px;">Description:</label></div>
                         <div class="col-lg-9"><input id="txtFileDesc" size="45" type="text" name="desc" style="margin-top: 15px;" /></div>
                     </div><br>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
 
-                        </div>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button id="btnCloseUploadModal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -306,22 +308,30 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Home</h4>
+                    <h4 class="modal-title"></h4>
                 </div>
-                <div class="modal-body" style="height: 55px;">
-                    <ul id="small-folder-list">
+                <div class="modal-body">
+                    <ul id="small-folder-list" class="list-inline noselect">
 
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="renameConfirm" type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>
+                    <button id="btnBackMove" type="button" class="btn btn-default pull-left">Back</button>
+                    <button id="btnCloseMoveModal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="moveConfirm" type="button" class="btn btn-primary">Copy</button>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- The actual snackbar -->
-    <div id="snackbar">Some text some message..</div>
+    <div id="snackbar" align="center">
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                Loading...
+            </div>
+        </div>
+    </div>
 
     <script type="text/javascript" src="script/contactBtn.js"></script>
 </body>
