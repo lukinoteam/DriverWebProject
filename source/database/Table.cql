@@ -4,9 +4,10 @@
  * 		status:
  * 			1: new avatar
  * 			0: current avatar
- * 			-1: old avatar
+ * 			-1: old file
  * 			10: default avatar for male
  * 			11: default avatar for female
+*			12: shared
  * --- Default data (default avatar for new user): 
  * 				insert into avatar(user_id, image_id, status) values (host_male, host_male_10, 10) 
  * 				insert into avatar(user_id, image_id, status) values (host_female, host_female_11, 11)
