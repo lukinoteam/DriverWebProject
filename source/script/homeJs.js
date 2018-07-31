@@ -1,5 +1,5 @@
 var home = '415fe87d-9b3b-4a4c-8f64-b380d2b39240';
-var recycle = 'd2cea1a3-b55e-49ae-956f-1ea7ba9b33a1';
+// var recycle = 'd2cea1a3-b55e-49ae-956f-1ea7ba9b33a1';
 var currenFolder = home;
 var choosedFile = "";
 var choosedFolder = "";
@@ -35,6 +35,9 @@ function checkOutside(container, e) {
         !$("#modalRename").find("*").is(e.target) &&
         !$("#btnDownload").is(e.target) &&
         !$("#btnDelete").is(e.target) &&
+        !$("#btnCopy").is(e.target) &&
+        !$("#modalMove").is(e.target) &&
+        !$("#modalMove").find("*").is(e.target) &&
         !$("#btnRename").is(e.target);
 }
 
@@ -137,6 +140,33 @@ $(document).ready(function() {
             deleteff(type, choosedFile);
         else
             deleteff(type, choosedFolder);
+    })
+
+    $("#btnCopy").click(function() {
+        sm_move_type = "copy";
+        sm_current = home;
+        sm_choosedFolder = home;
+        $("#modalMove").find("#moveConfirm").text("Copy");
+        getSmallFolderList();
+    })
+
+    $("#btnMove").click(function() {
+        sm_move_type = "move";
+        sm_current = home;
+        sm_choosedFolder = home;
+        $("#modalMove").find("#moveConfirm").text("Move");
+        getSmallFolderList();
+    })
+
+    $("#moveConfirm").click(function() {
+        if (type == 0) {
+            move(0, choosedFile, sm_choosedFolder);
+        } else {
+            move(1, choosedFolder, sm_choosedFolder);
+        }
+    })
+    $("#btnBackMove").click(function() {
+        getSmallParentFolder();
     })
 });
 

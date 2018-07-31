@@ -150,26 +150,22 @@ function uploadFile() {
     form_data.append('name', filename);
     form_data.append('desc', $('#txtFileDesc').val());
     form_data.append('current', currenFolder);
+    $("#btnCloseUploadModal").click();
 
     $.ajax({
         xhr: function() {
             var xhr = new window.XMLHttpRequest();
             xhr.upload.addEventListener("progress", function(evt) {
                 if (evt.lengthComputable) {
-                    var percentComplete = evt.loaded / evt.total;
-                    $('.progress').find(".progress-bar").css({
-                        width: percentComplete * 100 - 1 + '%'
-                    });
-                    $('.progress').find(".progress-bar").text(percentComplete * 100 - 1 + '%');
+                    
+                    $("#snackbar").css("visibility", "visible");
                 }
             }, false);
             xhr.addEventListener("progress", function(evt) {
                 if (evt.lengthComputable) {
-                    var percentComplete = evt.loaded / evt.total;
-                    $('.progress').find(".progress-bar").css({
-                        width: percentComplete * 100 - 1 + '%'
-                    });
-                    $('.progress').find(".progress-bar").text(percentComplete * 100 - 1 + '%');
+
+                    $("#snackbar").css("visibility", "visible");
+
                 }
             }, false);
             return xhr;
@@ -182,15 +178,11 @@ function uploadFile() {
         data: form_data,
         success: function(data) {
             getFileList();
-            $("#btnCloseUploadModal").click();
             $("#inputFile").val("");
             $('#txtFileDesc').val("");
             $("#txtFileName").val("");
 
-            $('.progress').css({
-                width: '0%'
-            });
-            $('.progress').find(".progress-bar").empty();
+            $("#snackbar").css("visibility", "hidden");
 
         }
     });
@@ -268,7 +260,6 @@ function getFileList() {
                     $("#fileList").append(str);
                 }
             });
-
         }
     });
 }
@@ -299,6 +290,23 @@ function downFile(id) {
         var form_data = new FormData();
         form_data.append('id', id);
         $.ajax({
+            xhr: function() {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function(evt) {
+                    if (evt.lengthComputable) {
+                        
+                        $("#snackbar").css("visibility", "visible");
+                    }
+                }, false);
+                xhr.addEventListener("progress", function(evt) {
+                    if (evt.lengthComputable) {
+    
+                        $("#snackbar").css("visibility", "visible");
+    
+                    }
+                }, false);
+                return xhr;
+            },
             url: 'php/Business/DownFile.php',
             cache: false,
             contentType: false,
@@ -308,6 +316,7 @@ function downFile(id) {
             dataType: 'json',
             success: function(json) {
                 generateLink(json[2], json[1], json[0]);
+                $("#snackbar").css("visibility", "hidden");
             }
         });
     }
@@ -424,12 +433,51 @@ function specialFolderAction(id) {
     $("#infoFileName").text($(folderId).find(".name").text());
 
 
-    if (id == "recycle_feature"){
+    if (id == "recycle_feature") {
         getDeletedFile();
     }
 }
 
+function move(type, id, destination) {
+    var form_data = new FormData();
+    form_data.append('id', id);
+    form_data.append('type', type);
+    form_data.append('dest', destination);
+    form_data.append('move_type', sm_move_type);
 
+    $("#btnCloseMoveModal").click();
+    
+    $.ajax({
+        xhr: function() {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function(evt) {
+                if (evt.lengthComputable) {
+                    
+                    $("#snackbar").css("visibility", "visible");
+                }
+            }, false);
+            xhr.addEventListener("progress", function(evt) {
+                if (evt.lengthComputable) {
+
+                    $("#snackbar").css("visibility", "visible");
+
+                }
+            }, false);
+            return xhr;
+        },
+        url: 'php/Business/MoveFile.php', // point to server-side PHP script 
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,
+        type: 'post',
+        success: function(msg) {
+            getFileList();
+            $("#snackbar").css("visibility", "hidden");
+            
+        }
+    });
+}
 
 function dataURItoBlob(dataURI) {
     // convert base64 to raw binary data held in a string
