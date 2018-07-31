@@ -37,15 +37,20 @@ if ($type == 0){
     
     $contentRes = $connect->get_connection()->execute($statement);
 
-    foreach ($contentRes as $content){
-        $newContent = new DataFileContent();
+    $newContent = new DataFileContent();
+    $newContent->setFileId($newFile->getFileId());
 
-        $newContent->setFileId($newFile->getFileId());
+    foreach ($contentRes as $content){
+        
         $newContent->setPart($content['part']);
         $newContent->setContent($content['content']);
 
         $connect->insert('file_content', $newContent);
+        
+        $connect->updateCount($newFile->getFileId());
     }
+
+
 
     $destFolder = new DataFolder();
 
