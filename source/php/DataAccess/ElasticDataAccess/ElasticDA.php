@@ -89,8 +89,7 @@ final class ElasticDA
             $resource = array();
             for ($i = 0; $i < count($response['hits']['hits']); $i++) {
                 $file_id = strtoupper(json_encode($response['hits']['hits'][$i]['_id']));
-                $name = strtoupper(json_encode($response['hits']['hits'][$i]['_source']['name']));
-                $resource[$file_id] = $name;
+                array_push($resource, $file_id);
             }
             ksort($resource);
             return $resource;
@@ -122,8 +121,7 @@ final class ElasticDA
             $resource = array();
             for ($i = 0; $i < count($response['hits']['hits']); $i++) {
                 $file_id = strtoupper(json_encode($response['hits']['hits'][$i]['_id']));
-                $type = json_encode($response['hits']['hits'][$i]['_source']['type']);
-                $resource[$file_id] = $type;
+                array_push($resource, $file_id);
             }
             ksort($resource);
             return $resource;
@@ -155,8 +153,7 @@ final class ElasticDA
             $resource = array();
             for ($i = 0; $i < count($response['hits']['hits']); $i++) {
                 $file_id = strtoupper(json_encode($response['hits']['hits'][$i]['_id']));
-                $size = json_encode($response['hits']['hits'][$i]['_source']['size']);
-                $resource[$file_id] = $size;
+                array_push($resource, $file_id);
             }
             ksort($resource);
             return $resource;
@@ -188,8 +185,7 @@ final class ElasticDA
             $resource = array();
             for ($i = 0; $i < count($response['hits']['hits']); $i++) {
                 $file_id = strtoupper(json_encode($response['hits']['hits'][$i]['_id']));
-                $date = json_encode($response['hits']['hits'][$i]['_source']['date']);
-                $resource[$file_id] = $date;
+                array_push($resource, $file_id);
             }
             ksort($resource);
             return $resource;
@@ -221,8 +217,7 @@ final class ElasticDA
             $resource = array();
             for ($i = 0; $i < count($response['hits']['hits']); $i++) {
                 $file_id = strtoupper(json_encode($response['hits']['hits'][$i]['_id']));
-                $content = json_encode($response['hits']['hits'][$i]['_source']['content']);
-                $resource[$file_id] = $content;
+                array_push($resource, $file_id);
             }
             ksort($resource);
             return $resource;
