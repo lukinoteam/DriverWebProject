@@ -45,6 +45,7 @@ else if ($type == 1){
     $newInfo->setSize($result[0]['size']);
     $newInfo->setDateModify(time());
     $newInfo->setDescription($result[0]['description']);
+    $newInfo->setStatus($result[0]['status']);
 
     
     $connect->insert('folder_info', $newInfo);
