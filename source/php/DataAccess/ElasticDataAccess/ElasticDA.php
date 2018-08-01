@@ -88,8 +88,9 @@ final class ElasticDA
             $response = $this->client->search($params);
             $resource = array();
             for ($i = 0; $i < count($response['hits']['hits']); $i++) {
+                $file_id = strtoupper(json_encode($response['hits']['hits'][$i]['_id']));
                 $name = strtoupper(json_encode($response['hits']['hits'][$i]['_source']['name']));
-                array_push($resource, $name);
+                $resource[$file_id] = $name;
             }
             ksort($resource);
             return $resource;
@@ -120,9 +121,9 @@ final class ElasticDA
             $response = $this->client->search($params);
             $resource = array();
             for ($i = 0; $i < count($response['hits']['hits']); $i++) {
-                $name = strtoupper(json_encode($response['hits']['hits'][$i]['_source']['name']));
+                $file_id = strtoupper(json_encode($response['hits']['hits'][$i]['_id']));
                 $type = json_encode($response['hits']['hits'][$i]['_source']['type']);
-                $resource[$name] = $type;
+                $resource[$file_id] = $type;
             }
             ksort($resource);
             return $resource;
@@ -153,9 +154,9 @@ final class ElasticDA
             $response = $this->client->search($params);
             $resource = array();
             for ($i = 0; $i < count($response['hits']['hits']); $i++) {
-                $name = strtoupper(json_encode($response['hits']['hits'][$i]['_source']['name']));
+                $file_id = strtoupper(json_encode($response['hits']['hits'][$i]['_id']));
                 $size = json_encode($response['hits']['hits'][$i]['_source']['size']);
-                $resource[$name] = $size;
+                $resource[$file_id] = $size;
             }
             ksort($resource);
             return $resource;
@@ -186,9 +187,9 @@ final class ElasticDA
             $response = $this->client->search($params);
             $resource = array();
             for ($i = 0; $i < count($response['hits']['hits']); $i++) {
-                $name = strtoupper(json_encode($response['hits']['hits'][$i]['_source']['name']));
+                $file_id = strtoupper(json_encode($response['hits']['hits'][$i]['_id']));
                 $date = json_encode($response['hits']['hits'][$i]['_source']['date']);
-                $resource[$name] = $date;
+                $resource[$file_id] = $date;
             }
             ksort($resource);
             return $resource;
@@ -219,9 +220,9 @@ final class ElasticDA
             $response = $this->client->search($params);
             $resource = array();
             for ($i = 0; $i < count($response['hits']['hits']); $i++) {
-                $name = strtoupper(json_encode($response['hits']['hits'][$i]['_source']['name']));
+                $file_id = strtoupper(json_encode($response['hits']['hits'][$i]['_id']));
                 $content = json_encode($response['hits']['hits'][$i]['_source']['content']);
-                $resource[$name] = $content;
+                $resource[$file_id] = $content;
             }
             ksort($resource);
             return $resource;
@@ -230,7 +231,7 @@ final class ElasticDA
             return null;
         }
     }
-    //TO-DO: Search with @var($status as Integer) in Elastic database
+    //TO-DO: Search file with @var($status as Integer) in Elastic database
     public function search_with_status($status)
     {
         $params = [
