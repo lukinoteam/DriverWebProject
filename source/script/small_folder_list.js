@@ -81,11 +81,12 @@ function triggerMoveAction(id) {
         var container = $("#modalMove").find(folderId);
 
         // if the target of the click isn't the container nor a descendant of the container
-        if (!container.is(e.target) && container.has(e.target).length === 0) {
+        if (!container.is(e.target) && container.has(e.target).length === 0 && !$("#moveConfirm").is(e.target)) {
             container.css({
                 "background-color": "#f2f2f2"
             })
 
+            sm_choosedFolder = sm_current;
         }
     });
 }
