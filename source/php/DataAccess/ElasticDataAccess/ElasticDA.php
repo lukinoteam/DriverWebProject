@@ -47,28 +47,56 @@ final class ElasticDA
         }
     }
 
-     //TO-DO: Indexing file's info at @var($folder_id) into Elastic database
-     public function index_folder($folder_id, $status)
-     {
-         $params = [
-             'index' => 'folder',
-             'type' => 'info',
-             'id' => $folder_id,
-             'body' => [
-                 'status' => $status
-             ],
-         ];
-         try {
-             $response = $this->client->index($params);
-             return "Success";
-         } catch (Elasticsearch\Common\Exceptions $e) {
-             echo $e;
-             return null;
-         }
-     }
+    //TO-DO: Indexing file's shared at @var($file_input) into Elastic database
+    public function indexing_shared($file_input)
+    {
+        $info = $file_input->getInfo();
+        $params = [
+            'index' => 'file',
+            'type' => 'content',
+            'id' => $info['file_id'],
+            'body' => [
+                'user_id' => $info['user_id'],
+                'name' => $info['name'],
+                'size' => $info['size'],
+                'date' => $info['date'],
+                'descr' => $info['descr'],
+                'type' => $info['type'],
+                'status' => $info['status'],
+                'content' => "shared_file",
+            ],
+        ];
+        try {
+            $response = $this->client->index($params);
+            return "Success";
+        } catch (Elasticsearch\Common\Exceptions $e) {
+            echo $e;
+            return null;
+        }
+    }
+
+    //TO-DO: Indexing file's info at @var($folder_id) into Elastic database
+    public function index_folder($folder_id, $status)
+    {
+        $params = [
+            'index' => 'folder',
+            'type' => 'info',
+            'id' => $folder_id,
+            'body' => [
+                'status' => $status,
+            ],
+        ];
+        try {
+            $response = $this->client->index($params);
+            return "Success";
+        } catch (Elasticsearch\Common\Exceptions $e) {
+            echo $e;
+            return null;
+        }
+    }
 //MARK:- Search Functions
     //TO-DO: Search with @var($file_name as String) in Elastic database
-    public function search_with_name($file_name)
+    public function search_with_name($file_name, $user_id)
     {
         $params = [
             'index' => 'file',
@@ -78,12 +106,17 @@ final class ElasticDA
                 'query' => [
                     'bool' => [
                         'should' => [
-                            ['match' => ['name' => $file_name]],
+                            'match' => ['name' => $file_name]
                         ],
+                        'must' => [
+                            ['match' => ['status' => "1"]],
+                            ['match' => ['user_id' => $user_id]]
+                        ]
                     ],
                 ],
             ],
         ];
+        print_r($params);
         try {
             $response = $this->client->search($params);
             $resource = array();
@@ -100,7 +133,7 @@ final class ElasticDA
     }
 
     //TO-DO: Search with @var($file_type as Integer) in Elastic database
-    public function search_with_type($file_type)
+    public function search_with_type($file_type, $user_id)
     {
         $params = [
             'index' => 'file',
@@ -110,7 +143,11 @@ final class ElasticDA
                 'query' => [
                     'bool' => [
                         'should' => [
-                            ['match' => ['type' => $file_type]],
+                            'match' => ['type' => $file_type]
+                        ],
+                        'must' => [
+                            ['match' => ['status' => "1"]],
+                            ['match' => ['user_id' => $user_id]]
                         ],
                     ],
                 ],
@@ -132,7 +169,7 @@ final class ElasticDA
     }
 
     //TO-DO: Search with @var($file_size as Integer) in Elastic database
-    public function search_with_size($file_size)
+    public function search_with_size($file_size, $user_id)
     {
         $params = [
             'index' => 'file',
@@ -142,11 +179,15 @@ final class ElasticDA
                 'query' => [
                     'bool' => [
                         'should' => [
-                            ['match' => ['size' => $file_size]],
+                            'match' => ['size' => $file_size]
+                            ]
                         ],
-                    ],
-                ],
-            ],
+                        'must' => [
+                            ['match' => ['status' => "1"]],
+                            ['match' => ['user_id' => $user_id]]
+                        ]
+                    ]
+            ]
         ];
         try {
             $response = $this->client->search($params);
@@ -164,7 +205,7 @@ final class ElasticDA
     }
 
     //TO-DO: Search with @var($file_dateModified as Date) in Elastic database
-    public function search_with_date($file_date)
+    public function search_with_date($file_date, $user_id)
     {
         $params = [
             'index' => 'file',
@@ -174,11 +215,15 @@ final class ElasticDA
                 'query' => [
                     'bool' => [
                         'should' => [
-                            ['match' => ['date' => $file_date]],
+                            'match' => ['date' => $file_date]
+                            ]
                         ],
-                    ],
-                ],
-            ],
+                        'must' => [
+                            ['match' => ['status' => "1"]],
+                            ['match' => ['user_id' => $user_id]]
+                        ]
+                    ]
+            ]
         ];
         try {
             $response = $this->client->search($params);
@@ -196,7 +241,7 @@ final class ElasticDA
     }
 
     //TO-DO: Search with @var($file_content as String) in Elastic database
-    public function search_with_content($file_content)
+    public function search_with_content($file_content, $user_id)
     {
         $params = [
             'index' => 'file',
@@ -206,11 +251,15 @@ final class ElasticDA
                 'query' => [
                     'bool' => [
                         'should' => [
-                            ['match' => ['content' => $file_content]],
+                            'match' => ['content' => $file_content]
+                            ]
                         ],
-                    ],
-                ],
-            ],
+                        'must' => [
+                            ['match' => ['status' => "1"]],
+                            ['match' => ['user_id' => $user_id]]
+                        ]
+                    ]
+            ]
         ];
         try {
             $response = $this->client->search($params);
@@ -227,7 +276,7 @@ final class ElasticDA
         }
     }
     //TO-DO: Search file with @var($status as Integer) in Elastic database
-    public function search_with_status($status)
+    public function search_with_status($status, $user_id)
     {
         $params = [
             'index' => 'file',
@@ -237,7 +286,7 @@ final class ElasticDA
                 'query' => [
                     'bool' => [
                         'should' => [
-                            ['match' => ['status' => $status]],
+                            'match' => ['status' => $status]
                         ],
                     ],
                 ],
@@ -257,7 +306,7 @@ final class ElasticDA
         }
     }
     //TO-DO: Search folder with @var($status as Integer) in Elastic database
-    public function search_folder_with_status($status)
+    public function search_folder_with_status($status, $user_id)
     {
         $params = [
             'index' => 'folder',
@@ -267,12 +316,17 @@ final class ElasticDA
                 'query' => [
                     'bool' => [
                         'should' => [
-                            ['match' => ['status' => $status]],
+                            'match' => ['status' => $status]
+                            ]
                         ],
-                    ],
-                ],
-            ],
+                        'must' => [
+                            ['match' => ['status' => "1"]],
+                            ['match' => ['user_id' => $user_id]]
+                        ]
+                    ]
+            ]
         ];
+        
         try {
             $response = $this->client->search($params);
             $resource = array();
@@ -287,6 +341,30 @@ final class ElasticDA
         }
     }
 //MARK:- Update Function
+
+    //TO-DO: Update file with $id and $name
+    public function update_with_name($id, $name)
+    {
+        $params = [
+            'index' => 'file',
+            'type' => 'content',
+            'id' => $id,
+            'body' => [
+                'doc' => [
+                    'name' => $name,
+                ],
+            ],
+        ];
+        try {
+            $response = $this->client->update($params);
+            return $response;
+        } catch (Elasticsearch\Common\Exceptions $e) {
+            echo $e;
+            return null;
+        }
+    }
+    
+
     //TO-DO: Update file with $id and $status
     public function update_with_status($id, $status)
     {
@@ -296,8 +374,8 @@ final class ElasticDA
             'id' => $id,
             'body' => [
                 'doc' => [
-                    'status' => $status
-                ]
+                    'status' => $status,
+                ],
             ],
         ];
         try {
@@ -309,6 +387,28 @@ final class ElasticDA
         }
     }
 
+     //TO-DO: Update folder with $id and $status
+     public function update_folder_with_name($id, $name)
+     {
+         $params = [
+             'index' => 'folder',
+             'type' => 'info',
+             'id' => $id,
+             'body' => [
+                 'doc' => [
+                     'name' => $name,
+                 ],
+             ],
+         ];
+         try {
+             $response = $this->client->update($params);
+             return $response;
+         } catch (Elasticsearch\Common\Exceptions $e) {
+             echo $e;
+             return null;
+         }
+     }
+
     //TO-DO: Update folder with $id and $status
     public function update_folder_with_status($id, $status)
     {
@@ -318,8 +418,8 @@ final class ElasticDA
             'id' => $id,
             'body' => [
                 'doc' => [
-                    'status' => $status
-                ]
+                    'status' => $status,
+                ],
             ],
         ];
         try {
