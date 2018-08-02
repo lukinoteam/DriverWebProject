@@ -9,7 +9,7 @@ function triggerFileChoosedTools(file) {
 
     $("#txtRename").val($(fileId).find(".fileCaption").find(".name").text());
 
-    $(document).mouseup(function(e) {
+    $(document).mouseup(function (e) {
         var container = $(fileId);
 
         // if the target of the click isn't the container nor a descendant of the container
@@ -63,7 +63,7 @@ function triggerFolderChoosedTools(folder) {
         "background-color": "#90adff"
     })
 
-    $(document).mouseup(function(e) {
+    $(document).mouseup(function (e) {
         var container = $(folderId);
 
         // if the target of the click isn't the container nor a descendant of the container
@@ -153,15 +153,15 @@ function uploadFile() {
     $("#btnCloseUploadModal").click();
 
     $.ajax({
-        xhr: function() {
+        xhr: function () {
             var xhr = new window.XMLHttpRequest();
-            xhr.upload.addEventListener("progress", function(evt) {
+            xhr.upload.addEventListener("progress", function (evt) {
                 if (evt.lengthComputable) {
-                    
+
                     $("#snackbar").css("visibility", "visible");
                 }
             }, false);
-            xhr.addEventListener("progress", function(evt) {
+            xhr.addEventListener("progress", function (evt) {
                 if (evt.lengthComputable) {
 
                     $("#snackbar").css("visibility", "visible");
@@ -200,7 +200,7 @@ function getFolderList() {
         data: form_data,
         type: 'post',
         dataType: 'json',
-        success: function(json) {
+        success: function (json) {
             $("#folderList").empty();
             $("#toolBar").hide();
 
@@ -290,19 +290,19 @@ function downFile(id) {
         var form_data = new FormData();
         form_data.append('id', id);
         $.ajax({
-            xhr: function() {
+            xhr: function () {
                 var xhr = new window.XMLHttpRequest();
-                xhr.upload.addEventListener("progress", function(evt) {
+                xhr.upload.addEventListener("progress", function (evt) {
                     if (evt.lengthComputable) {
-                        
+
                         $("#snackbar").css("visibility", "visible");
                     }
                 }, false);
-                xhr.addEventListener("progress", function(evt) {
+                xhr.addEventListener("progress", function (evt) {
                     if (evt.lengthComputable) {
-    
+
                         $("#snackbar").css("visibility", "visible");
-    
+
                     }
                 }, false);
                 return xhr;
@@ -358,7 +358,7 @@ function deleteff(type, id) {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function(msg) {
+        success: function (msg) {
             if (type == 0) {
                 getFileList();
             } else {
@@ -376,7 +376,6 @@ function getDeletedFile() {
         contentType: false,
         processData: false,
         type: 'post',
-        dataType: 'json',
         success: function (json) {
             $("#fileList").empty();
 
@@ -411,7 +410,7 @@ function getDeletedFile() {
 function specialFolderAction(id) {
 
     var folderId = "#" + id;
-    $(document).mouseup(function(e) {
+    $(document).mouseup(function (e) {
         var container = $(folderId);
         // if the target of the click is neither the container nor a descendant of the container
         if (checkOutside(container, e)) {
@@ -435,6 +434,8 @@ function specialFolderAction(id) {
 
     if (id == "recycle_feature") {
         getDeletedFile();
+    } else if (id == "share_feature") {
+        get_shared_files();
     }
 }
 
@@ -446,17 +447,17 @@ function move(type, id, destination) {
     form_data.append('move_type', sm_move_type);
 
     $("#btnCloseMoveModal").click();
-    
+
     $.ajax({
-        xhr: function() {
+        xhr: function () {
             var xhr = new window.XMLHttpRequest();
-            xhr.upload.addEventListener("progress", function(evt) {
+            xhr.upload.addEventListener("progress", function (evt) {
                 if (evt.lengthComputable) {
-                    
+
                     $("#snackbar").css("visibility", "visible");
                 }
             }, false);
-            xhr.addEventListener("progress", function(evt) {
+            xhr.addEventListener("progress", function (evt) {
                 if (evt.lengthComputable) {
 
                     $("#snackbar").css("visibility", "visible");
@@ -471,10 +472,10 @@ function move(type, id, destination) {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function(msg) {
+        success: function (msg) {
             getFileList();
             $("#snackbar").css("visibility", "hidden");
-            
+
         }
     });
 }
@@ -485,7 +486,7 @@ function dataURItoBlob(dataURI) {
     var byteString = atob(dataURI.split(',')[1]);
     // separate out the mime component
     var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-        // write the bytes of the string to an ArrayBuffer
+    // write the bytes of the string to an ArrayBuffer
     var ab = new ArrayBuffer(byteString.length);
     // create a view into the buffer
     var ia = new Uint8Array(ab);

@@ -49,31 +49,36 @@ $(document).ready(function() {
     getFolderList();
     getFileList();
 
-    $("#home").click(function(){
+    $("#home").click(function (){
         setPath(home);
     })
 
-    $("#inputFile").change(function() {
+    $('#btnShareTo').click(function () {
+        var sharedEmail = $('#txtShareEmail').val();
+        shareTo(sharedEmail);
+    });
+
+    $("#inputFile").change(function () {
         str = $("#inputFile").val()
         $("#txtFileName").val(str.substring(12, str.length));
     });
 
     $("#backIcon").hide();
 
-    $("#btnDownload").click(function() {
+    $("#btnDownload").click(function () {
         downFile(choosedFile);
     })
 
-    $('.dropdown').on('show.bs.dropdown', function(e) {
+    $('.dropdown').on('show.bs.dropdown', function (e) {
         $(this).find('.dropdown-menu').first().stop(true, true).slideDown(300);
     });
 
-    $('.dropdown').on('hide.bs.dropdown', function(e) {
+    $('.dropdown').on('hide.bs.dropdown', function (e) {
         $(this).find('.dropdown-menu').first().stop(true, true).slideUp(200);
     });
 
     //Hide tool bar when click outside of it
-    $(document).mouseup(function(e) {
+    $(document).mouseup(function (e) {
         var container = $('#toolBar');
 
         // if the target of the click isn't the container nor a descendant of the container
@@ -82,7 +87,7 @@ $(document).ready(function() {
         }
     });
 
-    $("#infoIcon").on("click", function() {
+    $("#infoIcon").on("click", function () {
 
         if ($("#filePanel").attr("class") == "col-xs-7") {
             $("#filePanel").attr("class", "col-xs-10");
@@ -93,49 +98,49 @@ $(document).ready(function() {
         }
     });
 
-    $('#modalNewFolder').on('shown.bs.modal', function() {
+    $('#modalNewFolder').on('shown.bs.modal', function () {
         $('#folderName').val("");
         $('#folderName').focus();
     });
 
-    $(document).keypress(function(e) {
+    $(document).keypress(function (e) {
         if ($("#modalNewFolder").hasClass('in') && (e.keycode == 13 || e.which == 13)) {
             $('#createFolderConfirm').click();
         }
     });
 
-    $(document).keypress(function(e) {
+    $(document).keypress(function (e) {
         if ($("#modalUploadFile").hasClass('in') && (e.keycode == 13 || e.which == 13)) {
             $('#uploadConfirm').click();
         }
     });
 
-    $(document).keypress(function(e) {
+    $(document).keypress(function (e) {
         if ($("#modalRename").hasClass('in') && (e.keycode == 13 || e.which == 13)) {
             $('#renameConfirm').click();
         }
     });
 
-    $("#createFolderConfirm").on("click", function() {
+    $("#createFolderConfirm").on("click", function () {
         createFolder();
     });
 
-    $("#backIcon").click(function() {
+    $("#backIcon").click(function () {
         getParentFolder();
     })
 
-    $("#uploadConfirm").click(function() {
+    $("#uploadConfirm").click(function () {
         uploadFile();
     })
 
-    $("#renameConfirm").click(function() {
+    $("#renameConfirm").click(function () {
         if (type == 0)
             rename(type, choosedFile);
         else
             rename(type, choosedFolder);
     })
 
-    $("#btnDelete").click(function() {
+    $("#btnDelete").click(function () {
         if (type == 0)
             deleteff(type, choosedFile);
         else
@@ -172,7 +177,7 @@ $(document).ready(function() {
 
 function getIdEmail() {
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var myObj = JSON.parse(this.responseText);
             var email = myObj[0];
@@ -189,7 +194,7 @@ function logOut() {
         type: "POST",
         contentType: false,
         processData: false,
-        success: function(data) {
+        success: function (data) {
 
         }
     });
