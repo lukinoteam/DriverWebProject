@@ -1,17 +1,20 @@
 <?php
 require_once __DIR__ . "/../DataAccess/Cassandra/CassandraDA.php";
 require_once __DIR__ . "/../DataAccess/MySQL/MySQLDA.php";
+require_once __DIR__ ."/../DataAccess/ElasticDataAccess/ElasticDA.php";
 
 // init connect to cassandra
 $connect = new CassandraDA();
 
 //init connect to mysql
-
 $sqlHelper = new MySQLDA();
+
+//init connect to elastic
+$eDA = new ElasticDA();
 
 //start session to get user-id
 session_start();
-$user_id = $_SESSION['id'];
+$owner_id = $_SESSION['id'];
 $current_account = $_SESSION['account'];
 
 //get shared email
@@ -30,16 +33,5 @@ if ($result->num_rows > 0) {
         $shared_id .= $row['id'];
     }
 }
-
-$fileInfo = new DataFileInfo();
-$fileInfo->setUserId(new Cassandra\Uuid($shared_id));
-$fileInfo->setFileId(new Cassandra\Uuid($file_id));
-$fileInfo->setName("");
-$fileInfo->setSize(0);
-$fileInfo->setDateModify(time());
-$fileInfo->setDescription("Shared from " . $current_account);
-$fileInfo->setStatus(12);
-
-$connect->insert('file_info', $fileInfo);
-
+$response = $eDA->indexing_shared($owner_id, $shared_id, $file_id);
 ?>

@@ -1,10 +1,16 @@
 <?php
 require_once __DIR__ ."/../DataAccess/Cassandra/CassandraDA.php";
+require_once __DIR__ ."/../DataAccess/ElasticDataAccess/ElasticDA.php";
 
+//init connect to cassandra
 $connect = new CassandraDA();
 
+//start session to get user id
 session_start();
 $user_id = $_SESSION['id'];
+
+//init connect to elastic
+$eDA = new ElasticDA();
 
 $id = $_POST['id'];
 $type = $_POST['type'];
@@ -13,6 +19,7 @@ $newName = $_POST['newName'];
 
 
 if ($type == 0){
+    //file
     $statement = new Cassandra\SimpleStatement(
         "select * from file_info where user_id = ".$user_id." and file_id = ".$id." "
     );
@@ -29,9 +36,11 @@ if ($type == 0){
     $newInfo->setType($result[0]['type']);
     $newInfo->setStatus($result[0]['status']);
     
+    $eDA->update_with_name($id, $newName);
     $connect->insert('file_info', $newInfo);
 }
 else if ($type == 1){
+    //folder
     $statement = new Cassandra\SimpleStatement(
         "select * from folder_info where user_id = ".$user_id." and folder_id = ".$id." "
     );
@@ -47,7 +56,7 @@ else if ($type == 1){
     $newInfo->setDescription($result[0]['description']);
     $newInfo->setStatus($result[0]['status']);
 
-    
+    $eDA->update_folder_with_name($id, $newName);
     $connect->insert('folder_info', $newInfo);
 }
 ?>
