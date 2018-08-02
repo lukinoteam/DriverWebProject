@@ -41,6 +41,8 @@
         src="script/small_folder_list.js"></script>
     <script type="text/javascript"
         src="script/shareTo.js"></script>
+    <script type="text/javascript"
+        src="script/get_shared_files.js"></script>
 
 
     <!-- Bootstrap library -->
@@ -74,6 +76,17 @@
         href="css/snack_bar.css">
 
 
+    <link rel="icon"
+        href="img/mydriveic.png">
+        <!-- <style>
+            body {
+                background-image: url("img/background.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                background-attachment: fixed;
+                overflow-y: hidden;
+            }
+        </style> -->
 
 </head>
 
@@ -583,19 +596,7 @@
             </div>
         </div>
 
-        <!-- The actual snackbar -->
-        <div id="snackbar"
-            align="center">
-            <div class="progress">
-                <div class="progress-bar progress-bar-striped active"
-                    role="progressbar"
-                    aria-valuenow="100"
-                    aria-valuemin="0"
-                    aria-valuemax="100">
-                    Loading...
-                </div>
-            </div>
-        </div>
+
     </div>
     <div class="modal fade"
         id="modalShare">
@@ -623,6 +624,20 @@
                         class="btn btn-primary"
                         data-dismiss="modal">Share</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The actual snackbar -->
+    <div id="snackbar"
+        align="center">
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped active"
+                role="progressbar"
+                aria-valuenow="100"
+                aria-valuemin="0"
+                aria-valuemax="100">
+                Loading...
             </div>
         </div>
     </div>
