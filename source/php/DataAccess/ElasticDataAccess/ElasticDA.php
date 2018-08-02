@@ -105,18 +105,15 @@ final class ElasticDA
             'body' => [
                 'query' => [
                     'bool' => [
-                        'should' => [
-                            'match' => ['name' => $file_name]
-                        ],
                         'must' => [
-                            ['match' => ['status' => "1"]],
-                            ['match' => ['user_id' => $user_id]]
-                        ]
+                            ['match' => ['status' => 1]],
+                            ['match' => ['user_id' => $user_id]],
+                            ['match' => ['name' => $file_name]],
+                        ],
                     ],
                 ],
             ],
         ];
-        print_r($params);
         try {
             $response = $this->client->search($params);
             $resource = array();
@@ -125,6 +122,7 @@ final class ElasticDA
                 array_push($resource, $file_id);
             }
             ksort($resource);
+            print_r($resource);
             return $resource;
         } catch (Elasticsearch\Common\Exceptions $e) {
             echo $e;
@@ -142,12 +140,10 @@ final class ElasticDA
             'body' => [
                 'query' => [
                     'bool' => [
-                        'should' => [
-                            'match' => ['type' => $file_type]
-                        ],
                         'must' => [
-                            ['match' => ['status' => "1"]],
-                            ['match' => ['user_id' => $user_id]]
+                            ['match' => ['status' => 1]],
+                            ['match' => ['user_id' => $user_id]],
+                            ['match' => ['type' => $file_type]],
                         ],
                     ],
                 ],
@@ -178,16 +174,14 @@ final class ElasticDA
             'body' => [
                 'query' => [
                     'bool' => [
-                        'should' => [
-                            'match' => ['size' => $file_size]
-                            ]
-                        ],
                         'must' => [
-                            ['match' => ['status' => "1"]],
-                            ['match' => ['user_id' => $user_id]]
-                        ]
-                    ]
-            ]
+                            ['match' => ['status' => 1]],
+                            ['match' => ['user_id' => $user_id]],
+                            ['match' => ['size' => $file_size]],
+                        ],
+                    ],
+                ],
+            ],
         ];
         try {
             $response = $this->client->search($params);
@@ -214,16 +208,14 @@ final class ElasticDA
             'body' => [
                 'query' => [
                     'bool' => [
-                        'should' => [
-                            'match' => ['date' => $file_date]
-                            ]
-                        ],
                         'must' => [
-                            ['match' => ['status' => "1"]],
-                            ['match' => ['user_id' => $user_id]]
-                        ]
-                    ]
-            ]
+                            ['match' => ['status' => 1]],
+                            ['match' => ['user_id' => $user_id]],
+                            ['match' => ['date' => $file_date]],
+                        ],
+                    ],
+                ],
+            ],
         ];
         try {
             $response = $this->client->search($params);
@@ -250,16 +242,14 @@ final class ElasticDA
             'body' => [
                 'query' => [
                     'bool' => [
-                        'should' => [
-                            'match' => ['content' => $file_content]
-                            ]
-                        ],
                         'must' => [
-                            ['match' => ['status' => "1"]],
-                            ['match' => ['user_id' => $user_id]]
-                        ]
-                    ]
-            ]
+                            ['match' => ['status' => 1]],
+                            ['match' => ['user_id' => $user_id]],
+                            ['match' => ['content' => $file_content],]
+                        ],
+                    ],
+                ],
+            ],
         ];
         try {
             $response = $this->client->search($params);
@@ -285,8 +275,9 @@ final class ElasticDA
             'body' => [
                 'query' => [
                     'bool' => [
-                        'should' => [
-                            'match' => ['status' => $status]
+                        'must' => [
+                            ['match' => ['status' => $status]],
+                            ['match' => ['user_id' => $user_id]],
                         ],
                     ],
                 ],
@@ -316,17 +307,17 @@ final class ElasticDA
                 'query' => [
                     'bool' => [
                         'should' => [
-                            'match' => ['status' => $status]
-                            ]
+                            'match' => ['status' => $status],
                         ],
-                        'must' => [
-                            ['match' => ['status' => "1"]],
-                            ['match' => ['user_id' => $user_id]]
-                        ]
-                    ]
-            ]
+                    ],
+                    'must' => [
+                        ['match' => ['status' => 1]],
+                        ['match' => ['user_id' => $user_id]],
+                    ],
+                ],
+            ],
         ];
-        
+
         try {
             $response = $this->client->search($params);
             $resource = array();
@@ -363,7 +354,6 @@ final class ElasticDA
             return null;
         }
     }
-    
 
     //TO-DO: Update file with $id and $status
     public function update_with_status($id, $status)
@@ -387,27 +377,27 @@ final class ElasticDA
         }
     }
 
-     //TO-DO: Update folder with $id and $status
-     public function update_folder_with_name($id, $name)
-     {
-         $params = [
-             'index' => 'folder',
-             'type' => 'info',
-             'id' => $id,
-             'body' => [
-                 'doc' => [
-                     'name' => $name,
-                 ],
-             ],
-         ];
-         try {
-             $response = $this->client->update($params);
-             return $response;
-         } catch (Elasticsearch\Common\Exceptions $e) {
-             echo $e;
-             return null;
-         }
-     }
+    //TO-DO: Update folder with $id and $status
+    public function update_folder_with_name($id, $name)
+    {
+        $params = [
+            'index' => 'folder',
+            'type' => 'info',
+            'id' => $id,
+            'body' => [
+                'doc' => [
+                    'name' => $name,
+                ],
+            ],
+        ];
+        try {
+            $response = $this->client->update($params);
+            return $response;
+        } catch (Elasticsearch\Common\Exceptions $e) {
+            echo $e;
+            return null;
+        }
+    }
 
     //TO-DO: Update folder with $id and $status
     public function update_folder_with_status($id, $status)
