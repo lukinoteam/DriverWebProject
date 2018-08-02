@@ -48,21 +48,15 @@ final class ElasticDA
     }
 
     //TO-DO: Indexing file's shared at @var($file_input) into Elastic database
-    public function indexing_shared($file_input)
+    public function indexing_shared($owner, $receiver, $file_id)
     {
-        $info = $file_input->getInfo();
         $params = [
-            'index' => 'file',
+            'index' => 'share',
             'type' => 'content',
-            'id' => $info['file_id'],
+            'id' => $file_id,
             'body' => [
-                'user_id' => $info['user_id'],
-                'name' => $info['name'],
-                'size' => $info['size'],
-                'date' => $info['date'],
-                'descr' => $info['descr'],
-                'type' => $info['type'],
-                'status' => $info['status'],
+                'owner_id' => $owner,
+                'receiver_id' => $receiver,
                 'content' => "shared_file",
             ],
         ];
@@ -122,7 +116,6 @@ final class ElasticDA
                 array_push($resource, $file_id);
             }
             ksort($resource);
-            print_r($resource);
             return $resource;
         } catch (Elasticsearch\Common\Exceptions $e) {
             echo $e;
@@ -245,7 +238,7 @@ final class ElasticDA
                         'must' => [
                             ['match' => ['status' => 1]],
                             ['match' => ['user_id' => $user_id]],
-                            ['match' => ['content' => $file_content],]
+                            ['match' => ['content' => $file_content]]
                         ],
                     ],
                 ],
@@ -266,34 +259,63 @@ final class ElasticDA
         }
     }
     //TO-DO: Search file with @var($status as Integer) in Elastic database
-    public function search_with_status($status, $user_id)
+    public function search_with_status($status, $index, $user_id)
     {
-        $params = [
-            'index' => 'file',
-            'type' => 'content',
-            'size' => 100,
-            'body' => [
-                'query' => [
-                    'bool' => [
-                        'must' => [
-                            ['match' => ['status' => $status]],
-                            ['match' => ['user_id' => $user_id]],
+        if ($index == "file") {
+            $params = [
+                'index' => $index,
+                'type' => 'content',
+                'size' => 100,
+                'body' => [
+                    'query' => [
+                        'bool' => [
+                            'must' => [
+                                ['match' => ['status' => $status]],
+                                ['match' => ['user_id' => $user_id]],
+                            ],
                         ],
                     ],
                 ],
-            ],
-        ];
-        try {
-            $response = $this->client->search($params);
-            $resource = array();
-            for ($i = 0; $i < count($response['hits']['hits']); $i++) {
-                $file_id = strtoupper(json_encode($response['hits']['hits'][$i]['_id']));
-                array_push($resource, $file_id);
+            ];
+            try {
+                $response = $this->client->search($params);
+                $resource = array();
+                for ($i = 0; $i < count($response['hits']['hits']); $i++) {
+                    $file_id = strtoupper(json_encode($response['hits']['hits'][$i]['_id']));
+                    array_push($resource, $file_id);
+                }
+                return $resource;
+            } catch (Elasticsearch\Common\Exceptions $e) {
+                echo $e;
+                return null;
             }
-            return $resource;
-        } catch (Elasticsearch\Common\Exceptions $e) {
-            echo $e;
-            return null;
+        } else if ($index == "share") {
+            $params = [
+                'index' => $index,
+                'type' => 'content',
+                'size' => 100,
+                'body' => [
+                    'query' => [
+                        'bool' => [
+                            'must' => [
+                                ['match' => ['receiver_id' => $user_id]],
+                            ],
+                        ],
+                    ],
+                ],
+            ];
+            try {
+                $response = $this->client->search($params);
+                $resource = array();
+                for ($i = 0; $i < count($response['hits']['hits']); $i++) {
+                    $file_id = strtoupper(json_encode($response['hits']['hits'][$i]['_id']));
+                    array_push($resource, $file_id);
+                }
+                return $resource;
+            } catch (Elasticsearch\Common\Exceptions $e) {
+                echo $e;
+                return null;
+            }
         }
     }
     //TO-DO: Search folder with @var($status as Integer) in Elastic database
