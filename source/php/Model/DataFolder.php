@@ -5,6 +5,8 @@ class DataFolder
     // All have getters and setters
     private $_folderId; //uuid
     private $_fileId; // uuid
+    private $_status; // int
+
 
 
     public function __construct()
@@ -23,6 +25,11 @@ class DataFolder
     {
         $this->_fileId = $fileId;
     }
+
+    public function setStatus($status)
+    {
+        $this->_status = $status;
+    }
     
 
     public function getFolderId()
@@ -35,5 +42,8 @@ class DataFolder
         return $this->_fileId;
     }
 
-
+    public function getStatus()
+    {
+        return $this->_status;
+    }
 }
