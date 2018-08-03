@@ -135,13 +135,13 @@
                         </form>
                     </div>
 
-                    <div id="profilePicture" class="center-item"><img class="imgCenter img-rounded" src="img/defaultAva.jpg" width="200" height="200">
+                    <div id="profilePicture" class="center-item"><img id = 'pic'class="imgCenter img-rounded" src="img/defaultAva.jpg" width="200" height="200">
 
                         <form id="profilePictureForm" method="POST" class="form-horizontal">
 
                             <div class="row form-group">
                                 <p><strong>Change Profile Picture:</strong></p>
-                                <input type="file" class="form-control" name="fileInput" />
+                                <input type="file" class="form-control" name="fileInput" change="document.getElementById('pic').src = window.URL.createObjectURL(this.files[0])" />
                                 <span class="help-block">Choose an image file.</span>
                             </div>
 
