@@ -45,7 +45,7 @@ function checkOutside(container, e) {
 
 
 $(document).ready(function() {
-
+    setAvatar();
     getIdEmail();
     getFolderList();
     getFileList();
@@ -172,7 +172,20 @@ $(document).ready(function() {
         getSmallParentFolder();
     })
 });
-
+function setAvatar(){
+    $.ajax({
+        url: 'php/Business/SetAvatar.php', // point to server-side PHP script 
+        dataType: 'text',  // what to expect back from the PHP script, if anything
+        cache: false,
+        contentType: false,
+        processData: false,
+        //data: form_data,                         
+        type: 'POST',
+        success: function(data){
+            document.getElementById("avatarIcon").src = data;
+        }
+ });
+}
 function getIdEmail() {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
