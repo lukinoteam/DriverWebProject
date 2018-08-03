@@ -14,7 +14,7 @@ $statement = new Cassandra\SimpleStatement(
 $count = $connect->get_connection()->execute($statement);
 
 $statement = new Cassandra\SimpleStatement(
-    "select name, type, size from file_info where user_id = ".$user_id." and file_id = ".$id." "
+    "select name, type, size from file_info where file_id = ".$id." allow filtering"
 );
 
 $fileinfo = $connect->get_connection()->execute($statement);

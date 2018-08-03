@@ -16,7 +16,6 @@ $eDA = new ElasticDA();
 
 $shared_files = $eDA->search_with_status(12, "share", $user_id);
 $files = array();
-
 foreach ($shared_files as $file_id) {
     $temp_state = 'select * from file_info where file_id = ' . $file_id . 'ALLOW FILTERING';
     $temp_state = str_replace('""', '', $temp_state);
@@ -54,7 +53,6 @@ foreach ($shared_files as $file_id) {
     }
     array_push($files, array($tmpResult[0]['file_id'], $tmpResult[0]['date_modify'], $tmpResult[0]['name'], $tmpResult[0]['size'], $tmpResult[0]['description'], $thumb, $tmpResult[0]['type'], $tmpResult[0]['status']));
 }
-
 echo json_encode($files);
 
 ?>
