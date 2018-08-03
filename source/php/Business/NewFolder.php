@@ -26,6 +26,8 @@ $connect->insert('folder', $newFolder);
 $folder = new DataFolder();
 $folder->setFolderId($current);
 $folder->setFileId($newFolder->getFolderId());
+$folder->setStatus(1);
+
 $connect->insert('folder', $folder);
 
 $folderInfo = new DataFolderInfo();

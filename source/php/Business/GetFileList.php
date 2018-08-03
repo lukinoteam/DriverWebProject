@@ -20,13 +20,13 @@ $result = $connect->get_connection()->execute($statement);
 $data = array();
 $thumb = '';
 foreach ($result as $row) {
-    if ($row['folder_id'] != $row['file_id']) {
+    if (($row['folder_id'] != $row['file_id']) && $row['status'] == 1) {
 
         $statement = new Cassandra\SimpleStatement(
-            "select * from file_info where user_id = ".$user_id." and file_id = " . $row['file_id']
+            "select * from file_info where user_id = " . $user_id . " and file_id = " . $row['file_id']
         );
         $tmpResult = $connect->get_connection()->execute($statement);
-
+        $thumb = "";
         if (($tmpResult[0]['type'] == 7 || $tmpResult[0]['type'] == 8 || $tmpResult[0]['type'] == 9) && $tmpResult[0]['size'] < 20 * 1024 * 1024) {
 
             $statement = new Cassandra\SimpleStatement(
@@ -48,7 +48,7 @@ foreach ($result as $row) {
             }
         }
 
-        array_push($data, array($tmpResult[0]['file_id'], $tmpResult[0]['date_modify'], $tmpResult[0]['name'], $tmpResult[0]['size'], $tmpResult[0]['description'], $thumb, $tmpResult[0]['type'],$tmpResult[0]['status']));
+        array_push($data, array($tmpResult[0]['file_id'], $tmpResult[0]['date_modify'], $tmpResult[0]['name'], $tmpResult[0]['size'], $tmpResult[0]['description'], $thumb, $tmpResult[0]['type'], $tmpResult[0]['status']));
 
     }
 }

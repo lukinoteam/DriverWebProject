@@ -50,7 +50,6 @@ while (!feof($file)) {
 
     $part++;
 }
-
 $ext = pathinfo($fileName, PATHINFO_EXTENSION);
 $ext = strtolower($ext);
 
@@ -104,6 +103,7 @@ $connect->insert('file_info', $fileInfo);
 $folder = new DataFolder();
 $folder->setFolderId($current);
 $folder->setFileId($data->getFileId());
+$folder->setStatus(1);
 
 $connect->insert('folder', $folder);
 
