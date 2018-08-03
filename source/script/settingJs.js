@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	showInfo();
-	getIdEmail();
+    getIdEmail();
+    setAvatar();
     // make drop-down menu effect smoother
     $('.dropdown').on('show.bs.dropdown', function(e) {
         $(this).find('.dropdown-menu').first().stop(true, true).slideDown(300);
@@ -106,13 +107,22 @@ $(document).ready(function() {
                     file: {
                         extension: 'jpeg,png,jpg',
                         type: 'image/jpeg,image/png',
-                        maxSize: 2048*1024,
-                        message: '*Please choose a jpg or png image file less than 2M.'
+                        maxSize: 500*1024,
+                        message: '*Please choose a jpg or png image file less than 500kb.'
                     }
                 }
             },
         }
     })
+    .on('success.form.bv', function(e) {
+        // Prevent submit form
+        e.preventDefault();
+      //  alert("Submit");
+        var $form     = $(e.target),
+            validator = $form.data('bootstrapValidator');
+        changeAvatar();
+        //$form.find('.alert').html('Thanks for signing up. Now you can sign in as ' + validator.getFieldElements('username').val()).show();
+    });
 
     $("#accountInfoMenu").css({
         "background-color": "#90adff" // account info tab's background-color set blue by default
@@ -184,9 +194,11 @@ function getIdEmail(){
         var myObj = JSON.parse(this.responseText);
 		var email = myObj[0];
 		var id = myObj[1];
+		console.log(email);
+		console.log(id);
 		}
 	};
-	xmlhttp.open("GET", "php/Business/GetUserInfo.php", true);
+	xmlhttp.open("GET", "php/Business/getUserInfo.php", true);
 	xmlhttp.send();
 }
 function changePassWord(){
@@ -213,6 +225,41 @@ function changePassWord(){
                 }
             });
 }
+function changeAvatar(){
+    var file_data = $("#fileInput").prop("files")[0];   
+            var form_data = new FormData();
+            form_data.append("avatar", file_data);
+            //alert(form_data)
+            $.ajax({
+            url: 'php/Business/ChangeAvatar.php', // point to server-side PHP script 
+            dataType: 'text',  // what to expect back from the PHP script, if anything
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,                         
+            type: 'POST',
+            success: function(data){
+                //alert(data);
+                document.getElementById("pic").src = data;
+                document.getElementById("avatarIcon").src = data;
+            }
+     });
+}
+function setAvatar(){
+    $.ajax({
+        url: 'php/Business/SetAvatar.php', // point to server-side PHP script 
+        dataType: 'text',  // what to expect back from the PHP script, if anything
+        cache: false,
+        contentType: false,
+        processData: false,
+        //data: form_data,                         
+        type: 'POST',
+        success: function(data){
+            document.getElementById("avatarIcon").src = data;
+            document.getElementById("pic").src = data;
+        }
+ });
+}
 function changeAccount(){
 	var name = document.getElementById("txtFullName").value;
 	var gender = document.getElementById("txtGenderChoice").value;
@@ -228,10 +275,8 @@ function changeAccount(){
                 contentType: false,
                 processData: false,
                 success: function (data) {
-                      
 						alert(data);
 						location = location;
-					  	  
                 }
             });
 }
