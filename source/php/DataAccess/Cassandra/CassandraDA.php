@@ -165,7 +165,7 @@ class CassandraDA implements DataBaseAccess
                 try {
                     // Prepare statement
                     $insert = $this->_connection->get_connection()->prepare(
-                        "insert into " . TableName::$folder . " (folder_id, file_id) values (?,?)"
+                        "insert into " . TableName::$folder . " (folder_id, file_id, status) values (?,?,?)"
                     );
                     
                     //TO-DO: Ready some data to prepare statement
@@ -173,6 +173,7 @@ class CassandraDA implements DataBaseAccess
                         array(
                             'folder_id' => $dataObject->getFolderId(),
                             'file_id' => $dataObject->getFileId(),
+                            'status' => $dataObject->getStatus(),
                         ),
                     );
                     $options = array('arguments' => $data[0]);
