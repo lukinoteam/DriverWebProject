@@ -21,6 +21,7 @@ function setPath(id) {
 
     getFolderList();
     getFileList();
+    
 }
 
 // Check if click event outside of div
@@ -49,10 +50,6 @@ $(document).ready(function() {
     getFolderList();
     getFileList();
 
-    $("#home").click(function (){
-        setPath(home);
-    })
-
     $('#btnShareTo').click(function () {
         var sharedEmail = $('#txtShareEmail').val();
         shareTo(sharedEmail);
@@ -66,6 +63,7 @@ $(document).ready(function() {
     $("#backIcon").hide();
 
     $("#btnDownload").click(function () {
+        $("#snackbar").css("visibility", "visible");
         downFile(choosedFile);
     })
 

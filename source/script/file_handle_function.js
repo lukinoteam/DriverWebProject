@@ -6,7 +6,7 @@ function triggerFileChoosedTools(file) {
     var fileId = '#' + file;
     choosedFile = file;
     type = 0;
-
+    console.log($(fileId).find(".owner").text());
     $("#txtRename").val($(fileId).find(".fileCaption").find(".name").text());
 
     $(document).mouseup(function (e) {
@@ -260,6 +260,7 @@ function getFileList() {
                     $("#fileList").append(str);
                 }
             });
+            $("#snackbar").css("visibility", "hidden");
         }
     });
 }
@@ -290,23 +291,6 @@ function downFile(id) {
         var form_data = new FormData();
         form_data.append('id', id);
         $.ajax({
-            xhr: function () {
-                var xhr = new window.XMLHttpRequest();
-                xhr.upload.addEventListener("progress", function (evt) {
-                    if (evt.lengthComputable) {
-
-                        $("#snackbar").css("visibility", "visible");
-                    }
-                }, false);
-                xhr.addEventListener("progress", function (evt) {
-                    if (evt.lengthComputable) {
-
-                        $("#snackbar").css("visibility", "visible");
-
-                    }
-                }, false);
-                return xhr;
-            },
             url: 'php/Business/DownFile.php',
             cache: false,
             contentType: false,
@@ -320,6 +304,10 @@ function downFile(id) {
             }
         });
     }
+}
+
+function downShareFile(id) {
+
 }
 
 function rename(type, id) {
@@ -402,6 +390,8 @@ function getDeletedFile() {
                     $("#fileList").append(str);
                 }
             });
+            $("#snackbar").css("visibility", "hidden");
+
 
         }
     });
@@ -433,9 +423,14 @@ function specialFolderAction(id) {
 
 
     if (id == "recycle_feature") {
+        $("#snackbar").css("visibility", "visible");
         getDeletedFile();
     } else if (id == "share_feature") {
+        $("#snackbar").css("visibility", "visible");
         get_shared_files();
+    } else if (id == "home") {
+        $("#snackbar").css("visibility", "visible");
+        setPath(home);
     }
 }
 

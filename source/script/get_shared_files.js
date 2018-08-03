@@ -8,9 +8,6 @@ function get_shared_files() {
         dataType: 'json',
         success: function (json) {
             $("#fileList").empty();
-
-            // $("#info p").text("");
-            // $("#infoTip").show();
             $("#toolBar").hide();
             Object.values(json).forEach(function (data) {
                 if (data[0] != null && (data[7] == 12 || data[7] == 1)) {
@@ -26,12 +23,15 @@ function get_shared_files() {
                     <p class="date" style="display: none;">' + parseDate(new Date(data[1].seconds * 1000)) + '</p>\
                     <p class="type" style="display: none;">' + extIntToStr(data[6]) + '</p>\
                     <p class="desc" style="display: none;">' + data[4] + '</p>\
+                    <p class="owner" style="display: none;">' + data[8] + '</p>\
                 </div>\
             </div>\
         </li>';
                     $("#fileList").append(str);
                 }
             });
+            $("#snackbar").css("visibility", "hidden");
+
         }
     });
 }
