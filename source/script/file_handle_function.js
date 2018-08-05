@@ -431,6 +431,25 @@ function move(type, id, destination) {
     });
 }
 
+function set_favorite(id){
+    var form_data = new FormData();
+    form_data.append('id', id);
+
+    $.ajax({
+        url: 'php/Business/SetFavorite.php', // point to server-side PHP script 
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,
+        type: 'post',
+        success: function(msg) {
+            console.log(msg);
+
+            $("#snackbar").css("visibility", "hidden");
+        }
+    });
+}
+
 function dataURItoBlob(dataURI) {
     // convert base64 to raw binary data held in a string
     // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
