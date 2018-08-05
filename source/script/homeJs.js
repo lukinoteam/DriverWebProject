@@ -175,6 +175,13 @@ $(document).ready(function() {
     $("#btnBackMove").click(function() {
         getSmallParentFolder();
     })
+    
+    $("#btnFav").click(function(){
+        if (type == 0 && choosedFile != ""){
+            $("#snackbar").css("visibility", "visible");
+            set_favorite(choosedFile);
+        }
+    })
 });
 function setAvatar(){
     $.ajax({
