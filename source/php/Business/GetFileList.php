@@ -20,7 +20,7 @@ $result = $connect->get_connection()->execute($statement);
 $data = array();
 $thumb = '';
 foreach ($result as $row) {
-    if (($row['folder_id'] != $row['file_id']) && $row['status'] == 1) {
+    if (($row['folder_id'] != $row['file_id']) && ($row['status'] == 1 || $row['status'] == 2)) {
 
         $statement = new Cassandra\SimpleStatement(
             "select * from file_info where user_id = " . $user_id . " and file_id = " . $row['file_id']
