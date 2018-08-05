@@ -55,6 +55,7 @@ if ($type == 0) {
 
         $destFolder->setFolderId(new Cassandra\UUID($dest));
         $destFolder->setFileId($newFile->getFileId());
+        $destFolder->setStatus(1);
 
         $connect->insert('folder', $destFolder);
 
