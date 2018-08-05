@@ -6,10 +6,10 @@ function triggerFileChoosedTools(file) {
     var fileId = '#' + file;
     choosedFile = file;
     type = 0;
-    console.log($(fileId).find(".owner").text());
+
     $("#txtRename").val($(fileId).find(".fileCaption").find(".name").text());
 
-    $(document).mouseup(function (e) {
+    $(document).mouseup(function(e) {
         var container = $(fileId);
 
         // if the target of the click isn't the container nor a descendant of the container
@@ -63,7 +63,7 @@ function triggerFolderChoosedTools(folder) {
         "background-color": "#90adff"
     })
 
-    $(document).mouseup(function (e) {
+    $(document).mouseup(function(e) {
         var container = $(folderId);
 
         // if the target of the click isn't the container nor a descendant of the container
@@ -102,12 +102,13 @@ function createFolder() {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function () {
+        success: function() {
 
             $('#folderName').val("");
             $('#txtFolderDesc').val("");
 
             getFolderList();
+            $("#snackbar").css("visibility", "hidden");
         }
     });
 
@@ -126,7 +127,7 @@ function getParentFolder() {
         data: form_data,
         type: 'post',
         dataType: 'json',
-        success: function (json) {
+        success: function(json) {
             currenFolder = String(json[0].uuid);
             if (currenFolder == home) {
                 $("#backIcon").hide();
@@ -147,43 +148,28 @@ function uploadFile() {
 
     var filename = $("#txtFileName").val();
 
+    var file_ext = $("#inputFile").val();
+    file_ext = file_ext.substring(12, file_ext.length);
+    file_ext = getExt(file_ext);
+
+    filename = filename + "." + file_ext;
+
     form_data.append('name', filename);
     form_data.append('desc', $('#txtFileDesc').val());
     form_data.append('current', currenFolder);
     $("#btnCloseUploadModal").click();
-
     $.ajax({
-        xhr: function () {
-            var xhr = new window.XMLHttpRequest();
-            xhr.upload.addEventListener("progress", function (evt) {
-                if (evt.lengthComputable) {
-
-                    $("#snackbar").css("visibility", "visible");
-                }
-            }, false);
-            xhr.addEventListener("progress", function (evt) {
-                if (evt.lengthComputable) {
-
-                    $("#snackbar").css("visibility", "visible");
-
-                }
-            }, false);
-            return xhr;
-        },
         type: 'POST',
         url: "php/Business/UploadFile.php",
         cache: false,
         contentType: false,
         processData: false,
         data: form_data,
-        success: function (data) {
+        success: function(data) {
             getFileList();
             $("#inputFile").val("");
             $('#txtFileDesc').val("");
             $("#txtFileName").val("");
-
-            $("#snackbar").css("visibility", "hidden");
-
         }
     });
 
@@ -200,11 +186,11 @@ function getFolderList() {
         data: form_data,
         type: 'post',
         dataType: 'json',
-        success: function (json) {
+        success: function(json) {
             $("#folderList").empty();
             $("#toolBar").hide();
 
-            Object.values(json).forEach(function (data) {
+            Object.values(json).forEach(function(data) {
                 if (data[1] != null && (data[5] == 0 || data[5] == 1)) {
 
                     var str = '<li>\
@@ -223,6 +209,7 @@ function getFolderList() {
 }
 
 function getFileList() {
+    $("#snackbar").css("visibility", "visible");
     var form_data = new FormData();
     form_data.append('current', currenFolder);
     $.ajax({
@@ -233,12 +220,10 @@ function getFileList() {
         data: form_data,
         type: 'post',
         dataType: 'json',
-        success: function (json) {
+        success: function(json) {
             $("#fileList").empty();
-            // $("#info p").text("");
-            // $("#infoTip").show();
             $("#toolBar").hide();
-            Object.values(json).forEach(function (data) {
+            Object.values(json).forEach(function(data) {
 
                 if (data[0] != null && (data[7] == 1 || data[7] == 0)) {
 
@@ -298,16 +283,12 @@ function downFile(id) {
             data: form_data,
             type: 'post',
             dataType: 'json',
-            success: function (json) {
+            success: function(json) {
                 generateLink(json[2], json[1], json[0]);
                 $("#snackbar").css("visibility", "hidden");
             }
         });
     }
-}
-
-function downShareFile(id) {
-
 }
 
 function rename(type, id) {
@@ -324,11 +305,12 @@ function rename(type, id) {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function () {
+        success: function() {
             if (type == 0) {
                 getFileList();
             } else {
                 getFolderList();
+                $("#snackbar").css("visibility", "hidden");
             }
         }
     });
@@ -346,11 +328,12 @@ function deleteff(type, id) {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function (msg) {
+        success: function(msg) {
             if (type == 0) {
                 getFileList();
             } else {
                 getFolderList();
+                $("#snackbar").css("visibility", "hidden");
             }
         }
     });
@@ -358,19 +341,19 @@ function deleteff(type, id) {
 
 //get all deleted file:
 function getDeletedFile() {
+    $("#fileList").empty();
+    $("#folderList").empty();
+    $("#snackbar").css("visibility", "visible");
     $.ajax({
         url: 'php/Business/RecycleBin.php',
         cache: false,
         contentType: false,
         processData: false,
         type: 'post',
-        success: function (json) {
+        success: function(json) {
             $("#fileList").empty();
-
-            // $("#info p").text("");
-            // $("#infoTip").show();
             $("#toolBar").hide();
-            Object.values(json).forEach(function (data) {
+            Object.values(json).forEach(function(data) {
                 if (data[0] != null && (data[7] == -1 || data[7] == 0)) {
 
                     var str = '<li>\
@@ -391,16 +374,13 @@ function getDeletedFile() {
                 }
             });
             $("#snackbar").css("visibility", "hidden");
-
-
         }
     });
 }
 
 function specialFolderAction(id) {
-
     var folderId = "#" + id;
-    $(document).mouseup(function (e) {
+    $(document).mouseup(function(e) {
         var container = $(folderId);
         // if the target of the click is neither the container nor a descendant of the container
         if (checkOutside(container, e)) {
@@ -418,18 +398,13 @@ function specialFolderAction(id) {
     })
 
     $("#infoTip").hide();
-
     $("#infoFileName").text($(folderId).find(".name").text());
-
-
     if (id == "recycle_feature") {
-        $("#snackbar").css("visibility", "visible");
         getDeletedFile();
     } else if (id == "share_feature") {
         $("#snackbar").css("visibility", "visible");
         get_shared_files();
     } else if (id == "home") {
-        $("#snackbar").css("visibility", "visible");
         setPath(home);
     }
 }
@@ -444,33 +419,14 @@ function move(type, id, destination) {
     $("#btnCloseMoveModal").click();
 
     $.ajax({
-        xhr: function () {
-            var xhr = new window.XMLHttpRequest();
-            xhr.upload.addEventListener("progress", function (evt) {
-                if (evt.lengthComputable) {
-
-                    $("#snackbar").css("visibility", "visible");
-                }
-            }, false);
-            xhr.addEventListener("progress", function (evt) {
-                if (evt.lengthComputable) {
-
-                    $("#snackbar").css("visibility", "visible");
-
-                }
-            }, false);
-            return xhr;
-        },
         url: 'php/Business/MoveFile.php', // point to server-side PHP script 
         cache: false,
         contentType: false,
         processData: false,
         data: form_data,
         type: 'post',
-        success: function (msg) {
+        success: function(msg) {
             getFileList();
-            $("#snackbar").css("visibility", "hidden");
-
         }
     });
 }
@@ -481,7 +437,7 @@ function dataURItoBlob(dataURI) {
     var byteString = atob(dataURI.split(',')[1]);
     // separate out the mime component
     var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-    // write the bytes of the string to an ArrayBuffer
+        // write the bytes of the string to an ArrayBuffer
     var ab = new ArrayBuffer(byteString.length);
     // create a view into the buffer
     var ia = new Uint8Array(ab);
@@ -517,6 +473,8 @@ function extIntToStr($ext) {
             return "HTML";
         case 11:
             return "CSS";
+        case 13:
+            return "MP4";
         case 14:
             return "MP3";
         default:

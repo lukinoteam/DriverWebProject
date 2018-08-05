@@ -1,5 +1,4 @@
 var home = '415fe87d-9b3b-4a4c-8f64-b380d2b39240';
-// var recycle = 'd2cea1a3-b55e-49ae-956f-1ea7ba9b33a1';
 var currenFolder = home;
 var choosedFile = "";
 var choosedFolder = "";
@@ -21,7 +20,6 @@ function setPath(id) {
 
     getFolderList();
     getFileList();
-    
 }
 
 // Check if click event outside of div
@@ -55,9 +53,10 @@ $(document).ready(function() {
         shareTo(sharedEmail);
     });
 
-    $("#inputFile").change(function () {
+    $("#inputFile").change(function() {
         str = $("#inputFile").val()
-        $("#txtFileName").val(str.substring(12, str.length));
+        str = str.substring(12, str.length);
+        $("#txtFileName").val(str.replace(/\.[^/.]+$/, ""));
     });
 
     $("#backIcon").hide();
@@ -120,6 +119,7 @@ $(document).ready(function() {
     });
 
     $("#createFolderConfirm").on("click", function () {
+        $("#snackbar").css("visibility", "visible");
         createFolder();
     });
 
@@ -128,10 +128,12 @@ $(document).ready(function() {
     })
 
     $("#uploadConfirm").click(function () {
+        $("#snackbar").css("visibility", "visible");
         uploadFile();
     })
 
     $("#renameConfirm").click(function () {
+        $("#snackbar").css("visibility", "visible");
         if (type == 0)
             rename(type, choosedFile);
         else
@@ -139,6 +141,7 @@ $(document).ready(function() {
     })
 
     $("#btnDelete").click(function () {
+        $("#snackbar").css("visibility", "visible");
         if (type == 0)
             deleteff(type, choosedFile);
         else
@@ -162,6 +165,7 @@ $(document).ready(function() {
     })
 
     $("#moveConfirm").click(function() {
+        $("#snackbar").css("visibility", "visible");
         if (type == 0) {
             move(0, choosedFile, sm_choosedFolder);
         } else {
@@ -209,4 +213,10 @@ function logOut() {
 
         }
     });
+}
+
+
+function getExt(filename) {
+    return filename.substring(filename.lastIndexOf('.') + 1, filename.length) || filename;
+
 }
