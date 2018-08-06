@@ -14,9 +14,9 @@ $user_id = $_SESSION['id'];
 //init connect to elastic search
 $eDA = new ElasticDA();
 
-$shared_files = $eDA->search_with_status(12, "share", $user_id);
+$fav_files = $eDA->search_with_status(2, "file", $user_id);
 $files = array();
-foreach ($shared_files as $file_id) {
+foreach ($fav_files as $file_id) {
     $temp_state = 'select * from file_info where file_id = ' . $file_id . 'ALLOW FILTERING';
     $temp_state = str_replace('""', '', $temp_state);
 
