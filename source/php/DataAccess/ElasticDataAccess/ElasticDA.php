@@ -69,6 +69,27 @@ final class ElasticDA
         }
     }
 
+    //TO-DO: Indexing file's shared at @var($file_input) into Elastic database
+    public function indexing_fav($user_id, $file_id, $status)
+    {
+        $params = [
+            'index' => 'fav',
+            'type' => 'content',
+            'id' => $file_id,
+            'body' => [
+                'user_id' => $user_id,
+                'status' => $status,
+            ],
+        ];
+        try {
+            $response = $this->client->index($params);
+            return "Success";
+        } catch (Elasticsearch\Common\Exceptions $e) {
+            echo $e;
+            return null;
+        }
+    }
+
     //TO-DO: Indexing file's info at @var($folder_id) into Elastic database
     public function index_folder($folder_id, $status)
     {

@@ -7,11 +7,8 @@ final class ElasticConnection
     //@var: Server's infomation
     private $hosts = [
         [
-            'host' => '7aba05a15783420a9353c67a7f176344.ap-southeast-1.aws.found.io',
-            'port' => '9243',
-            'scheme' => 'https',
-            'user' => 'elastic',
-            'pass' => '8uaAv0WHhtPdhez6ElSbyqzD',
+            'host' => '192.168.0.100',
+            'port' => '9200'
         ],
     ];
     private $client;
