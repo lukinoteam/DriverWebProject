@@ -225,7 +225,7 @@ function getFileList() {
             $("#toolBar").hide();
             Object.values(json).forEach(function(data) {
 
-                if (data[0] != null && (data[7] == 1 || data[7] == 0)) {
+                if (data[0] != null && (data[7] == 1 || data[7] == 0 || data[7] == 2)) {
 
                     var str = '<li>\
                 <div id="' + data[0].uuid + '" class="fileItem" onclick="triggerFileChoosedTools(this.id);" ondblclick="viewImg(this.id);">\
@@ -406,6 +406,9 @@ function specialFolderAction(id) {
         get_shared_files();
     } else if (id == "home") {
         setPath(home);
+    } else if (id == "fav_feature") {
+        $("#snackbar").css("visibility", "visible");
+        get_fav_files()
     }
 }
 
@@ -433,6 +436,7 @@ function move(type, id, destination) {
 
 function set_favorite(id){
     var form_data = new FormData();
+    console.log("JUMP-IN favorite");
     form_data.append('id', id);
 
     $.ajax({
