@@ -194,8 +194,8 @@ function getIdEmail(){
         var myObj = JSON.parse(this.responseText);
 		var email = myObj[0];
 		var id = myObj[1];
-		console.log(email);
-		console.log(id);
+		//console.log(email);
+		//console.log(id);
 		}
 	};
 	xmlhttp.open("GET", "php/Business/getUserInfo.php", true);
