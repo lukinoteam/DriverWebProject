@@ -121,9 +121,11 @@ final class ElasticDA
                 'query' => [
                     'bool' => [
                         'must' => [
-                            ['match' => ['status' => 1]],
                             ['match' => ['user_id' => $user_id]],
                             ['match' => ['name' => $file_name]],
+                        ],
+                        'must_not' => [
+                            ['match' => ['status' => -1]],
                         ],
                     ],
                 ],
@@ -155,9 +157,11 @@ final class ElasticDA
                 'query' => [
                     'bool' => [
                         'must' => [
-                            ['match' => ['status' => 1]],
                             ['match' => ['user_id' => $user_id]],
                             ['match' => ['type' => $file_type]],
+                        ],
+                        'must_not' => [
+                            ['match' => ['status' => -1]],
                         ],
                     ],
                 ],
@@ -189,9 +193,11 @@ final class ElasticDA
                 'query' => [
                     'bool' => [
                         'must' => [
-                            ['match' => ['status' => 1]],
                             ['match' => ['user_id' => $user_id]],
                             ['match' => ['size' => $file_size]],
+                        ],
+                        'must_not' => [
+                            ['match' => ['status' => -1]],
                         ],
                     ],
                 ],
@@ -223,9 +229,11 @@ final class ElasticDA
                 'query' => [
                     'bool' => [
                         'must' => [
-                            ['match' => ['status' => 1]],
                             ['match' => ['user_id' => $user_id]],
                             ['match' => ['date' => $file_date]],
+                        ],
+                        'must_not' => [
+                            ['match' => ['status' => -1]],
                         ],
                     ],
                 ],
@@ -257,9 +265,11 @@ final class ElasticDA
                 'query' => [
                     'bool' => [
                         'must' => [
-                            ['match' => ['status' => 1]],
                             ['match' => ['user_id' => $user_id]],
-                            ['match' => ['content' => $file_content]]
+                            ['match' => ['content' => $file_content]],
+                        ],
+                        'must_not' => [
+                            ['match' => ['status' => -1]],
                         ],
                     ],
                 ],
@@ -354,8 +364,10 @@ final class ElasticDA
                         ],
                     ],
                     'must' => [
-                        ['match' => ['status' => 1]],
                         ['match' => ['user_id' => $user_id]],
+                    ],
+                    'must_not' => [
+                        ['match' => ['status' => -1]],
                     ],
                 ],
             ],
@@ -463,4 +475,28 @@ final class ElasticDA
             return null;
         }
     }
+//MARK: Delete Document functions
+
+    //TO-DO: Delete document with $id
+    public function delete_file_with_id($id)
+    {
+        $params = [
+            'index' => 'file',
+            'type' => 'content',
+            'id' => $id
+        ];
+        
+        // Delete doc at /my_index/my_type/my_id
+        $response = $client->delete($params);
+
+        $params = [
+            'index' => 'share',
+            'type' => 'content',
+            'id' => $id
+        ];
+        
+        // Delete doc at /my_index/my_type/my_id
+        $response = $client->delete($params);
+    }
 }
+?>
