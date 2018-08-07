@@ -350,6 +350,7 @@ function getDeletedFile() {
         contentType: false,
         processData: false,
         type: 'post',
+        dataType: 'json',
         success: function(json) {
             $("#fileList").empty();
             $("#toolBar").hide();
