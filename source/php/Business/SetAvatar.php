@@ -22,7 +22,7 @@ if($result[0]['user_id']!=null){
         $query = $connect->get_connection()->execute($select_avatar);
         foreach($query as $row){
             if($row['file_id']==$GLOBALS['image_id']){
-                $pic = pack("H*",$row['content']);
+                $pic .= pack("H*",$row['content']);
             }
         }
         echo "data:image/png;base64,".base64_encode($pic);
