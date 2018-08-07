@@ -107,8 +107,8 @@ $(document).ready(function() {
                     file: {
                         extension: 'jpeg,png,jpg',
                         type: 'image/jpeg,image/png',
-                        maxSize: 500*1024,
-                        message: '*Please choose a jpg or png image file less than 500kb.'
+                        // maxSize: 500*1024,
+                        // message: '*Please choose a jpg or png image file less than 500kb.'
                     }
                 }
             },
@@ -194,8 +194,8 @@ function getIdEmail(){
         var myObj = JSON.parse(this.responseText);
 		var email = myObj[0];
 		var id = myObj[1];
-		console.log(email);
-		console.log(id);
+		//console.log(email);
+		//console.log(id);
 		}
 	};
 	xmlhttp.open("GET", "php/Business/getUserInfo.php", true);
