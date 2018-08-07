@@ -15,7 +15,7 @@
  /*	THUMBNAIL TABLE:
   * 
   * --- NOTE:
-   * 	 type:
+  * 	 type:
   			1: doc
 			2: docx
 			3: txt
@@ -25,13 +25,14 @@
 			7: jpg, jpeg
 			8: png
 			9: bmp
-			10: ic
-			11: html, htm
-			12: css
-			13: php
-   			14: default 
+			10: html, htm
+			11: css
+			12: xlsx
+			13: mp4
+			14: mp3
+   			15: default 
    
- * 				
+ * 			
  * 				
   */
 //
