@@ -230,6 +230,103 @@ class CassandraDA implements DataBaseAccess
 
     public function deleteRow($table,$dataObject)
     {
+        switch ($table) {
+			case TableName::$avatar:
+			try{
+			$delete = $this->_connection->getConnection()->prepare("DELETE from ".Table::$avatar." WHERE id_user = ?");
+				$data = array(
+					array(
+						'user_id' => $dataObject->getUserId(),
+					),
+				);
+				$option = array('arguments'=>$data[0]);
+				$this->_connection->getConnection()->execute($delete,$option);
+			}
+			catch(Exception $e){
+				echo $e->getMessage();
+			}
+			break;
+			case TableName::$file_info:
+			try{
+			$delete = $this->_connection->getConnection()->prepare("DELETE from ".TableName::$file_info." WHERE id_user = ?,file_id = ?");
+				$data = array(
+					array(
+						'user_id' => $dataObject->getUserId(),
+						'file_id' =>$dataObject->getFileId(),
+					),
+				);
+				$option = array('arguments'=>$data[0]);
+				$this->_connection->getConnection()->execute($delete,$option);
+			}
+			catch(Exception $e){
+				echo $e->getMessage();
+			}
+			break;
+			case TableName::$file_content:
+			try{
+			$delete = $this->_connection->getConnection()->prepare("DELETE from ".TableName::$file_content." WHERE part = ?,file_id = ?");
+				$data = array(
+					array(
+						'part' => $dataObject->getPart(),
+						'file_id' =>$dataObject->getFileId(),
+					),
+				);
+				$option = array('arguments'=>$data[0]);
+				$this->_connection->getConnection()->execute($delete,$option);
+			}
+			
+			catch(Exception $e){
+				echo $e->getMessage();
+			}
+			break;
+			case TableName::$count_content:
+			try{
+			$delete = $this->_connection->getConnection()->prepare("DELETE from ".TableName::$count_content." WHERE file_id=?");
+				$data = array(
+					array(
+						'file_id' =>$dataObject->getFileId(),
+					),
+				);
+				$option = array('arguments'=>$data[0]);
+				$this->_connection->getConnection()->execute($delete,$option);
+			}
+			catch(Exception $e){
+				echo $e->getMessage();
+			}
+			break;
+			case TableName::$thumbnail:
+			try{
+			$delete = $this->_connection->getConnection()->prepare("DELETE from ".TableName::$thumbnail." WHERE file_id = ?");
+				$data = array(
+					array(
+						'file_id' =>$dataObject->getFileId(),
+					),
+				);
+				$option = array('arguments'=>$data[0]);
+				$this->_connection->getConnection()->execute($delete,$option);
+			}
+			catch(Exception $e){
+				echo $e->getMessage();
+			}
+			break;
+			case TableName::$folder:
+			try{
+				$delete = $this->_connection->getConnection()->prepare("DELETE from ".TableName::$folder."WHERE folder_id = ?");
+				$data = array(
+				array(
+					'file_id'=>$dataObject->getFolderId(),
+				),
+			);
+				$option = array('arguments'=>$data[0]);
+				$this->_connection->getConnection()->execute($delete,$option);
+			}
+			catch(Exception $e){
+				echo $e->getMessage();
+			}
+			break;
+			default:
+				echo "Delete con cac";
 
+		}
     }
 }
