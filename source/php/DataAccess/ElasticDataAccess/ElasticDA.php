@@ -487,7 +487,7 @@ final class ElasticDA
         ];
         
         // Delete doc at /my_index/my_type/my_id
-        $response = $client->delete($params);
+        $response = $this->client->delete($params);
 
         $params = [
             'index' => 'share',
@@ -496,7 +496,7 @@ final class ElasticDA
         ];
         
         // Delete doc at /my_index/my_type/my_id
-        $response = $client->delete($params);
+        $response = $this->client->delete($params);
     }
 }
 ?>
