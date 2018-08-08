@@ -21,8 +21,10 @@ foreach ($search_result as $file_id) {
     );
     $tmpResult = $connect->get_connection()->execute($statement);
 
+    $thumb="";
+    $thumb_id="";
     if (($tmpResult[0]['type'] == 7 || $tmpResult[0]['type'] == 8 || $tmpResult[0]['type'] == 9) && $tmpResult[0]['size'] < 20 * 1024 * 1024) {
-        $temp_state = 'select blobAsAscii(image) as image from thumbnail where file_id = ' . $file_id;
+        $temp_state = 'select id, blobAsAscii(image) as image from thumbnail where file_id = ' . $file_id;
         $temp_state = str_replace('""', '', $temp_state);
 
         $temp_state = preg_replace('/[^A-Za-z0-9\-*-_-()]/', ' ', $temp_state);
@@ -31,6 +33,7 @@ foreach ($search_result as $file_id) {
         );
         $thumbBlob = $connect->get_connection()->execute($statement);
         $thumb = "data:image/jpg;base64," . base64_encode(pack("H*", $thumbBlob[0]['image']));
+        $thumb_id = $thumbBlob[0]['id'];
 
     } else {
         
@@ -44,8 +47,9 @@ foreach ($search_result as $file_id) {
                 $thumb = "data:image/jpg;base64," . base64_encode(pack("H*", $res['image']));
             }
         }
+        $thumb_id = new Cassandra\UUID('011643db-8195-45e7-808c-dddc23461fdb');
     }
-    array_push($files, array($tmpResult[0]['file_id'], $tmpResult[0]['date_modify'], $tmpResult[0]['name'], $tmpResult[0]['size'], $tmpResult[0]['description'], $thumb, $tmpResult[0]['type'], $tmpResult[0]['status']));
+    array_push($files, array($tmpResult[0]['file_id'], $tmpResult[0]['date_modify'], $tmpResult[0]['name'], $tmpResult[0]['size'], $tmpResult[0]['description'], $thumb, $tmpResult[0]['type'], $tmpResult[0]['status'], $thumb_id));
 }
 
 echo json_encode($files);
