@@ -38,16 +38,16 @@ foreach ($search_result as $file_id) {
     } else {
         
         $statement = new Cassandra\SimpleStatement(
-            "select type, blobAsAscii(image) as image from thumbnail where file_id = 011643db-8195-45e7-808c-dddc23461fdb"
+            "select id, type, blobAsAscii(image) as image from thumbnail where file_id = 011643db-8195-45e7-808c-dddc23461fdb"
         );
         $thumbBlob = $connect->get_connection()->execute($statement);
 
         foreach ($thumbBlob as $res) {
             if ($tmpResult[0]['type'] == $res['type']) {
                 $thumb = "data:image/jpg;base64," . base64_encode(pack("H*", $res['image']));
+                $thumb_id = $res['id'];
             }
         }
-        $thumb_id = new Cassandra\UUID('011643db-8195-45e7-808c-dddc23461fdb');
     }
     array_push($files, array($tmpResult[0]['file_id'], $tmpResult[0]['date_modify'], $tmpResult[0]['name'], $tmpResult[0]['size'], $tmpResult[0]['description'], $thumb, $tmpResult[0]['type'], $tmpResult[0]['status'], $thumb_id));
 }
