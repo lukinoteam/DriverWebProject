@@ -202,13 +202,13 @@ function getFolderList() {
             $("#toolBar").hide();
 
             Object.values(json).forEach(function(data) {
-                if (data[1] != null && (data[5] == 0 || data[5] == 1)) {
+                if (data[1] != null && (data[4] == 0 || data[4] == 1)) {
 
                     var str = '<li>\
                 <div id="' + data[1].uuid + '" class="folderItem" onclick="triggerFolderChoosedTools(this.id);" ondblclick="setPath(this.id);">\
                 <img src="img/folderic.png" style="display: inline;"><span class="name" style="display: inline;">' + data[0] + '</span>\
-                    <p class="date" style="display: none;">' + parseDate(new Date(data[3].seconds * 1000)) + '</p>\
-                    <p class="desc" style="display: none;">' + data[4] + '</p>\
+                    <p class="date" style="display: none;">' + parseDate(new Date(data[2].seconds * 1000)) + '</p>\
+                    <p class="desc" style="display: none;">' + data[3] + '</p>\
                 </div>\
                 </li>';
                     $("#folderList").append(str);
