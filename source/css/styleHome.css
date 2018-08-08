@@ -21,16 +21,29 @@
 .tool {
     position: absolute;
     top: 76px;
-    left: 38%;
+    right: 23%;
     margin-right: 3%;
     display: none;
+
+    border-radius: 100px;
+}
+#regular_tool button{
+    padding: 5px 12px;
+}
+
+#recycle_tool button{
+    padding: 5px 12px;
+}
+
+.tool button{
+    font-size: 12px;
 }
 
 .fileItem {
     background-color: white;
     width: 130px;
     height: 110px;
-    border: 1px solid #919180;
+    border: 1px solid #d3d3d3;
     display: table-cell;
     vertical-align: middle;
     text-align: center;
@@ -38,9 +51,15 @@
     overflow: hidden;
 }
 
-.fileItem img {
+.fileItem .img-wrapper{
     width: 128px;
     height: 108px;
+    overflow: hidden;
+}
+
+.fileItem img {
+    width: auto;
+    height: 120%;
 }
 
 .fileCaption {
@@ -249,4 +268,34 @@
 
 .progress .progress-bar {
     width: 100%;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+    
+    /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
 }
