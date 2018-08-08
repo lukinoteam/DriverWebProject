@@ -19,7 +19,7 @@ function triggerFileChoosedTools(file) {
                 "color": "black"
             });
             container.css({
-                "border": "1px solid #919180"
+                "border": "1px solid #d3d3d3"
             });
 
             $("#info p").text("");
