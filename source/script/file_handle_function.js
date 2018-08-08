@@ -46,6 +46,14 @@ function triggerFileChoosedTools(file) {
     $("#infoFileDesc").text("Desciption: " + $(fileId).find(".fileCaption").find(".desc").text());
 
     $("#infoTip").hide();
+
+    if ($(fileId).hasClass('deletedFile')) {
+        $('#regular_tool').hide();
+        $('#recycle_tool').show();
+    } else {
+        $('#regular_tool').show();
+        $('#recycle_tool').hide();
+    }
 }
 
 function triggerFolderChoosedTools(folder) {
@@ -76,16 +84,19 @@ function triggerFolderChoosedTools(folder) {
             $("#infoTip").show();
 
             $("#infoFileType").show();
+            $("#infoFileSize").show();
         }
     });
 
     $("#infoFileName").text($(folderId).find(".name").text());
     $("#infoFileType").hide();
-    $("#infoFileSize").text("Size: " + $(folderId).find(".size").text());
+    $("#infoFileSize").hide();    
     $("#infoFileDate").text("Date modified: " + $(folderId).find(".date").text());
     $("#infoFileDesc").text("Desciption: " + $(folderId).find(".desc").text());
     $("#infoTip").hide();
 
+    $('#regular_tool').show();
+    $('#recycle_tool').hide();
 }
 
 function createFolder() {
@@ -196,7 +207,6 @@ function getFolderList() {
                     var str = '<li>\
                 <div id="' + data[1].uuid + '" class="folderItem" onclick="triggerFolderChoosedTools(this.id);" ondblclick="setPath(this.id);">\
                 <img src="img/folderic.png" style="display: inline;"><span class="name" style="display: inline;">' + data[0] + '</span>\
-                    <p class="size" style="display: none;">' + parseSize(data[2].value) + '</p>\
                     <p class="date" style="display: none;">' + parseDate(new Date(data[3].seconds * 1000)) + '</p>\
                     <p class="desc" style="display: none;">' + data[4] + '</p>\
                 </div>\
@@ -335,6 +345,8 @@ function deleteff(type, id) {
                 getFolderList();
                 $("#snackbar").css("visibility", "hidden");
             }
+            $("#info p").text("");
+            $("#infoTip").show();
         }
     });
 }
@@ -368,6 +380,7 @@ function getDeletedFile() {
                     <p class="date" style="display: none;">' + parseDate(new Date(data[1].seconds * 1000)) + '</p>\
                     <p class="type" style="display: none;">' + extIntToStr(data[6]) + '</p>\
                     <p class="desc" style="display: none;">' + data[4] + '</p>\
+                    <p class="thumb_id" style="display: none;">' + data[8].uuid + '</p>\
                 </div>\
             </div>\
         </li>';
@@ -380,6 +393,7 @@ function getDeletedFile() {
 }
 
 function specialFolderAction(id) {
+    $("#backIcon").hide();
     var folderId = "#" + id;
     $(document).mouseup(function(e) {
         var container = $(folderId);
@@ -437,7 +451,6 @@ function move(type, id, destination) {
 
 function set_favorite(id){
     var form_data = new FormData();
-    console.log("JUMP-IN favorite");
     form_data.append('id', id);
 
     $.ajax({
@@ -448,9 +461,46 @@ function set_favorite(id){
         data: form_data,
         type: 'post',
         success: function(msg) {
-            console.log(msg);
-
             $("#snackbar").css("visibility", "hidden");
+        }
+    });
+}
+
+function restore(id) {
+    var form_data = new FormData();
+    form_data.append('id', id);
+
+    $.ajax({
+        url: 'php/Business/RestoreFile.php', // point to server-side PHP script 
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,
+        type: 'post',
+        success: function(msg) {
+            getDeletedFile();
+            $("#info p").text("");
+            $("#infoTip").show();
+        }
+    });
+}
+
+function remove(id) {
+    var form_data = new FormData();
+    form_data.append('id', id);
+    form_data.append('thumb_id', $("#" + id).find(".thumb_id").text());
+
+    $.ajax({
+        url: 'php/Business/RemoveFile.php', // point to server-side PHP script 
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,
+        type: 'post',
+        success: function(msg) {
+            getDeletedFile();
+            $("#info p").text("");
+            $("#infoTip").show();
         }
     });
 }

@@ -35,12 +35,12 @@ function checkOutside(container, e) {
         !$("#btnDownload").is(e.target) &&
         !$("#btnDelete").is(e.target) &&
         !$("#btnCopy").is(e.target) &&
+        !$("#btnRemove").is(e.target) &&
+        !$("#btnRestore").is(e.target) &&
         !$("#modalMove").is(e.target) &&
         !$("#modalMove").find("*").is(e.target) &&
         !$("#btnRename").is(e.target);
 }
-
-
 
 $(document).ready(function() {
     setAvatar();
@@ -182,7 +182,18 @@ $(document).ready(function() {
             set_favorite(choosedFile);
         }
     })
+
+    $("#btnRestore").click(function(){
+        $("#snackbar").css("visibility", "visible");
+        restore(choosedFile);
+    })
+
+    $("#btnRemove").click(function(){
+        $("#snackbar").css("visibility", "visible");
+        remove(choosedFile);
+    })
 });
+
 function setAvatar(){
     $.ajax({
         url: 'php/Business/SetAvatar.php', // point to server-side PHP script 
@@ -197,6 +208,7 @@ function setAvatar(){
         }
  });
 }
+
 function getIdEmail() {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
@@ -221,7 +233,6 @@ function logOut() {
         }
     });
 }
-
 
 function getExt(filename) {
     return filename.substring(filename.lastIndexOf('.') + 1, filename.length) || filename;
