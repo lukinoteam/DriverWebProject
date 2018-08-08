@@ -239,7 +239,7 @@ function getFileList() {
 
                     var str = '<li>\
                 <div id="' + data[0].uuid + '" class="fileItem" onclick="triggerFileChoosedTools(this.id);" ondblclick="viewImg(this.id);">\
-                    <div>\
+                    <div class="img-wrapper">\
                         <img src=' + data[5] + '>\
                     </div>\
                     <div class="fileCaption">\
@@ -370,8 +370,8 @@ function getDeletedFile() {
                 if (data[0] != null && (data[7] == -1 || data[7] == 0)) {
 
                     var str = '<li>\
-            <div id="' + data[0].uuid + '" class="fileItem" onclick="triggerFileChoosedTools(this.id);" ondblclick="viewImg(this.id);">\
-                <div>\
+            <div id="' + data[0].uuid + '" class="fileItem deletedFile" onclick="triggerFileChoosedTools(this.id);" ondblclick="viewImg(this.id);">\
+                <div class="img-wrapper">\
                     <img src=' + data[5] + '>\
                 </div>\
                 <div class="fileCaption">\
