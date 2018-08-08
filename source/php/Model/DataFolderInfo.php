@@ -31,11 +31,6 @@ class DataFolderInfo
     {
         $this->_name = $name;
     }
-
-    public function setSize($size)
-    {
-        $this->_size = $size;
-    }
     public function setDateModify($dateModify)
     {
         $this->_dateModify = $dateModify;
@@ -64,11 +59,6 @@ class DataFolderInfo
     public function getName()
     {
         return $this->_name;
-    }
-
-    public function getSize()
-    {
-        return $this->_size;
     }
     public function getDateModify()
     {

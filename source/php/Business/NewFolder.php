@@ -20,6 +20,7 @@ $newFolder = new DataFolder();
 
 $newFolder->setFolderId(new Cassandra\UUID());
 $newFolder->setFileId($newFolder->getFolderId());
+$newFolder->setStatus(1);
 
 $connect->insert('folder', $newFolder);
 
@@ -37,7 +38,6 @@ $folderInfo->setFolderId($newFolder->getFolderId());
 $folderInfo->setDateModify(time());
 $folderInfo->setDescription($desc);
 $folderInfo->setName($folderName);
-$folderInfo->setSize(0);
 $folderInfo->setStatus(1);
 
 $connect->insert('folder_info', $folderInfo);

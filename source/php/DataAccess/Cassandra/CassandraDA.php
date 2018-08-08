@@ -1,14 +1,14 @@
 <?php
 require_once 'DBInterface.php';
 require_once 'TableName.php';
-require_once __DIR__ .'/../../Model/DataAvatar.php';
-require_once __DIR__ .'/../../Model/DataCountContent.php';
-require_once __DIR__ .'/../../Model/DataFileInfo.php';
-require_once __DIR__ .'/../../Model/DataThumbnail.php';
-require_once __DIR__ .'/../../Model/DataFileContent.php';
-require_once __DIR__ .'/../../Model/DataFolderInfo.php';
-require_once __DIR__ .'/../../Model/DataFolder.php';
-require_once __DIR__ .'/../Connectdb.php';
+require_once __DIR__ . '/../../Model/DataAvatar.php';
+require_once __DIR__ . '/../../Model/DataCountContent.php';
+require_once __DIR__ . '/../../Model/DataFileInfo.php';
+require_once __DIR__ . '/../../Model/DataThumbnail.php';
+require_once __DIR__ . '/../../Model/DataFileContent.php';
+require_once __DIR__ . '/../../Model/DataFolderInfo.php';
+require_once __DIR__ . '/../../Model/DataFolder.php';
+require_once __DIR__ . '/../Connectdb.php';
 
 class CassandraDA implements DataBaseAccess
 {
@@ -167,7 +167,7 @@ class CassandraDA implements DataBaseAccess
                     $insert = $this->_connection->get_connection()->prepare(
                         "insert into " . TableName::$folder . " (folder_id, file_id, status) values (?,?,?)"
                     );
-                    
+
                     //TO-DO: Ready some data to prepare statement
                     $data = array(
                         array(
@@ -187,16 +187,15 @@ class CassandraDA implements DataBaseAccess
                 try {
                     // Prepare statement
                     $insert = $this->_connection->get_connection()->prepare(
-                        "insert into " . TableName::$folder_info . " (user_id, folder_id, name, size, date_modify, description, status) values (?,?,?,?,?,?,?)"
+                        "insert into " . TableName::$folder_info . " (user_id, folder_id, name, date_modify, description, status) values (?,?,?,?,?,?)"
                     );
-                 
+
                     //TO-DO: Ready some data to prepare statement
                     $data = array(
                         array(
                             'user_id' => $dataObject->getUserId(),
                             'folder_id' => $dataObject->getFolderId(),
                             'name' => $dataObject->getName(),
-                            'size' => new Cassandra\Bigint($dataObject->getSize()),
                             'date_modify' => new \Cassandra\Timestamp($dataObject->getDateModify()),
                             'description' => $dataObject->getDescription(),
                             'status' => $dataObject->getStatus(),
@@ -215,7 +214,8 @@ class CassandraDA implements DataBaseAccess
         }
     }
 
-    public function get_connection() {
+    public function get_connection()
+    {
         return $this->_connection->get_connection();
     }
 
@@ -228,105 +228,97 @@ class CassandraDA implements DataBaseAccess
         $this->_connection->get_connection()->execute($statement);
     }
 
-    public function deleteRow($table,$dataObject)
+    public function deleteRow($table, $dataObject)
     {
         switch ($table) {
-			case TableName::$avatar:
-			try{
-			$delete = $this->_connection->getConnection()->prepare("DELETE from ".Table::$avatar." WHERE id_user = ?");
-				$data = array(
-					array(
-						'user_id' => $dataObject->getUserId(),
-					),
-				);
-				$option = array('arguments'=>$data[0]);
-				$this->_connection->getConnection()->execute($delete,$option);
-			}
-			catch(Exception $e){
-				echo $e->getMessage();
-			}
-			break;
-			case TableName::$file_info:
-			try{
-			$delete = $this->_connection->getConnection()->prepare("DELETE from ".TableName::$file_info." WHERE id_user = ?,file_id = ?");
-				$data = array(
-					array(
-						'user_id' => $dataObject->getUserId(),
-						'file_id' =>$dataObject->getFileId(),
-					),
-				);
-				$option = array('arguments'=>$data[0]);
-				$this->_connection->getConnection()->execute($delete,$option);
-			}
-			catch(Exception $e){
-				echo $e->getMessage();
-			}
-			break;
-			case TableName::$file_content:
-			try{
-			$delete = $this->_connection->getConnection()->prepare("DELETE from ".TableName::$file_content." WHERE part = ?,file_id = ?");
-				$data = array(
-					array(
-						'part' => $dataObject->getPart(),
-						'file_id' =>$dataObject->getFileId(),
-					),
-				);
-				$option = array('arguments'=>$data[0]);
-				$this->_connection->getConnection()->execute($delete,$option);
-			}
-			
-			catch(Exception $e){
-				echo $e->getMessage();
-			}
-			break;
-			case TableName::$count_content:
-			try{
-			$delete = $this->_connection->getConnection()->prepare("DELETE from ".TableName::$count_content." WHERE file_id=?");
-				$data = array(
-					array(
-						'file_id' =>$dataObject->getFileId(),
-					),
-				);
-				$option = array('arguments'=>$data[0]);
-				$this->_connection->getConnection()->execute($delete,$option);
-			}
-			catch(Exception $e){
-				echo $e->getMessage();
-			}
-			break;
-			case TableName::$thumbnail:
-			try{
-			$delete = $this->_connection->getConnection()->prepare("DELETE from ".TableName::$thumbnail." WHERE file_id = ?");
-				$data = array(
-					array(
-						'file_id' =>$dataObject->getFileId(),
-					),
-				);
-				$option = array('arguments'=>$data[0]);
-				$this->_connection->getConnection()->execute($delete,$option);
-			}
-			catch(Exception $e){
-				echo $e->getMessage();
-			}
-			break;
-			case TableName::$folder:
-			try{
-				$delete = $this->_connection->getConnection()->prepare("DELETE from ".TableName::$folder."WHERE folder_id = ?");
-				$data = array(
-				array(
-					'file_id'=>$dataObject->getFolderId(),
-				),
-			);
-				$option = array('arguments'=>$data[0]);
-				$this->_connection->getConnection()->execute($delete,$option);
-			}
-			catch(Exception $e){
-				echo $e->getMessage();
-			}
-			break;
-			default:
-				echo "Delete con cac";
-
-		}
+            case TableName::$avatar:
+                try {
+                    $delete = $this->_connection->get_connection()->prepare("DELETE from " . Table::$avatar . " WHERE user_id = ?");
+                    $data = array(
+                        array(
+                            'user_id' => $dataObject->getUserId(),
+                        ),
+                    );
+                    $option = array('arguments' => $data[0]);
+                    $this->_connection->get_connection()->execute($delete, $option);
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                }
+                break;
+            case TableName::$file_info:
+                try {
+                    $delete = $this->_connection->get_connection()->prepare("DELETE from " . TableName::$file_info . " WHERE user_id = ? and file_id = ?");
+                    $data = array(
+                        array(
+                            'user_id' => $dataObject->getUserId(),
+                            'file_id' => $dataObject->getFileId(),
+                        ),
+                    );
+                    $option = array('arguments' => $data[0]);
+                    $this->_connection->get_connection()->execute($delete, $option);
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                }
+                break;
+            case TableName::$file_content:
+                try {
+                    $delete = $this->_connection->get_connection()->prepare("DELETE from " . TableName::$file_content . " WHERE part = ? and file_id = ?");
+                    $data = array(
+                        array(
+                            'part' => $dataObject->getPart(),
+                            'file_id' => $dataObject->getFileId(),
+                        ),
+                    );
+                    $option = array('arguments' => $data[0]);
+                    $this->_connection->get_connection()->execute($delete, $option);
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                }
+                break;
+            case TableName::$count_content:
+                try {
+                    $delete = $this->_connection->get_connection()->prepare("DELETE from " . TableName::$count_content . " WHERE file_id=?");
+                    $data = array(
+                        array(
+                            'file_id' => $dataObject->getFileId(),
+                        ),
+                    );
+                    $option = array('arguments' => $data[0]);
+                    $this->_connection->get_connection()->execute($delete, $option);
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                }
+                break;
+            case TableName::$thumbnail:
+                try {
+                    $delete = $this->_connection->get_connection()->prepare("DELETE from " . TableName::$thumbnail . " WHERE file_id = ?");
+                    $data = array(
+                        array(
+                            'file_id' => $dataObject->getFileId(),
+                        ),
+                    );
+                    $option = array('arguments' => $data[0]);
+                    $this->_connection->get_connection()->execute($delete, $option);
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                }
+                break;
+            case TableName::$folder:
+                try {
+                    $delete = $this->_connection->get_connection()->prepare("DELETE from " . TableName::$folder . "WHERE folder_id = ?");
+                    $data = array(
+                        array(
+                            'file_id' => $dataObject->getFolderId(),
+                        ),
+                    );
+                    $option = array('arguments' => $data[0]);
+                    $this->_connection->get_connection()->execute($delete, $option);
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                }
+                break;
+            default:
+                echo "Delete con cac";
+        }
     }
 }

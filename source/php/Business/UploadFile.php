@@ -107,18 +107,4 @@ $folder->setStatus(1);
 
 $connect->insert('folder', $folder);
 
-$statement = new Cassandra\SimpleStatement(
-    "select size from folder_info where user_id = ".$user_id." and folder_id = " . $current
-);
-
-$result = $connect->get_connection()->execute($statement);
-$newSize = $result[0]['size'] + $fileInfo->getSize();
-
-$statement = new Cassandra\SimpleStatement(
-    "insert into folder_info (user_id, folder_id, size)
-    values (".$user_id.", " . $current . ", " . $newSize . ")"
-);
-
-$connect->get_connection()->execute($statement);
-
 fclose($file);
