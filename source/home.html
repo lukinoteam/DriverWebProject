@@ -5,213 +5,114 @@
     <title>Home</title>
 
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=600px, initial-scale=1">
+    <meta name="viewport" content="width=600px, initial-scale=1">
 
-    <meta http-equiv="cache-control"
-        content="no-cache" />
-    <meta http-equiv="Pragma"
-        content="no-cache" />
-    <meta http-equiv="Expires"
-        content="-1" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="-1" />
 
     <!-- jQuery library -->
-    <script type="text/javascript"
-        src="script/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="script/jquery-3.3.1.js"></script>
 
     <!-- Latest compiled JavaScript -->
-    <script type="text/javascript"
-        src="script/bootstrap.min-3.3.7.js"></script>
+    <script type="text/javascript" src="script/bootstrap.min-3.3.7.js"></script>
 
-    <script type="text/javascript"
-        src="script/homeJs.js"></script>
-    <script type="text/javascript"
-        src="script/modal_image.js"></script>
-    <script type="text/javascript"
-        src="script/wheelzoom.js"></script>
-    <script type="text/javascript"
-        src="script/search.js"></script>
-    <script type="text/javascript"
-        src="script/file_handle_function.js"></script>
-    <script type="text/javascript"
-        src="script/generate_link_download.js"></script>
-    <script type="text/javascript"
-        src="script/init_thumbnail.js"></script>
-    <script type="text/javascript"
-        src="script/small_folder_list.js"></script>
-    <script type="text/javascript"
-        src="script/shareTo.js"></script>
-    <script type="text/javascript"
-        src="script/get_shared_files.js"></script>
+    <script type="text/javascript" src="script/homeJs.js"></script>
+    <script type="text/javascript" src="script/modal_image.js"></script>
+    <script type="text/javascript" src="script/wheelzoom.js"></script>
+    <script type="text/javascript" src="script/search.js"></script>
+    <script type="text/javascript" src="script/file_handle_function.js"></script>
+    <script type="text/javascript" src="script/generate_link_download.js"></script>
+    <script type="text/javascript" src="script/init_thumbnail.js"></script>
+    <script type="text/javascript" src="script/small_folder_list.js"></script>
+    <script type="text/javascript" src="script/shareTo.js"></script>
+    <script type="text/javascript" src="script/get_shared_files.js"></script>
 
 
     <!-- Bootstrap library -->
-    <link rel="stylesheet"
-        type="text/css"
-        href="css/bootstrap.min-3.3.7.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min-3.3.7.css">
 
-    <link rel="stylesheet"
-        type="text/css"
-        href="css/styleHome.css">
-    <link rel="stylesheet"
-        type="text/css"
-        href="css/contactButton.css">
-    <link rel="stylesheet"
-        type="text/css"
-        href="css/avatar.css">
-    <link rel="stylesheet"
-        type="text/css"
-        href="css/uploadButton.css">
-    <link rel="stylesheet"
-        type="text/css"
-        href="css/modal_image.css">
-    <link rel="stylesheet"
-        type="text/css"
-        href="css/searchBar.css">
-    <link rel="stylesheet"
-        type="text/css"
-        href="css/small_folder_list.css">
-    <link rel="stylesheet"
-        type="text/css"
-        href="css/snack_bar.css">
+    <link rel="stylesheet" type="text/css" href="css/styleHome.css">
+    <link rel="stylesheet" type="text/css" href="css/contactButton.css">
+    <link rel="stylesheet" type="text/css" href="css/avatar.css">
+    <link rel="stylesheet" type="text/css" href="css/uploadButton.css">
+    <link rel="stylesheet" type="text/css" href="css/modal_image.css">
+    <link rel="stylesheet" type="text/css" href="css/searchBar.css">
+    <link rel="stylesheet" type="text/css" href="css/small_folder_list.css">
+    <link rel="stylesheet" type="text/css" href="css/snack_bar.css">
 
 
-    <link rel="icon"
-        href="img/mydriveic.png">
-        <!-- <style>
-            body {
-                background-image: url("img/background.png");
-                background-repeat: no-repeat;
-                background-size: 100% 100%;
-                background-attachment: fixed;
-                overflow-y: hidden;
-            }
-        </style> -->
+    <link rel="icon" href="img/mydriveic.png">
+
 
 </head>
 
 <body>
     <div class="jumbotron">
         <a href="home.html">
-            <img src="img/logo1.png"
-                class="img-rounded"
-                width="110px"
-                height="80px"
-                alt="Cinque Terre">
+            <img src="img/logo1.png" class="img-rounded" width="110px" height="80px" alt="Cinque Terre">
         </a>
-        <div class="dropdown pull-right"
-            item-width="40px"
-            item-height="40px">
-            <button class="btn toggleAcc avatarDrop"
-                type="button"
-                data-toggle="dropdown">
+        <div class="dropdown pull-right" item-width="40px" item-height="40px">
+            <button class="btn toggleAcc avatarDrop" type="button" data-toggle="dropdown">
                 <img id="avatarIcon"
                     src="img/defaultAva.jpg">
             </button>
             <ul class="dropdown-menu">
                 <li>
-                    <a class="text-right"
-                        href="accountsettings.html">Account Settings</a>
+                    <a class="text-right" href="accountsettings.html">Account Settings</a>
                 </li>
                 <li>
-                    <a class="text-right"
-                        href="login.html">Logout</a>
+                    <a class="text-right" href="login.html">Logout</a>
                 </li>
             </ul>
         </div>
 
         <div class="dropdown pull-right uploadButton noselect">
-            <button class="dropdown-toggle uploadIcon btn-primary"
-                type="button"
-                data-toggle="dropdown">UPLOAD</button>
+            <button class="dropdown-toggle uploadIcon btn-primary" type="button" data-toggle="dropdown">UPLOAD</button>
             <ul class="dropdown-menu">
                 <li>
-                    <a class="text-left"
-                        data-toggle="modal"
-                        href='#modalNewFolder'>Create New Folder</a>
+                    <a class="text-left" data-toggle="modal" href='#modalNewFolder'>Create New Folder</a>
                 </li>
                 <li>
-                    <a class="text-left"
-                        data-toggle="modal"
-                        href='#modalUploadFile'>Upload File</a>
+                    <a class="text-left" data-toggle="modal" href='#modalUploadFile'>Upload File</a>
                 </li>
                 <li>
-                    <a class="text-left"
-                        data-toggle="modal"
-                        href='#modalUploadFolder'>Upload Folder</a>
+                    <a class="text-left" data-toggle="modal" href='#modalUploadFolder'>Upload Folder</a>
                 </li>
 
             </ul>
         </div>
 
-        <div id="toolBar"
-            class="pull-right tool">
-            <div id="tool"
-                class='btn-toolbar'
-                role='toolbar'
-                aria-label='Toolbar with button groups'>
-                <div id="download"
-                    class='btn-group mr-2'
-                    role='group'
-                    aria-label='First group'>
-                    <button type='button'
-                        id="btnDownload"
-                        class='btn btn-secondary'>Download</button>
+        <div id="toolBar" class="pull-right tool">
+            <div id="tool" class='btn-toolbar' role='toolbar' aria-label='Toolbar with button groups'>
+                <a id="link" href="" download="" style="display: none;"></a>
+                <div id="regular_tool" class='btn-group mr-2' role='group' aria-label='Second group'>
+                    <button type='button' id="btnDownload" class='btn btn-secondary btn-primary' style="border-radius: 50px 0px 0px 50px; border-right: 3px solid white;"><img src="img/downic.png" width="15" height="15" > Download</button>
+                    <button type='button' id="btnRename" class='btn btn-secondary btn-success' style="border-right: 3px solid white;" data-toggle="modal" href='#modalRename'>Rename</button>
+                    <button type='button' id="btnCopy" class='btn btn-secondary btn-success' style="border-right: 3px solid white;" data-toggle="modal" href='#modalMove'>Copy</button>
+                    <button type='button' id="btnMove" class='btn btn-secondary btn-success' style="border-right: 3px solid white;" data-toggle="modal" href='#modalMove'>Move</button>
+                    <button type='button' id="btnShare" class='btn btn-secondary btn-success' style="border-right: 3px solid white;" data-toggle="modal" href='#modalShare'>Share</button>
+                    <button type='button' id="btnDelete" class='btn btn-secondary btn-danger' style="border-right: 3px solid white;">Delete</button>
+                    <button type='button' id="btnFav" class='btn btn-secondary btn-warning' style="border-radius: 0px 50px 50px 0px;">Favorite</button>
                 </div>
-                <a id="link"
-                    href=""
-                    download=""
-                    style="display: none;"></a>
-                <div class='btn-group mr-2'
-                    role='group'
-                    aria-label='Second group'>
-                    <button type='button'
-                        id="btnRename"
-                        class='btn btn-secondary'
-                        data-toggle="modal"
-                        href='#modalRename'>Rename</button>
-                    <button type='button'
-                        id="btnCopy"
-                        class='btn btn-secondary'
-                        data-toggle="modal"
-                        href='#modalMove'>Copy</button>
-                    <button type='button'
-                        id="btnMove"
-                        class='btn btn-secondary'
-                        data-toggle="modal"
-                        href='#modalMove'>Move</button>
-                    <button type='button'
-                        id="btnDelete"
-                        class='btn btn-secondary'>Delete</button>
-                    <button type='button'
-                        id="btnShare"
-                        class='btn btn-secondary'
-                        data-toggle="modal"
-                        href='#modalShare'>Share</button>
-                    <button type='button' id="btnFav" class='btn btn-secondary'>Favorite</button>
-
+                <div id="recycle_tool" class='btn-group mr-2' role='group' aria-label='Second group'>
+                    <button type='button' id="btnRestore" class='btn btn-secondary btn-success' style="border-radius: 5px 0px 0px 5px; border-right: 3px solid white;">Restore</button>
+                    <button type='button' id="btnRemove" class='btn btn-secondary btn-danger' style="border-radius: 0px 5px 5px 0px;">Remove</button>
                 </div>
             </div>
+
+
         </div>
 
-        <div class="input-group"
-            id="adv-search">
-            <input type="text"
-                id="searchBar"
-                class="form-control"
-                placeholder="Search..." />
+        <div class="input-group" id="adv-search">
+            <input type="text" id="searchBar" class="form-control" placeholder="Search..." />
             <div class="input-group-btn">
-                <div class="btn-group"
-                    role="group">
+                <div class="btn-group" role="group">
                     <div class="dropdown dropdown-lg">
-                        <button type="button"
-                            class="btn btn-default dropdown-toggle"
-                            data-toggle="dropdown"
-                            aria-expanded="false">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <span class="caret"></span>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-right"
-                            role="menu">
+                        <div class="dropdown-menu dropdown-menu-right" role="menu">
                             <form>
                                 <label class="radio">
                                     <input id="radioName"
@@ -242,9 +143,7 @@
                             </form>
                         </div>
                     </div>
-                    <button id="btnSearch"
-                        type="button"
-                        class="btn btn-primary">
+                    <button id="btnSearch" type="button" class="btn btn-primary">
                         <span aria-hidden="true">Search</span>
                     </button>
                 </div>
@@ -253,8 +152,7 @@
         </div>
     </div>
 
-    <div id="backIcon"
-        class="noselect">
+    <div id="backIcon" class="noselect">
 
         <p data-toggle="dropdown">
             <span style="font-size: 20px;">◀</span> BACK</p>
@@ -268,72 +166,47 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-2 noselect"
-                id="folderPanel">
+            <div class="col-xs-2 noselect" id="folderPanel">
                 <ul id="specialFolderList">
                     <li>
-                        <div id="home"
-                            class="specialFolderItem"
-                            onclick="specialFolderAction(this.id);">
-                            <img src="img/mydriveic.png"
-                                style="display: inline;">
-                            <span class="name"
-                                style="display: inline;">My Driver</span>
+                        <div id="home" class="specialFolderItem" onclick="specialFolderAction(this.id);">
+                            <img src="img/mydriveic.png" style="display: inline;">
+                            <span class="name" style="display: inline;">My Driver</span>
                         </div>
                     </li>
                     <li>
-                        <div id="share_feature"
-                            class="specialFolderItem"
-                            onclick="specialFolderAction(this.id);">
-                            <img src="img/shareic.png"
-                                style="display: inline;">
-                            <span class="name"
-                                style="display: inline;">Shared With Me</span>
+                        <div id="share_feature" class="specialFolderItem" onclick="specialFolderAction(this.id);">
+                            <img src="img/shareic.png" style="display: inline;">
+                            <span class="name" style="display: inline;">Shared With Me</span>
                         </div>
                     </li>
                     <li>
-                        <div id="fav_feature"
-                            class="specialFolderItem"
-                            onclick="specialFolderAction(this.id);">
-                            <img src="img/favic.png"
-                                style="display: inline;">
-                            <span class="name"
-                                style="display: inline;">Favorites</span>
+                        <div id="fav_feature" class="specialFolderItem" onclick="specialFolderAction(this.id);">
+                            <img src="img/favic.png" style="display: inline;">
+                            <span class="name" style="display: inline;">Favorites</span>
                         </div>
                     </li>
-                 
                     <li>
-                        <div id="recycle_feature"
-                            class="specialFolderItem"
-                            onclick="specialFolderAction(this.id);">
-                            <img src="img/recycleic.png"
-                                style="display: inline;">
-                            <span class="name"
-                                style="display: inline;">Recycle Bin</span>
+                        <div id="recycle_feature" class="specialFolderItem" onclick="specialFolderAction(this.id);">
+                            <img src="img/recycleic.png" style="display: inline;">
+                            <span class="name" style="display: inline;">Recycle Bin</span>
                         </div>
                     </li>
 
                 </ul>
             </div>
-            <div class="col-xs-7 noselect"
-                id="filePanel">
-                <ul id="folderList"
-                    class="list-inline">
+            <div class="col-xs-7 noselect" id="filePanel">
+                <ul id="folderList" class="list-inline">
 
                 </ul>
-                <ul id="fileList"
-                    class="list-inline">
+                <ul id="fileList" class="list-inline">
 
                 </ul>
             </div>
 
-            <div class="col-xs-3"
-                id="infoPanel">
-                <div id="infoTip"
-                    style="text-align: center">
-                    <img src="img/cloudPen.png"
-                        width="150"
-                        height="150">
+            <div class="col-xs-3" id="infoPanel">
+                <div id="infoTip" style="text-align: center">
+                    <img src="img/cloudPen.png" width="150" height="150">
                     <p>Select a file to view its details</p>
                 </div>
 
@@ -349,52 +222,34 @@
     </div>
 
     <!-- model create new folder -->
-    <div class="modal fade"
-        id="modalNewFolder">
+    <div class="modal fade" id="modalNewFolder">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-hidden="true">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Create New Folder</h4>
                 </div>
-                <div class="modal-body"
-                    style="height: 140px;">
+                <div class="modal-body" style="height: 140px;">
                     <div class="row">
                         <div class="col-lg-3">
                             <label for="folderName">Folder Name:</label>
                         </div>
                         <div class="col-lg-9">
-                            <input id="folderName"
-                                size="45"
-                                type="text"
-                                name="folderName" />
+                            <input id="folderName" size="45" type="text" name="folderName" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-3">
-                            <label for="desc"
-                                style="margin-top: 15px;">Description:</label>
+                            <label for="desc" style="margin-top: 15px;">Description:</label>
                         </div>
                         <div class="col-lg-9">
-                            <input id="txtFolderDesc"
-                                size="45"
-                                type="text"
-                                name="desc"
-                                style="margin-top: 15px;" />
+                            <input id="txtFolderDesc" size="45" type="text" name="desc" style="margin-top: 15px;" />
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button"
-                        class="btn btn-default"
-                        data-dismiss="modal">Close</button>
-                    <button id="createFolderConfirm"
-                        type="button"
-                        class="btn btn-primary"
-                        data-dismiss="modal">Create</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="createFolderConfirm" type="button" class="btn btn-primary" data-dismiss="modal">Create</button>
                 </div>
             </div>
         </div>
@@ -402,15 +257,11 @@
 
 
     <!-- modal upload file-->
-    <div class="modal fade"
-        id="modalUploadFile">
+    <div class="modal fade" id="modalUploadFile">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-hidden="true">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Upload File</h4>
                 </div>
                 <div class="modal-body">
@@ -419,96 +270,63 @@
                             <label for="inputFile">Select File:</label>
                         </div>
                         <div class="col-lg-9">
-                            <input id="inputFile"
-                                name="inputFile"
-                                type="file"
-                                class="file"
-                                data-show-preview="false">
+                            <input id="inputFile" name="inputFile" type="file" class="file" data-show-preview="false">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-3">
-                            <label for="filename"
-                                style="margin-top: 15px;">File Name:</label>
+                            <label for="filename" style="margin-top: 15px;">File Name:</label>
                         </div>
                         <div class="col-lg-9">
-                            <input id="txtFileName"
-                                size="45"
-                                type="text"
-                                name="filename"
-                                style="margin-top: 15px;" />
+                            <input id="txtFileName" size="45" type="text" name="filename" style="margin-top: 15px;" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-3">
-                            <label for="desc"
-                                style="margin-top: 15px;">Description:</label>
+                            <label for="desc" style="margin-top: 15px;">Description:</label>
                         </div>
                         <div class="col-lg-9">
-                            <input id="txtFileDesc"
-                                size="45"
-                                type="text"
-                                name="desc"
-                                style="margin-top: 15px;" />
+                            <input id="txtFileDesc" size="45" type="text" name="desc" style="margin-top: 15px;" />
                         </div>
                     </div>
                     <br>
 
                 </div>
                 <div class="modal-footer">
-                    <button id="btnCloseUploadModal"
-                        type="button"
-                        class="btn btn-default"
-                        data-dismiss="modal">Close</button>
-                    <button id="uploadConfirm"
-                        type="button"
-                        class="btn btn-primary">Upload</button>
+                    <button id="btnCloseUploadModal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="uploadConfirm" type="button" class="btn btn-primary">Upload</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- modal upload folder-->
-    <div class="modal fade"
-        id="modalUploadFolder">
+    <div class="modal fade" id="modalUploadFolder">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-hidden="true">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Upload Folder</h4>
                 </div>
                 <div class="modal-body">
-                    <input id="input-b2"
-                        name="input-b2"
-                        type="file"
-                        class="file"
-                        data-show-preview="false">
+                    <input id="input-b2" name="input-b2" type="file" class="file" data-show-preview="false">
                 </div>
                 <div class="modal-footer">
-                    <button type="button"
-                        class="btn btn-default"
-                        data-dismiss="modal">Close</button>
-                    <button type="button"
-                        class="btn btn-primary"
-                        data-dismiss="modal">Upload</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Upload</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- The Modal For Image Preview-->
-    <div id="modalImg"
-        class="custom-modal">
+    <div id="modalImg" class="custom-modal">
 
         <!-- The Close Button -->
         <span id="close">&times;</span>
 
         <!-- Modal Content (The Image) -->
-        <img class="custom-modal-content"
-            id="preview-img">
+        <img class="custom-modal-content" id="preview-img">
 
         <!-- Modal Caption (Image Text) -->
         <div id="caption">
@@ -517,72 +335,46 @@
     </div>
 
     <!-- modal rename-->
-    <div class="modal fade"
-        id="modalRename">
+    <div class="modal fade" id="modalRename">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-hidden="true">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Rename File</h4>
                 </div>
-                <div class="modal-body"
-                    style="height: 55px;">
+                <div class="modal-body" style="height: 55px;">
                     <div class="col-lg-3">
                         <label for="rename">Rename:</label>
                     </div>
                     <div class="col-lg-9">
-                        <input id="txtRename"
-                            size="45"
-                            name="rename"
-                            type="text"
-                            data-show-preview="false">
+                        <input id="txtRename" size="45" name="rename" type="text" data-show-preview="false">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button"
-                        class="btn btn-default"
-                        data-dismiss="modal">Close</button>
-                    <button id="renameConfirm"
-                        type="button"
-                        class="btn btn-primary"
-                        data-dismiss="modal">Apply</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="renameConfirm" type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- modal move-->
-    <div class="modal fade"
-        id="modalMove">
+    <div class="modal fade" id="modalMove">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-hidden="true">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body">
-                    <ul id="small-folder-list"
-                        class="list-inline noselect">
+                    <ul id="small-folder-list" class="list-inline noselect">
 
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button id="btnBackMove"
-                        type="button"
-                        class="btn btn-default pull-left">Back</button>
-                    <button id="btnCloseMoveModal"
-                        type="button"
-                        class="btn btn-default"
-                        data-dismiss="modal">Close</button>
-                    <button id="moveConfirm"
-                        type="button"
-                        class="btn btn-primary">Copy</button>
+                    <button id="btnBackMove" type="button" class="btn btn-default pull-left">Back</button>
+                    <button id="btnCloseMoveModal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="moveConfirm" type="button" class="btn btn-primary">Copy</button>
 
                 </div>
 
@@ -591,51 +383,33 @@
 
 
     </div>
-    <div class="modal fade"
-        id="modalShare">
+    <div class="modal fade" id="modalShare">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-hidden="true">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Share To</h4>
                 </div>
                 <div class="modal-body">
-                    <input type="text"
-                        id="txtShareEmail"
-                        class="form-control"
-                        placeholder="Receiver Email" />
+                    <input type="text" id="txtShareEmail" class="form-control" placeholder="Receiver Email" />
                 </div>
                 <div class="modal-footer">
-                    <button type="button"
-                        class="btn btn-default"
-                        data-dismiss="modal">Close</button>
-                    <button type="button"
-                        id="btnShareTo"
-                        class="btn btn-primary"
-                        data-dismiss="modal">Share</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnShareTo" class="btn btn-primary" data-dismiss="modal">Share</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- The actual snackbar -->
-    <div id="snackbar"
-        align="center">
+    <div id="snackbar" align="center">
         <div class="progress">
-            <div class="progress-bar progress-bar-striped active"
-                role="progressbar"
-                aria-valuenow="100"
-                aria-valuemin="0"
-                aria-valuemax="100">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                 Loading...
             </div>
         </div>
     </div>
-    <script type="text/javascript"
-        src="script/contactBtn.js"></script>
+    <script type="text/javascript" src="script/contactBtn.js"></script>
 
 
 </body>
