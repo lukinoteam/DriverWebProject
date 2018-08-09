@@ -48,7 +48,7 @@ class CassandraConnectivity {
     //MARK:- Properties 
     
     //@var:Database's attributes
-    private $_server_id="192.168.0.6";
+    private $_server_id="192.168.0.110";
     private $_keyspace="driveweb";
 
     
