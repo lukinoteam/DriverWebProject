@@ -1,7 +1,7 @@
 <?php 
 require_once __DIR__. "/../Connectdb.php";
 
-class MySQLDA{
+final class MySQLDA{
 	//MARK:- Properties
 	private  $db;
 	private $conn;
