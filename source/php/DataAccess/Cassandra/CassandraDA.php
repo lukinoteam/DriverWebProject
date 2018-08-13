@@ -10,7 +10,7 @@ require_once __DIR__ . '/../../Model/DataFolderInfo.php';
 require_once __DIR__ . '/../../Model/DataFolder.php';
 require_once __DIR__ . '/../Connectdb.php';
 
-class CassandraDA implements DataBaseAccess
+final class CassandraDA implements DataBaseAccess
 {
 
     //MARK:- Variables
