@@ -1,5 +1,5 @@
 <?php
-class DataFolderInfo
+final class DataFolderInfo
 {
     // Thumbnail table's column's name
     // All have getters and setters

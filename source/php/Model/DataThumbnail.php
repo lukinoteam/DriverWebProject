@@ -1,5 +1,5 @@
 <?php
-class DataThumbnail
+final class DataThumbnail
 {
 
     // Thumbnail table's column's name

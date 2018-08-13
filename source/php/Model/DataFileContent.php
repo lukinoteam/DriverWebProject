@@ -1,5 +1,5 @@
 <?php
-class DataFileContent
+final class DataFileContent
 {
     // Thumbnail table's column's name
     // All have getters and setters

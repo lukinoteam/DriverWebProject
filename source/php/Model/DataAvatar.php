@@ -1,5 +1,5 @@
 <?php
-class DataAvatar
+final class DataAvatar
 {
     // Thumbnail table's column's name
     // All have getters and setters

@@ -1,5 +1,5 @@
 <?php
-class DataCountContent
+final class DataCountContent
 {
     // Thumbnail table's column's name
     // All have getters and setters
