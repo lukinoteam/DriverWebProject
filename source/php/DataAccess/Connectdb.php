@@ -1,5 +1,5 @@
 <?php
-class MySQLConnectivity {
+final class MySQLConnectivity {
     /*
      * TO-DO: Create Singleton for connectivity to Server at @var($_host)
      * as @var($_username) and @var($_password).
@@ -40,7 +40,7 @@ class MySQLConnectivity {
         return $this->_connection;
     }
 }
-class CassandraConnectivity {
+final class CassandraConnectivity {
     /* TO-DO: Creat Singleton for connectivity of Cassandra server 
      * with @var($_serverId) at @var($ke)
      */
