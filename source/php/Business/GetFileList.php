@@ -27,7 +27,7 @@ foreach ($result as $row) {
         );
         $tmpResult = $connect->get_connection()->execute($statement);
         $thumb = "";
-        if (($tmpResult[0]['type'] == 7 || $tmpResult[0]['type'] == 8 || $tmpResult[0]['type'] == 9) && $tmpResult[0]['size'] < 20 * 1024 * 1024) {
+        if (($tmpResult[0]['type'] == 7 || $tmpResult[0]['type'] == 8 || $tmpResult[0]['type'] == 9||$tmpResult[0]['type']==13) && $tmpResult[0]['size'] < 20 * 1024 * 1024) {
 
             $statement = new Cassandra\SimpleStatement(
                 "select blobAsAscii(image) as image from thumbnail where file_id = " . $row['file_id']

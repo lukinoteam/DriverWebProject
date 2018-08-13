@@ -9,7 +9,7 @@ function make_thumb($src, $ext)
     ini_set('memory_limit', '-1');
     if ($ext == 'jpg' || $ext == 'jpeg') {
         $source_image = imagecreatefromjpeg($src);
-    } else if ($ext == 'png') {
+    } else if ($ext == 'png'||$ext =='mp4') {
         $source_image = imagecreatefrompng($src);
     } else if ($ext == 'bmp') {
         $source_image = imagecreatefrombmp($src);

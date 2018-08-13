@@ -31,6 +31,9 @@ function extStrToInt($ext)
             return 12;
         case 'mp3':
             return 14;
+        case 'mp4':
+        case 'mov':
+            return 13;    
         default:
             return 15;
     }

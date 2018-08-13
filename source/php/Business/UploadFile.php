@@ -97,6 +97,24 @@ if (($fileInfo->getType() == 7 || $fileInfo->getType() == 8 || $fileInfo->getTyp
     $connect->insert('thumbnail', $thumb);
 
 }
+if($fileInfo->getType()==13){
+    $sec = 1;
+    $thumbnail = substr($_FILES['file']['name'],0,-3).'png';
+    $ffmpeg = FFMpeg\FFMpeg::create();
+    $vid = $ffmpeg->open($filePath);
+    $frame = $vid->frame(FFMpeg\Coordinate\TimeCode::fromSeconds($sec));
+    $frame ->save($thumbnail);
+    // $content = file_get_contents($thumbnail);
+    // $image = bin2hex($content);
+    $thumb = new DataThumbnail();
+    $thumb->setFileId($data->getFileId());
+    $thumb->setId(new Cassandra\UUID());
+    $thumb->setStatus(1);
+    $thumb->setImage(make_thumb($thumbnail,$ext));
+    $thumb->setType(13);
+    $connect->insert('thumbnail',$thumb);
+    unlink($thumbnail);
+}
 
 $connect->insert('file_info', $fileInfo);
 
