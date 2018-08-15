@@ -8,4 +8,8 @@ class TableName
     static $thumbnail = "thumbnail";
     static $folder = "folder";
     static $folder_info = "folder_info";
+    static $dash_board_count_type = "count_type";
+    static $dash_board_count_size = "count_size";
+
 }
+
