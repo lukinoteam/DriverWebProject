@@ -28,7 +28,7 @@ function show_dash_board() {
         success: function(json) {
             $("#dash_board_area").empty();
             var used_data = json[6] / (20 * 1024 * 1024);
-            used_data = 50;
+            used_data *= 100;
 
             var color = "green";
             if (used_data > 80) {
