@@ -24,18 +24,18 @@
     right: 23%;
     margin-right: 3%;
     display: none;
-
     border-radius: 100px;
 }
-#regular_tool button{
+
+#regular_tool button {
     padding: 5px 12px;
 }
 
-#recycle_tool button{
+#recycle_tool button {
     padding: 5px 12px;
 }
 
-.tool button{
+.tool button {
     font-size: 12px;
 }
 
@@ -51,7 +51,7 @@
     overflow: hidden;
 }
 
-.fileItem .img-wrapper{
+.fileItem .img-wrapper {
     width: 128px;
     height: 108px;
     overflow: hidden;
@@ -102,14 +102,12 @@
     overflow: hidden;
     white-space: nowrap;
     padding: 0px 5px;
-    
 }
 
-.folderItem img{
-    margin-left: 10px; 
+.folderItem img {
+    margin-left: 10px;
     width: 20px;
     height: 20px;
-    
 }
 
 #folderList {
@@ -122,7 +120,6 @@
     width: 150%;
     border-radius: 10px;
     height: 16%;
-    
     background-color: #f2f2f2;
 }
 
@@ -136,7 +133,7 @@
     padding: 0px 5px;
 }
 
-.specialFolderItem img{
+.specialFolderItem img {
     width: 30px;
     height: 30px;
 }
@@ -225,7 +222,7 @@
     overflow-y: auto;
 }
 
-#folderPanel{
+#folderPanel {
     overflow-x: hidden;
 }
 
@@ -266,10 +263,6 @@
     padding: 0;
 }
 
-.progress .progress-bar {
-    width: 100%;
-}
-
 .tooltip {
     position: relative;
     display: inline-block;
@@ -289,7 +282,6 @@
     bottom: 100%;
     left: 50%;
     margin-left: -60px;
-    
     /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
     opacity: 0;
     transition: opacity 1s;
@@ -298,4 +290,51 @@
 .tooltip:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
+}
+
+#dash_board_area {
+    margin-left: 20px;
+}
+
+#dash_board_tooltip {
+    position: absolute;
+    top: 300px;
+    left: 50px;
+}
+
+.dash_board_child {
+    width: 200px;
+    height: 110px;
+    font-family: "Gadugi";
+    font-size: 16px;
+    color: white;
+    border: 1px solid #d3d3d3;
+    border-radius: 5%;
+    overflow: hidden;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#dash_board_doc {
+    background-color: #247bc6;
+}
+
+#dash_board_excel {
+    background-color: #5fb88c;
+}
+
+#dash_board_image {
+    background-color: #89c247;
+}
+
+#dash_board_video {
+    background-color: #ee5f55;
+}
+
+#dash_board_audio {
+    background-color: #dd7fed;
+}
+
+#dash_board_others {
+    background-color: #b2b2b2;
 }
