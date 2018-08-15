@@ -9,7 +9,7 @@ final class MySQLConnectivity {
     //MARK: Properties
 
     //@var: Server's properties for connection
-    private $_host="127.0.0.1";
+    private $_host="192.168.0.100";
     private $_username="root";
     private $_password="";
     private $_database="manage_user";
