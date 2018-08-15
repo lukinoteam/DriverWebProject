@@ -7,7 +7,7 @@ final class ElasticConnection
     //@var: Server's infomation
     private $hosts = [
         [
-            'host' => '192.168.0.100',
+            'host' => 'http://tamviettech.vn/',
             'port' => '9200'
         ],
     ];
