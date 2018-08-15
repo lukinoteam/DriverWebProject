@@ -45,37 +45,27 @@ function checkOutside(container, e) {
 $(document).ready(function() {
     setAvatar();
     getIdEmail();
-    getFolderList();
-    getFileList();
 
-    $('#btnShareTo').click(function () {
-        var sharedEmail = $('#txtShareEmail').val();
-        shareTo(sharedEmail);
-    });
+    $("#filePanel").attr("class", "col-xs-10");
+    $("#infoPanel").hide();
 
-    $("#inputFile").change(function() {
-        str = $("#inputFile").val()
-        str = str.substring(12, str.length);
-        $("#txtFileName").val(str.replace(/\.[^/.]+$/, ""));
-    });
+    $("#infoIcon").hide();
+
+    show_dash_board();
 
     $("#backIcon").hide();
 
-    $("#btnDownload").click(function () {
-        $("#snackbar").css("visibility", "visible");
-        downFile(choosedFile);
-    })
 
-    $('.dropdown').on('show.bs.dropdown', function (e) {
+    $('.dropdown').on('show.bs.dropdown', function(e) {
         $(this).find('.dropdown-menu').first().stop(true, true).slideDown(300);
     });
 
-    $('.dropdown').on('hide.bs.dropdown', function (e) {
+    $('.dropdown').on('hide.bs.dropdown', function(e) {
         $(this).find('.dropdown-menu').first().stop(true, true).slideUp(200);
     });
 
     //Hide tool bar when click outside of it
-    $(document).mouseup(function (e) {
+    $(document).mouseup(function(e) {
         var container = $('#toolBar');
 
         // if the target of the click isn't the container nor a descendant of the container
@@ -84,134 +74,50 @@ $(document).ready(function() {
         }
     });
 
-    $("#infoIcon").on("click", function () {
-
-        if ($("#filePanel").attr("class") == "col-xs-7") {
-            $("#filePanel").attr("class", "col-xs-10");
-            $("#infoPanel").hide();
-        } else {
-            $("#filePanel").attr("class", "col-xs-7");
-            $("#infoPanel").show();
-        }
-    });
-
-    $('#modalNewFolder').on('shown.bs.modal', function () {
+    $('#modalNewFolder').on('shown.bs.modal', function() {
         $('#folderName').val("");
         $('#folderName').focus();
     });
 
-    $(document).keypress(function (e) {
+    $(document).keypress(function(e) {
         if ($("#modalNewFolder").hasClass('in') && (e.keycode == 13 || e.which == 13)) {
             $('#createFolderConfirm').click();
         }
     });
 
-    $(document).keypress(function (e) {
+    $(document).keypress(function(e) {
         if ($("#modalUploadFile").hasClass('in') && (e.keycode == 13 || e.which == 13)) {
             $('#uploadConfirm').click();
         }
     });
 
-    $(document).keypress(function (e) {
+    $(document).keypress(function(e) {
         if ($("#modalRename").hasClass('in') && (e.keycode == 13 || e.which == 13)) {
             $('#renameConfirm').click();
         }
     });
 
-    $("#createFolderConfirm").on("click", function () {
-        $("#snackbar").css("visibility", "visible");
-        createFolder();
-    });
 
-    $("#backIcon").click(function () {
-        getParentFolder();
-    })
-
-    $("#uploadConfirm").click(function () {
-        $("#snackbar").css("visibility", "visible");
-        uploadFile();
-    })
-
-    $("#renameConfirm").click(function () {
-        $("#snackbar").css("visibility", "visible");
-        if (type == 0)
-            rename(type, choosedFile);
-        else
-            rename(type, choosedFolder);
-    })
-
-    $("#btnDelete").click(function () {
-        $("#snackbar").css("visibility", "visible");
-        if (type == 0)
-            deleteff(type, choosedFile);
-        else
-            deleteff(type, choosedFolder);
-    })
-
-    $("#btnCopy").click(function() {
-        sm_move_type = "copy";
-        sm_current = home;
-        sm_choosedFolder = home;
-        $("#modalMove").find("#moveConfirm").text("Copy");
-        getSmallFolderList();
-    })
-
-    $("#btnMove").click(function() {
-        sm_move_type = "move";
-        sm_current = home;
-        sm_choosedFolder = home;
-        $("#modalMove").find("#moveConfirm").text("Move");
-        getSmallFolderList();
-    })
-
-    $("#moveConfirm").click(function() {
-        $("#snackbar").css("visibility", "visible");
-        if (type == 0) {
-            move(0, choosedFile, sm_choosedFolder);
-        } else {
-            move(1, choosedFolder, sm_choosedFolder);
-        }
-    })
-    $("#btnBackMove").click(function() {
-        getSmallParentFolder();
-    })
-    
-    $("#btnFav").click(function(){
-        if (type == 0 && choosedFile != ""){
-            $("#snackbar").css("visibility", "visible");
-            set_favorite(choosedFile);
-        }
-    })
-
-    $("#btnRestore").click(function(){
-        $("#snackbar").css("visibility", "visible");
-        restore(choosedFile);
-    })
-
-    $("#btnRemove").click(function(){
-        $("#snackbar").css("visibility", "visible");
-        remove(choosedFile);
-    })
 });
 
-function setAvatar(){
+function setAvatar() {
     $.ajax({
         url: 'php/Business/SetAvatar.php', // point to server-side PHP script 
-        dataType: 'text',  // what to expect back from the PHP script, if anything
+        dataType: 'text', // what to expect back from the PHP script, if anything
         cache: false,
         contentType: false,
         processData: false,
         //data: form_data,                         
         type: 'POST',
-        success: function(data){
+        success: function(data) {
             document.getElementById("avatarIcon").src = data;
         }
- });
+    });
 }
 
 function getIdEmail() {
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
+    xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var myObj = JSON.parse(this.responseText);
             var email = myObj[0];
@@ -228,7 +134,7 @@ function logOut() {
         type: "POST",
         contentType: false,
         processData: false,
-        success: function (data) {
+        success: function(data) {
 
         }
     });
@@ -236,5 +142,98 @@ function logOut() {
 
 function getExt(filename) {
     return filename.substring(filename.lastIndexOf('.') + 1, filename.length) || filename;
+}
 
+function info_icon() {
+    if ($("#filePanel").attr("class") == "col-xs-7") {
+        $("#filePanel").attr("class", "col-xs-10");
+        $("#infoPanel").hide();
+    } else {
+        $("#filePanel").attr("class", "col-xs-7");
+        $("#infoPanel").show();
+    }
+}
+
+function change_input_file_name_text() {
+    str = $("#inputFile").val();
+    str = str.substring(12, str.length);
+    $("#txtFileName").val(str.replace(/\.[^/.]+$/, ""));
+}
+
+function btn_share() {
+    var sharedEmail = $('#txtShareEmail').val();
+    shareTo(sharedEmail);
+}
+
+function upload_confirm() {
+    $("#snackbar").css("visibility", "visible");
+    uploadFile();
+}
+
+function btn_download() {
+    $("#snackbar").css("visibility", "visible");
+    downFile(choosedFile);
+}
+
+function create_folder_confirm() {
+    $("#snackbar").css("visibility", "visible");
+    createFolder();
+}
+
+function rename_confirm() {
+    $("#snackbar").css("visibility", "visible");
+    if (type == 0)
+        rename(type, choosedFile);
+    else
+        rename(type, choosedFolder);
+}
+
+function btn_delete() {
+    $("#snackbar").css("visibility", "visible");
+    if (type == 0)
+        deleteff(type, choosedFile);
+    else
+        deleteff(type, choosedFolder);
+}
+
+function btn_copy() {
+    sm_move_type = "copy";
+    sm_current = home;
+    sm_choosedFolder = home;
+    $("#modalMove").find("#moveConfirm").text("Copy");
+    getSmallFolderList();
+}
+
+function btn_move() {
+    sm_move_type = "move";
+    sm_current = home;
+    sm_choosedFolder = home;
+    $("#modalMove").find("#moveConfirm").text("Move");
+    getSmallFolderList();
+}
+
+function move_confirm() {
+    $("#snackbar").css("visibility", "visible");
+    if (type == 0) {
+        move(0, choosedFile, sm_choosedFolder);
+    } else {
+        move(1, choosedFolder, sm_choosedFolder);
+    }
+}
+
+function btn_fav() {
+    if (type == 0 && choosedFile != "") {
+        $("#snackbar").css("visibility", "visible");
+        set_favorite(choosedFile);
+    }
+}
+
+function btn_restore() {
+    $("#snackbar").css("visibility", "visible");
+    restore(choosedFile);
+}
+
+function btn_remove() {
+    $("#snackbar").css("visibility", "visible");
+    remove(choosedFile);
 }
