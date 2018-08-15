@@ -56,3 +56,32 @@ $file_info->setUserId(new Cassandra\UUID($user_id));
 $file_info->setFileId(new Cassandra\UUID($id));
 
 $connect->deleteRow('file_info', $file_info);
+
+$dash_board_type = "";
+switch ($result[0]['type']) {
+    case 1:
+    case 2:
+    case 3:
+        $dash_board_type = "Word";
+        break;
+    case 4:
+    case 12:
+        $dash_board_type = "Excel";
+        break;
+    case 7:
+    case 8:
+    case 9:
+        $dash_board_type = "Image";
+        break;
+    case 13:
+        $dash_board_type = "Video";
+        break;
+    case 14:
+        $dash_board_type = "Audio";
+        break;
+    default:
+        $dash_board_type = "Others";
+}
+
+$connect->update_dash_board("count_type", $result[0]['user_id'], $dash_board_type, 1, "down");
+$connect->update_dash_board("count_size", $result[0]['user_id'], $dash_board_type, $result[0]['size'], "down");
