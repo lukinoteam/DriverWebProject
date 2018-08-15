@@ -115,6 +115,22 @@ create table folder_info(
 	primary key ((user_id), folder_id)
 );
 
+drop table IF EXISTS count_type;
+create table count_type(
+	user_id uuid,
+	type_id text,
+	count counter,
+	primary key ((user_id), type_id)
+);
+
+drop table IF EXISTS count_size;
+create table count_size(
+	user_id uuid,
+	type_id text,
+	size counter,
+	primary key ((user_id), type_id)
+);
+
 // insert default home folder
 // fixed user_id for testing only
 INSERT INTO folder_info (user_id, folder_id, name, size, date_modify, description, status)
