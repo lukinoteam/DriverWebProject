@@ -177,21 +177,27 @@ function uploadFile() {
     form_data.append('desc', $('#txtFileDesc').val());
     form_data.append('current', currenFolder);
     $("#btnCloseUploadModal").click();
-    $.ajax({
-        type: 'POST',
-        url: "php/Business/UploadFile.php",
-        cache: false,
-        contentType: false,
-        processData: false,
-        data: form_data,
-        success: function(data) {
-            specialFolderAction("home");
-            getFileList();
-            $("#inputFile").val("");
-            $('#txtFileDesc').val("");
-            $("#txtFileName").val("");
-        }
-    });
+
+    if ((data.size * 100) / default_max_data + used_data > 100) {
+        $('#modal-out-of-data').modal('show');
+    } else {
+        $.ajax({
+            type: 'POST',
+            url: "php/Business/UploadFile.php",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            success: function(data) {
+                specialFolderAction("home");
+                getFileList();
+                $("#inputFile").val("");
+                $('#txtFileDesc').val("");
+                $("#txtFileName").val("");
+            }
+        });
+    }
+
 
 }
 
