@@ -125,4 +125,35 @@ $folder->setStatus(1);
 
 $connect->insert('folder', $folder);
 
+// dash_board insert
+$dash_board_type = "";
+switch ($fileInfo->getType()) {
+    case 1:
+    case 2:
+    case 3:
+        $dash_board_type = "Word";
+        break;
+    case 4:
+    case 12:
+        $dash_board_type = "Excel";
+        break;
+    case 7:
+    case 8:
+    case 9:
+        $dash_board_type = "Image";
+        break;
+    case 13:
+        $dash_board_type = "Video";
+        break;
+    case 14:
+        $dash_board_type = "Audio";
+        break;
+    default:
+        $dash_board_type = "Others";
+}
+
+$connect->update_dash_board("count_type", $fileInfo->getUserId(), $dash_board_type, 1, "up");
+$connect->update_dash_board("count_size", $fileInfo->getUserId(), $dash_board_type, $fileInfo->getSize(), "up");
+
+
 fclose($file);
