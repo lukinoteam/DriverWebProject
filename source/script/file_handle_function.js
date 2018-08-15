@@ -54,6 +54,14 @@ function triggerFileChoosedTools(file) {
         $('#regular_tool').show();
         $('#recycle_tool').hide();
     }
+
+    if ($(fileId).hasClass('shared')) {
+        $("#infoFileOwner").show();
+        $("#infoFileOwner").text("Owner: " + $(fileId).find(".fileCaption").find(".owner").text());
+    } else {
+        $("#infoFileOwner").hide();
+
+    }
 }
 
 function triggerFolderChoosedTools(folder) {
@@ -90,7 +98,7 @@ function triggerFolderChoosedTools(folder) {
 
     $("#infoFileName").text($(folderId).find(".name").text());
     $("#infoFileType").hide();
-    $("#infoFileSize").hide();    
+    $("#infoFileSize").hide();
     $("#infoFileDate").text("Date modified: " + $(folderId).find(".date").text());
     $("#infoFileDesc").text("Desciption: " + $(folderId).find(".desc").text());
     $("#infoTip").hide();
@@ -177,6 +185,7 @@ function uploadFile() {
         processData: false,
         data: form_data,
         success: function(data) {
+            specialFolderAction("home");
             getFileList();
             $("#inputFile").val("");
             $('#txtFileDesc').val("");
@@ -392,19 +401,25 @@ function getDeletedFile() {
     });
 }
 
+function check_out_for_special_feature(container, e) {
+    return $("#specialFolderList").find("*").is(e.target);
+}
+
 function specialFolderAction(id) {
     $("#backIcon").hide();
     var folderId = "#" + id;
     $(document).mouseup(function(e) {
         var container = $(folderId);
         // if the target of the click is neither the container nor a descendant of the container
-        if (checkOutside(container, e)) {
+        if (check_out_for_special_feature(container, e)) {
             container.css({
                 "background-color": "#f2f2f2"
             })
 
-            $("#infoTip").show();
-            $("#infoFileName").text("");
+            if (id == "home" || id == "recycle_feature" || id == "share_feature" || id == "fav_feature") {
+                $("#infoTip").show();
+                $("#infoFileName").text("");
+            }
         }
     });
 
@@ -412,9 +427,17 @@ function specialFolderAction(id) {
         "background-color": "#90adff"
     })
 
+    $("#dash_board_area").hide();
+    $("#dash_board").css({ "background-color": "#f2f2f2" });
+
     $("#infoTip").hide();
-    $("#infoFileName").text($(folderId).find(".name").text());
+
+    $("#infoIcon").show();
+    $("#filePanel").attr("class", "col-xs-7");
+    $("#infoPanel").show();
+
     if (id == "recycle_feature") {
+
         getDeletedFile();
     } else if (id == "share_feature") {
         $("#snackbar").css("visibility", "visible");
@@ -424,6 +447,16 @@ function specialFolderAction(id) {
     } else if (id == "fav_feature") {
         $("#snackbar").css("visibility", "visible");
         get_fav_files()
+    } else if (id == "dash_board") {
+        if ($("#filePanel").attr("class") == "col-xs-7") {
+            $("#filePanel").attr("class", "col-xs-10");
+            $("#infoPanel").hide();
+        }
+        $("#infoIcon").hide();
+
+        $("#snackbar").css("visibility", "visible");
+        $("#dash_board_area").show();
+        show_dash_board();
     }
 }
 
@@ -449,7 +482,7 @@ function move(type, id, destination) {
     });
 }
 
-function set_favorite(id){
+function set_favorite(id) {
     var form_data = new FormData();
     form_data.append('id', id);
 
