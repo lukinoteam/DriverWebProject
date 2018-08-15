@@ -27,7 +27,9 @@
     <script type="text/javascript" src="script/small_folder_list.js"></script>
     <script type="text/javascript" src="script/shareTo.js"></script>
     <script type="text/javascript" src="script/get_shared_files.js"></script>
-
+    <script type="text/javascript" src="script/get_fav_files.js"></script>
+    <script type="text/javascript" src="script/small_folder_list.js"></script>
+    <script type="text/javascript" src="script/dash_board.js"></script>
 
     <!-- Bootstrap library -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min-3.3.7.css">
@@ -40,6 +42,7 @@
     <link rel="stylesheet" type="text/css" href="css/searchBar.css">
     <link rel="stylesheet" type="text/css" href="css/small_folder_list.css">
     <link rel="stylesheet" type="text/css" href="css/snack_bar.css">
+    <link rel="stylesheet" type="text/css" href="css/circle.css">
 
 
     <link rel="icon" href="img/mydriveic.png">
@@ -84,17 +87,17 @@
             <div id="tool" class='btn-toolbar' role='toolbar' aria-label='Toolbar with button groups'>
                 <a id="link" href="" download="" style="display: none;"></a>
                 <div id="regular_tool" class='btn-group mr-2' role='group' aria-label='Second group'>
-                    <button type='button' id="btnDownload" class='btn btn-secondary btn-primary' style="border-radius: 50px 0px 0px 50px; border-right: 3px solid white;"><img src="img/downic.png" width="15" height="15" > Download</button>
+                    <button type='button' id="btnDownload" class='btn btn-secondary btn-primary' style="border-radius: 50px 0px 0px 50px; border-right: 3px solid white;" onclick="btn_download();"><img src="img/downic.png" width="15" height="15" > Download</button>
                     <button type='button' id="btnRename" class='btn btn-secondary btn-success' style="border-right: 3px solid white;" data-toggle="modal" href='#modalRename'>Rename</button>
-                    <button type='button' id="btnCopy" class='btn btn-secondary btn-success' style="border-right: 3px solid white;" data-toggle="modal" href='#modalMove'>Copy</button>
-                    <button type='button' id="btnMove" class='btn btn-secondary btn-success' style="border-right: 3px solid white;" data-toggle="modal" href='#modalMove'>Move</button>
+                    <button type='button' id="btnCopy" class='btn btn-secondary btn-success' style="border-right: 3px solid white;" data-toggle="modal" href='#modalMove' onclick="btn_copy();">Copy</button>
+                    <button type='button' id="btnMove" class='btn btn-secondary btn-success' style="border-right: 3px solid white;" data-toggle="modal" href='#modalMove' onclick="btn_move();">Move</button>
                     <button type='button' id="btnShare" class='btn btn-secondary btn-success' style="border-right: 3px solid white;" data-toggle="modal" href='#modalShare'>Share</button>
-                    <button type='button' id="btnDelete" class='btn btn-secondary btn-danger' style="border-right: 3px solid white;">Delete</button>
-                    <button type='button' id="btnFav" class='btn btn-secondary btn-warning' style="border-radius: 0px 50px 50px 0px;">Favorite</button>
+                    <button type='button' id="btnDelete" class='btn btn-secondary btn-danger' style="border-right: 3px solid white;" onclick="btn_delete();">Delete</button>
+                    <button type='button' id="btnFav" class='btn btn-secondary btn-warning' style="border-radius: 0px 50px 50px 0px;" onclick="btn_fav();">Favorite</button>
                 </div>
                 <div id="recycle_tool" class='btn-group mr-2' role='group' aria-label='Second group'>
-                    <button type='button' id="btnRestore" class='btn btn-secondary btn-success' style="border-radius: 5px 0px 0px 5px; border-right: 3px solid white;">Restore</button>
-                    <button type='button' id="btnRemove" class='btn btn-secondary btn-danger' style="border-radius: 0px 5px 5px 0px;">Remove</button>
+                    <button type='button' id="btnRestore" class='btn btn-secondary btn-success' style="border-radius: 5px 0px 0px 5px; border-right: 3px solid white;" onclick="btn_restore();">Restore</button>
+                    <button type='button' id="btnRemove" class='btn btn-secondary btn-danger' style="border-radius: 0px 5px 5px 0px;" onclick="btn_remove();">Remove</button>
                 </div>
             </div>
 
@@ -140,7 +143,7 @@
                             </form>
                         </div>
                     </div>
-                    <button id="btnSearch" type="button" class="btn btn-primary">
+                    <button id="btnSearch" type="button" class="btn btn-primary" onclick="btn_search();">
                         <span aria-hidden="true">Search</span>
                     </button>
                 </div>
@@ -149,22 +152,27 @@
         </div>
     </div>
 
-    <div id="backIcon" class="noselect">
+    <div id="backIcon" class="noselect" onclick="getParentFolder();">
 
         <p data-toggle="dropdown">
             <span style="font-size: 20px;">◀</span> BACK</p>
 
     </div>
 
-    <div id="infoIcon">
+    <div id="infoIcon" onclick="info_icon();">
         <img src="img/info.png">
     </div>
-
 
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-2 noselect" id="folderPanel">
                 <ul id="specialFolderList">
+                    <li>
+                        <div id="dash_board" class="specialFolderItem" onclick="specialFolderAction(this.id);">
+                            <img src="img/dashboardic.png" style="display: inline;">
+                            <span class="name" style="display: inline;">Dash Board</span>
+                        </div>
+                    </li>
                     <li>
                         <div id="home" class="specialFolderItem" onclick="specialFolderAction(this.id);">
                             <img src="img/mydriveic.png" style="display: inline;">
@@ -199,20 +207,83 @@
                 <ul id="fileList" class="list-inline">
 
                 </ul>
+                <div id="dash_board_area" class="clearfix noselect">
+                    <div class="c100 p0 green big">
+                        <span>0%</span>
+                        <div class="slice">
+                            <div class="bar"></div>
+                            <div class="fill"></div>
+                        </div>
+                    </div>
+                    <div id="dash_board_tooltip">
+                        <div>
+                            <img src="img/used_data_color_green.jpg" width="15" height="15" style="margin-right: 10px;">
+                            <span>Used Data</span>
+                        </div>
+                        <div>
+                            <img src="img/remain_data_color.jpg" width="15" height="15" style="margin-right: 10px;">
+                            <span>Remain Data</span>
+                        </div>
+                    </div>
+                    <ul id="dash_board_info" class="list-inline">
+                        <li>
+                            <div id="dash_board_doc" class="dash_board_child">
+                                <img src="img/word-icon.png" width="80" height="80">
+                                <span>Word: 0 file</span>
+                            </div>
+
+                        </li>
+                        <li>
+                            <div id="dash_board_excel" class="dash_board_child">
+                                <img src="img/excel-icon.png" width="80" height="80">
+                                <span>Excel: 0 file</span>
+                            </div>
+
+                        </li>
+                        <li>
+                            <div id="dash_board_image" class="dash_board_child">
+                                <img src="img/image-icon.png" width="80" height="80">
+                                <span>Image: 0 file</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div id="dash_board_video" class="dash_board_child">
+                                <img src="img/video-icon.png" width="80" height="80">
+                                <span>Video: 0 file</span>
+                            </div>
+
+                        </li>
+                        <li>
+                            <div id="dash_board_audio" class="dash_board_child">
+                                <img src="img/audio-icon.png" width="80" height="80">
+                                <span>Audio: 0 file</span>
+                            </div>
+
+                        </li>
+                        <li>
+                            <div id="dash_board_others" class="dash_board_child">
+                                <img src="img/others-icon.png" width="80" height="80">
+                                <span>Others: 0 file</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
             <div class="col-xs-3" id="infoPanel">
-                <div id="infoTip" style="text-align: center">
+                <div class="noselect" id="infoTip" style="text-align: center">
                     <img src="img/cloudPen.png" width="150" height="150">
                     <p>Select a file to view its details</p>
                 </div>
 
                 <div id="info">
                     <p id="infoFileName"></p>
+                    <p id="infoFileOwner"></p>
                     <p id="infoFileType"></p>
                     <p id="infoFileSize"></p>
                     <p id="infoFileDate"></p>
                     <p id="infoFileDesc"></p>
+
                 </div>
             </div>
         </div>
@@ -246,7 +317,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="createFolderConfirm" type="button" class="btn btn-primary" data-dismiss="modal">Create</button>
+                    <button id="createFolderConfirm" type="button" class="btn btn-primary" data-dismiss="modal" onclick="create_folder_confirm();">Create</button>
                 </div>
             </div>
         </div>
@@ -267,7 +338,7 @@
                             <label for="inputFile">Select File:</label>
                         </div>
                         <div class="col-lg-9">
-                            <input id="inputFile" name="inputFile" type="file" class="file" data-show-preview="false">
+                            <input id="inputFile" name="inputFile" type="file" class="file" data-show-preview="false" onchange="change_input_file_name_text();">
                         </div>
                     </div>
                     <div class="row">
@@ -291,7 +362,7 @@
                 </div>
                 <div class="modal-footer">
                     <button id="btnCloseUploadModal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="uploadConfirm" type="button" class="btn btn-primary">Upload</button>
+                    <button id="uploadConfirm" type="button" class="btn btn-primary" onclick="upload_confirm();">Upload</button>
                 </div>
             </div>
         </div>
@@ -349,7 +420,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="renameConfirm" type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>
+                    <button id="renameConfirm" type="button" class="btn btn-primary" data-dismiss="modal" onclick="rename_confirm();">Apply</button>
                 </div>
             </div>
         </div>
@@ -369,9 +440,9 @@
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button id="btnBackMove" type="button" class="btn btn-default pull-left">Back</button>
+                    <button id="btnBackMove" type="button" class="btn btn-default pull-left" onclick="getSmallParentFolder();">Back</button>
                     <button id="btnCloseMoveModal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="moveConfirm" type="button" class="btn btn-primary">Copy</button>
+                    <button id="moveConfirm" type="button" class="btn btn-primary" onclick="move_confirm();">Copy</button>
 
                 </div>
 
@@ -392,7 +463,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" id="btnShareTo" class="btn btn-primary" data-dismiss="modal">Share</button>
+                    <button type="button" id="btnShareTo" class="btn btn-primary" data-dismiss="modal" onclick="btn_share();">Share</button>
                 </div>
             </div>
         </div>
