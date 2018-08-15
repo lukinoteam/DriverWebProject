@@ -1,3 +1,6 @@
+var used_data = 0;
+var default_max_data = 100 * 1024 * 1024;
+
 function parse_num_by_type(val) {
     if (val == 0)
         return "0 file";
