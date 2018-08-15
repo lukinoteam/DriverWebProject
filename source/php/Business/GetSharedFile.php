@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . "/../DataAccess/Cassandra/CassandraDA.php";
-require_once __DIR__ ."/../DataAccess/ElasticDataAccess/ElasticDA.php";
+require_once __DIR__ . "/../DataAccess/ElasticDataAccess/ElasticDA.php";
+require_once __DIR__ . "/../DataAccess/MySQL/MySQLDA.php";
+
 require_once 'ParseExtension.php';
 require_once 'ThumbGenerator.php';
 
@@ -27,6 +29,20 @@ foreach ($shared_files as $file_id) {
     $tmpResult = $connect->get_connection()->execute($statement);
     $thumb = "";
 
+    $sql_conn = new MySQLDA();
+
+    $table = "users";
+    $attr = "fullname";
+    $condition = "id ='" . $tmpResult[0]['user_id'] . "'";
+    $owner_info = $sql_conn->select($table, $attr, $condition);
+
+    $owner_name = "";
+    if ($owner_info->num_rows > 0) {
+        while ($row = $owner_info->fetch_assoc()) {
+            $owner_name = $row['fullname'];
+        }
+    }
+
     if (($tmpResult[0]['type'] == 7 || $tmpResult[0]['type'] == 8 || $tmpResult[0]['type'] == 9) && $tmpResult[0]['size'] < 20 * 1024 * 1024) {
         $temp_state = 'select blobAsAscii(image) as image from thumbnail where file_id = ' . $file_id;
         $temp_state = str_replace('""', '', $temp_state);
@@ -39,7 +55,7 @@ foreach ($shared_files as $file_id) {
         $thumb = "data:image/jpg;base64," . base64_encode(pack("H*", $thumbBlob[0]['image']));
 
     } else {
-        
+
         $statement = new Cassandra\SimpleStatement(
             "select type, blobAsAscii(image) as image from thumbnail where file_id = 011643db-8195-45e7-808c-dddc23461fdb"
         );
@@ -51,7 +67,6 @@ foreach ($shared_files as $file_id) {
             }
         }
     }
-    array_push($files, array($tmpResult[0]['file_id'], $tmpResult[0]['date_modify'], $tmpResult[0]['name'], $tmpResult[0]['size'], $tmpResult[0]['description'], $thumb, $tmpResult[0]['type'], $tmpResult[0]['status']));
+    array_push($files, array($tmpResult[0]['file_id'], $tmpResult[0]['date_modify'], $tmpResult[0]['name'], $tmpResult[0]['size'], $tmpResult[0]['description'], $thumb, $tmpResult[0]['type'], $tmpResult[0]['status'], $owner_name));
 }
 echo json_encode($files);
-?>
