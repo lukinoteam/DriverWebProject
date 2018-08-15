@@ -13,7 +13,7 @@ function get_shared_files() {
                 if (data[0] != null && (data[7] == 12 || data[7] == 1)) {
 
                     var str = '<li>\
-            <div id="' + data[0].uuid + '" class="fileItem" onclick="triggerFileChoosedTools(this.id);" ondblclick="viewImg(this.id);">\
+            <div id="' + data[0].uuid + '" class="fileItem shared" onclick="triggerFileChoosedTools(this.id);" ondblclick="viewImg(this.id);">\
                 <div class="img-wrapper>\
                     <img src=' + data[5] + '>\
                 </div>\
