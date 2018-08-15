@@ -228,6 +228,40 @@ final class CassandraDA implements DataBaseAccess
         $this->_connection->get_connection()->execute($statement);
     }
 
+    public function update_dash_board($table, $user_id, $type, $amount, $up_down)
+    {
+        switch ($table) {
+            case TableName::$dash_board_count_type:
+                $statement;
+                if ($up_down == "up") {
+                    $statement = new Cassandra\SimpleStatement(
+                        "update " . TableName::$dash_board_count_type . " set count = count + " . $amount . " where user_id = " . $user_id . " and type_id = '" . $type . "'"
+                    );
+                } else {
+                    $statement = new Cassandra\SimpleStatement(
+                        "update " . TableName::$dash_board_count_type . " set count = count - " . $amount . " where user_id = " . $user_id . " and type_id = '" . $type . "'"
+                    );
+                }
+                $this->_connection->get_connection()->execute($statement);
+                break;
+            case TableName::$dash_board_count_size:
+                $statement;
+                if ($up_down == "up") {
+                    $statement = new Cassandra\SimpleStatement(
+                        "update " . TableName::$dash_board_count_size . " set size = size + " . $amount . " where user_id = " . $user_id . " and type_id = '" . $type . "'"
+                    );
+                } else {
+                    $statement = new Cassandra\SimpleStatement(
+                        "update " . TableName::$dash_board_count_size . " set size = size - " . $amount . " where user_id = " . $user_id . " and type_id = '" . $type . "'"
+                    );
+                }
+                $this->_connection->get_connection()->execute($statement);
+                break;
+        }
+
+    }
+
+    
     public function deleteRow($table, $dataObject)
     {
         switch ($table) {
