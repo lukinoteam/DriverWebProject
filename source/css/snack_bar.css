@@ -43,3 +43,7 @@ However, delay the fade out process for 2.5 seconds */
     from {bottom: 20px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
 }
+
+.progress-bar{
+    width: 100%;
+}
