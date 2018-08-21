@@ -228,12 +228,18 @@ function btn_fav() {
     }
 }
 
+function btn_un_fav() {
+    if (type == 0 && choosedFile != "") {
+        $("#snackbar").css("visibility", "visible");
+        un_favorite(choosedFile);
+    }
+}
+
 function btn_restore() {
     $("#snackbar").css("visibility", "visible");
     restore(choosedFile);
 }
 
 function btn_remove() {
-    $("#snackbar").css("visibility", "visible");
     remove(choosedFile);
 }
