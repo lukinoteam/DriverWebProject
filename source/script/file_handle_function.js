@@ -60,7 +60,15 @@ function triggerFileChoosedTools(file) {
         $("#infoFileOwner").text("Owner: " + $(fileId).find(".fileCaption").find(".owner").text());
     } else {
         $("#infoFileOwner").hide();
+    }
 
+    if ($(fileId).hasClass('favorited')) {
+        $("#btnUnFav").show();
+        $("#btnFav").hide();
+    }
+    else{
+        $("#btnUnFav").hide();
+        $("#btnFav").show();
     }
 }
 
@@ -346,6 +354,8 @@ function deleteff(type, id) {
     form_data.append('id', id);
     form_data.append('type', type);
 
+    $("#" + id).remove();
+
     $.ajax({
         url: 'php/Business/DeleteFile.php', // point to server-side PHP script 
         cache: false,
@@ -370,7 +380,9 @@ function deleteff(type, id) {
 function getDeletedFile() {
     $("#fileList").empty();
     $("#folderList").empty();
+
     $("#snackbar").css("visibility", "visible");
+
     $.ajax({
         url: 'php/Business/RecycleBin.php',
         cache: false,
@@ -505,6 +517,26 @@ function set_favorite(id) {
     });
 }
 
+function un_favorite(id) {
+    $("#" + id).remove();
+
+    var form_data = new FormData();
+    form_data.append('id', id);
+
+    $.ajax({
+        url: 'php/Business/UnFavorite.php', // point to server-side PHP script 
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,
+        type: 'post',
+        success: function(msg) {
+            $("#toolBar").hide();
+            $("#snackbar").css("visibility", "hidden");
+        }
+    });
+}
+
 function restore(id) {
     var form_data = new FormData();
     form_data.append('id', id);
@@ -525,9 +557,13 @@ function restore(id) {
 }
 
 function remove(id) {
+
+
     var form_data = new FormData();
     form_data.append('id', id);
     form_data.append('thumb_id', $("#" + id).find(".thumb_id").text());
+
+    $("#" + id).remove();
 
     $.ajax({
         url: 'php/Business/RemoveFile.php', // point to server-side PHP script 
@@ -537,7 +573,7 @@ function remove(id) {
         data: form_data,
         type: 'post',
         success: function(msg) {
-            getDeletedFile();
+            $("#toolBar").hide();
             $("#info p").text("");
             $("#infoTip").show();
         }
