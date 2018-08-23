@@ -28,7 +28,6 @@
     <script type="text/javascript" src="script/shareTo.js"></script>
     <script type="text/javascript" src="script/get_shared_files.js"></script>
     <script type="text/javascript" src="script/get_fav_files.js"></script>
-    <script type="text/javascript" src="script/small_folder_list.js"></script>
     <script type="text/javascript" src="script/dash_board.js"></script>
 
     <!-- Bootstrap library -->
@@ -200,11 +199,11 @@
 
                 </ul>
             </div>
-            <div class="col-xs-7 noselect" id="filePanel">
-                <ul id="folderList" class="list-inline">
+            <div class="col-xs-7" id="filePanel">
+                <ul id="folderList" class="list-inline noselect">
 
                 </ul>
-                <ul id="fileList" class="list-inline">
+                <ul id="fileList" class="list-inline noselect">
 
                 </ul>
                 <div id="dash_board_area" class="clearfix noselect">
@@ -388,7 +387,7 @@
     </div>
 
     <!-- The Modal For Image Preview-->
-    <div id="modalImg" class="custom-modal">
+    <div id="modalImg" class="custom-modal noselect">
 
         <!-- The Close Button -->
         <span id="close">&times;</span>
@@ -436,7 +435,7 @@
                 </div>
                 <div class="modal-body">
                     <ul id="small-folder-list" class="list-inline noselect">
-
+                        
                     </ul>
                 </div>
                 <div class="modal-footer">
@@ -448,9 +447,8 @@
 
             </div>
         </div>
-
-
     </div>
+
     <div class="modal fade" id="modalShare">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -485,7 +483,7 @@
             </div>
         </div>
     </div>
-    
+
 
     <!-- The actual snackbar -->
     <div id="snackbar" align="center">
