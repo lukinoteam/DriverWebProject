@@ -30,7 +30,7 @@ function show_dash_board() {
         dataType: 'json',
         success: function(json) {
             $("#dash_board_area").empty();
-            var used_data = json[6] / (20 * 1024 * 1024);
+            var used_data = json[6] / default_max_data;
             used_data *= 100; 
 
             var color = "green";
