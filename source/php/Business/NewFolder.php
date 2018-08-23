@@ -50,4 +50,4 @@ $connect->insert('folder_info', $folderInfo);
 $eDA->index_folder($newFolder->getFolderId(), 1);
 
 ob_end_clean();
-echo json_encode(array($folderInfo->getName(), $folderInfo->getFolderId(), $folderInfo->getDateModify(), $folderInfo->getDescription(), $folderInfo->getStatus()));
+echo json_encode(array($folderInfo->getName(), $folderInfo->getFolderId(), new \Cassandra\Timestamp($folderInfo->getDateModify()), $folderInfo->getDescription(), $folderInfo->getStatus()));
