@@ -9,7 +9,7 @@ function triggerFileChoosedTools(file) {
 
     $("#txtRename").val($(fileId).find(".fileCaption").find(".name").text());
 
-    $(document).mouseup(function(e) {
+    $(document).mouseup(function (e) {
         var container = $(fileId);
 
         // if the target of the click isn't the container nor a descendant of the container
@@ -66,7 +66,7 @@ function triggerFileChoosedTools(file) {
         $("#btnUnFav").show();
         $("#btnFav").hide();
     }
-    else{
+    else {
         $("#btnUnFav").hide();
         $("#btnFav").show();
     }
@@ -87,7 +87,7 @@ function triggerFolderChoosedTools(folder) {
         "background-color": "#90adff"
     })
 
-    $(document).mouseup(function(e) {
+    $(document).mouseup(function (e) {
         var container = $(folderId);
 
         // if the target of the click isn't the container nor a descendant of the container
@@ -129,7 +129,7 @@ function createFolder() {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function() {
+        success: function () {
 
             $('#folderName').val("");
             $('#txtFolderDesc').val("");
@@ -154,7 +154,7 @@ function getParentFolder() {
         data: form_data,
         type: 'post',
         dataType: 'json',
-        success: function(json) {
+        success: function (json) {
             currenFolder = String(json[0].uuid);
             if (currenFolder == home) {
                 $("#backIcon").hide();
@@ -197,12 +197,13 @@ function uploadFile() {
             processData: false,
             data: form_data,
             dataType: 'json',
-            success: function(data) {
-                
+            success: function (data) {
+
                 $("#inputFile").val("");
                 $('#txtFileDesc').val("");
                 $("#txtFileName").val("");
-                var str = '<li>\
+                if ($("#home").css("background-color") == "rgb(144, 173, 255)") {
+                    var str = '<li>\
                 <div id="' + data[0].uuid + '" class="fileItem" onclick="triggerFileChoosedTools(this.id);" ondblclick="viewImg(this.id);">\
                     <div class="img-wrapper">\
                         <img src=' + data[5] + '>\
@@ -216,9 +217,12 @@ function uploadFile() {
                     </div>\
                 </div>\
             </li>';
-
                     $("#fileList").append(str);
-            $("#snackbar").css("visibility", "hidden");
+                    $("#snackbar").css("visibility", "hidden");
+                }
+                else{
+                    specialFolderAction("home");
+                }
 
             }
         });
@@ -238,11 +242,11 @@ function getFolderList() {
         data: form_data,
         type: 'post',
         dataType: 'json',
-        success: function(json) {
+        success: function (json) {
             $("#folderList").empty();
             $("#toolBar").hide();
 
-            Object.values(json).forEach(function(data) {
+            Object.values(json).forEach(function (data) {
                 if (data[1] != null && (data[4] == 0 || data[4] == 1)) {
 
                     var str = '<li>\
@@ -271,10 +275,10 @@ function getFileList() {
         data: form_data,
         type: 'post',
         dataType: 'json',
-        success: function(json) {
+        success: function (json) {
             $("#fileList").empty();
             $("#toolBar").hide();
-            Object.values(json).forEach(function(data) {
+            Object.values(json).forEach(function (data) {
 
                 if (data[0] != null && (data[7] == 1 || data[7] == 0 || data[7] == 2)) {
 
@@ -334,7 +338,7 @@ function downFile(id) {
             data: form_data,
             type: 'post',
             dataType: 'json',
-            success: function(json) {
+            success: function (json) {
                 generateLink(json[2], json[1], json[0]);
                 $("#snackbar").css("visibility", "hidden");
             }
@@ -356,7 +360,7 @@ function rename(type, id) {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function() {
+        success: function () {
             if (type == 0) {
                 getFileList();
             } else {
@@ -381,7 +385,7 @@ function deleteff(type, id) {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function(msg) {
+        success: function (msg) {
             if (type == 0) {
                 getFileList();
             } else {
@@ -408,10 +412,10 @@ function getDeletedFile() {
         processData: false,
         type: 'post',
         dataType: 'json',
-        success: function(json) {
+        success: function (json) {
             $("#fileList").empty();
             $("#toolBar").hide();
-            Object.values(json).forEach(function(data) {
+            Object.values(json).forEach(function (data) {
                 if (data[0] != null && (data[7] == -1 || data[7] == 0)) {
 
                     var str = '<li>\
@@ -444,7 +448,7 @@ function check_out_for_special_feature(container, e) {
 function specialFolderAction(id) {
     $("#backIcon").hide();
     var folderId = "#" + id;
-    $(document).mouseup(function(e) {
+    $(document).mouseup(function (e) {
         var container = $(folderId);
         // if the target of the click is neither the container nor a descendant of the container
         if (check_out_for_special_feature(container, e)) {
@@ -512,7 +516,7 @@ function move(type, id, destination) {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function(msg) {
+        success: function (msg) {
             getFileList();
         }
     });
@@ -529,7 +533,7 @@ function set_favorite(id) {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function(msg) {
+        success: function (msg) {
             $("#snackbar").css("visibility", "hidden");
         }
     });
@@ -548,7 +552,7 @@ function un_favorite(id) {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function(msg) {
+        success: function (msg) {
             $("#toolBar").hide();
             $("#snackbar").css("visibility", "hidden");
         }
@@ -566,7 +570,7 @@ function restore(id) {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function(msg) {
+        success: function (msg) {
             getDeletedFile();
             $("#info p").text("");
             $("#infoTip").show();
@@ -590,7 +594,7 @@ function remove(id) {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function(msg) {
+        success: function (msg) {
             $("#toolBar").hide();
             $("#info p").text("");
             $("#infoTip").show();
@@ -604,7 +608,7 @@ function dataURItoBlob(dataURI) {
     var byteString = atob(dataURI.split(',')[1]);
     // separate out the mime component
     var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-        // write the bytes of the string to an ArrayBuffer
+    // write the bytes of the string to an ArrayBuffer
     var ab = new ArrayBuffer(byteString.length);
     // create a view into the buffer
     var ia = new Uint8Array(ab);
