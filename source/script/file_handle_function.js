@@ -128,13 +128,25 @@ function createFolder() {
         processData: false,
         data: form_data,
         type: 'post',
-        success: function() {
+        dataType: 'json',
+        success: function(data) {
 
             $('#folderName').val("");
             $('#txtFolderDesc').val("");
 
-            getFolderList();
-            $("#snackbar").css("visibility", "hidden");
+            if ($("#home").css("background-color") == "rgb(144, 173, 255)") {
+                var str = '<li>\
+                <div id="' + data[1].uuid + '" class="folderItem" onclick="triggerFolderChoosedTools(this.id);" ondblclick="setPath(this.id);">\
+                <img src="img/folderic.png" style="display: inline;"><span class="name" style="display: inline;">' + data[0] + '</span>\
+                    <p class="date" style="display: none;">' + parseDate(new Date(data[2].seconds * 1000)) + '</p>\
+                    <p class="desc" style="display: none;">' + data[3] + '</p>\
+                </div>\
+                </li>';
+                $("#folderList").append(str);
+                $("#snackbar").css("visibility", "hidden");
+            } else {
+                specialFolderAction("home");
+            }
         }
     });
 
