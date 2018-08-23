@@ -19,7 +19,13 @@ $user_id = $_SESSION['id'];
 $fileName = $_POST['name'];
 $filePath = $_FILES['file']['tmp_name'];
 $fileDesc = $_POST['desc'];
-$current = new Cassandra\UUID($_POST['current']);
+
+//get current folder
+$current = $_POST['current'];
+if ($current == "home"){
+    $current = $user_id;
+}
+$current = new Cassandra\UUID($current);
 
 // open file for streaming
 $file = fopen($filePath, "r");
