@@ -24,13 +24,11 @@ $(document).ready(function() {
             $('#searchBar').attr("placeholder", "Content...")
         }
     });
-
-    $('#btnSearch').click(function() {
-        $("#snackbar").css("visibility", "visible");
-        search();
-    });
 })
-
+function btn_search(){
+    $("#snackbar").css("visibility", "visible");
+    search();
+}
 function search() {
     var sender = new FormData();
     var content = ($("#searchBar").val());
