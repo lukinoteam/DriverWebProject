@@ -1,4 +1,4 @@
-var home = '415fe87d-9b3b-4a4c-8f64-b380d2b39240';
+var home = "home";
 var currenFolder = home;
 var choosedFile = "";
 var choosedFolder = "";
@@ -35,6 +35,7 @@ function checkOutside(container, e) {
         !$("#btnDownload").is(e.target) &&
         !$("#btnDelete").is(e.target) &&
         !$("#btnCopy").is(e.target) &&
+        !$("#btnMove").is(e.target) &&
         !$("#btnRemove").is(e.target) &&
         !$("#btnRestore").is(e.target) &&
         !$("#modalMove").is(e.target) &&
