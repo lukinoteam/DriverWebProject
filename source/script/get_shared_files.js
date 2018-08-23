@@ -7,6 +7,7 @@ function get_shared_files() {
         type: 'post',
         dataType: 'json',
         success: function (json) {
+            $("#folderList").empty();
             $("#fileList").empty();
             $("#toolBar").hide();
             Object.values(json).forEach(function (data) {
