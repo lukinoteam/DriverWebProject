@@ -398,14 +398,11 @@ function deleteff(type, id) {
         data: form_data,
         type: 'post',
         success: function(msg) {
-            if (type == 0) {
-                getFileList();
-            } else {
-                getFolderList();
-                $("#snackbar").css("visibility", "hidden");
-            }
             $("#info p").text("");
             $("#infoTip").show();
+            
+            $("#snackbar").css("visibility", "hidden");
+
         }
     });
 }
