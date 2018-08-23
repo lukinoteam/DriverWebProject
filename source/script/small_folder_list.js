@@ -21,7 +21,6 @@ function getSmallFolderList() {
             $("#infoTip").show();
 
             Object.values(json).forEach(function(data) {
-                console.log(data);
 
                 if (data[1] != null && (data[4] == 0 || data[4] == 1)) {
 
