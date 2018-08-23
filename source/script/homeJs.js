@@ -37,6 +37,9 @@ function checkOutside(container, e) {
         !$("#btnCopy").is(e.target) &&
         !$("#btnMove").is(e.target) &&
         !$("#btnRemove").is(e.target) &&
+        !$("#btnShare").is(e.target) &&
+        !$("#modalShare").is(e.target) &&
+        !$("#modalShare").find("*").is(e.target) &&
         !$("#btnRestore").is(e.target) &&
         !$("#modalMove").is(e.target) &&
         !$("#modalMove").find("*").is(e.target) &&
