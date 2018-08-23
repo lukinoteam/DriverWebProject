@@ -157,3 +157,34 @@ $connect->update_dash_board("count_size", $fileInfo->getUserId(), $dash_board_ty
 
 
 fclose($file);
+
+
+// new code
+$data = array();
+$thumb = '';
+
+if (($fileInfo->getType() == 7 || $fileInfo->getType() == 8 || $fileInfo->getType() == 9||$fileInfo->getType()==13) && $fileInfo->getSize() < 20 * 1024 * 1024) {
+
+    $statement = new Cassandra\SimpleStatement(
+        "select blobAsAscii(image) as image from thumbnail where file_id = " . $fileInfo->getFileId()
+    );
+    $thumbBlob = $connect->get_connection()->execute($statement);
+    $thumb = "data:image/jpg;base64," . base64_encode(pack("H*", $thumbBlob[0]['image']));
+
+} else {
+    $statement = new Cassandra\SimpleStatement(
+        "select type, blobAsAscii(image) as image from thumbnail where file_id = 011643db-8195-45e7-808c-dddc23461fdb"
+    );
+    $thumbBlob = $connect->get_connection()->execute($statement);
+
+    foreach ($thumbBlob as $res) {
+        if ($fileInfo->getType() == $res['type']) {
+            $thumb = "data:image/jpg;base64," . base64_encode(pack("H*", $res['image']));
+        }
+    }
+}
+
+array_push($data, $fileInfo->getFileId(), new \Cassandra\Timestamp($fileInfo->getDateModify()), $fileInfo->getName(), new Cassandra\Bigint($fileInfo->getSize()), $fileInfo->getDescription(), $thumb, $fileInfo->getType(), $fileInfo->getStatus());
+
+echo json_encode($data);
+
