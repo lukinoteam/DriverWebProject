@@ -166,7 +166,11 @@ function getParentFolder() {
         type: 'post',
         dataType: 'json',
         success: function(json) {
-            currenFolder = String(json[0].uuid);
+            if (json[0] == "home")
+                currenFolder = "home";
+            else
+                currenFolder = String(json[0].uuid);
+            
             if (currenFolder == home) {
                 $("#backIcon").hide();
             } else {
