@@ -19,28 +19,31 @@ function getSmallFolderList() {
             $("#small-folder-list").empty();
             $("#info p").text("");
             $("#infoTip").show();
-            $("#toolBar").hide();
+
             Object.values(json).forEach(function(data) {
-                if (data[1] != null && (data[5] == 0 || data[5] == 1)) {
+                console.log(data);
+
+                if (data[1] != null && (data[4] == 0 || data[4] == 1)) {
 
                     var str = '<li>\
-                <div id="' + data[1].uuid + '" class="small-folder-item" onclick="triggerMoveAction(this.id);" ondblclick="setSmallPath(this.id);">\
-                <img src="img/folderic.png" style="display: inline;"><span class="name" style="display: inline;">' + data[0] + '</span>\
-                </div>\
-                </li>';
-
+                    <div id="' + data[1].uuid + '" class="small-folder-item" onclick="triggerMoveAction(this.id);" ondblclick="setSmallPath(this.id);">\
+                    <img src="img/folderic.png" style="display: inline;"><span class="name" style="display: inline;">' + data[0] + '</span>\
+                    </div>\
+                    </li>';
                     $("#small-folder-list").append(str);
+
                 }
             });
 
             if (sm_current == home) {
                 $("#modalMove").find(".modal-title").text("Home");
+                $("#btnBackMove").prop("disabled", true);
             } else {
                 $("#modalMove").find(".modal-title").text(save_title);
                 $("#btnBackMove").prop("disabled", false);
             }
 
-             
+
         }
     });
 
@@ -58,7 +61,10 @@ function getSmallParentFolder() {
         type: 'post',
         dataType: 'json',
         success: function(json) {
-            sm_current = String(json[0].uuid);
+            if (json[0] == "home")
+                sm_current = "home";
+            else
+                sm_current = String(json[0].uuid);
 
             getSmallFolderList();
         }
@@ -66,7 +72,7 @@ function getSmallParentFolder() {
 }
 
 function triggerMoveAction(id) {
-    
+
     var folderId = '#' + id;
 
     sm_choosedFolder = id;
