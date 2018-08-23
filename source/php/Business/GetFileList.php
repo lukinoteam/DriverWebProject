@@ -11,6 +11,10 @@ $user_id = $_SESSION['id'];
 // GET CURRENT FOLDER FROM CLIENT
 $current = $_POST['current'];
 
+if ($current == "home"){
+    $current = $user_id;
+}
+
 $statement = new Cassandra\SimpleStatement(
     "select * from folder where folder_id = " . $current
 );
