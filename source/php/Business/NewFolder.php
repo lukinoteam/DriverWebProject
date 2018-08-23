@@ -11,8 +11,14 @@ $user_id = $_SESSION['id'];
 //Elastic DataAccess
 $eDA = new ElasticDA();
 
-// get file and filename from client
-$current = new Cassandra\UUID($_POST['current']);
+//get current folder
+$current = $_POST['current'];
+if ($current == "home"){
+    $current = $user_id;
+}
+$current = new Cassandra\UUID($current);
+
+// get folder ename from client
 $folderName = $_POST['folderName'];
 $desc = $_POST['desc'];
 
