@@ -14,7 +14,7 @@ function get_shared_files() {
 
                     var str = '<li>\
             <div id="' + data[0].uuid + '" class="fileItem shared" onclick="triggerFileChoosedTools(this.id);" ondblclick="viewImg(this.id);">\
-                <div class="img-wrapper>\
+                <div class="img-wrapper">\
                     <img src=' + data[5] + '>\
                 </div>\
                 <div class="fileCaption">\
