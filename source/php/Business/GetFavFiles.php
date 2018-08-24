@@ -17,7 +17,7 @@ $eDA = new ElasticDA();
 $fav_files = $eDA->search_with_status(2, "file", $user_id);
 $files = array();
 foreach ($fav_files as $file_id) {
-    $temp_state = 'select * from file_info where file_id = ' . $file_id . 'ALLOW FILTERING';
+    $temp_state = 'select * from file_info where file_id = ' . $file_id . 'and user_id = '.$user_id;
     $temp_state = str_replace('""', '', $temp_state);
 
     $temp_state = preg_replace('/[^A-Za-z0-9\-*-_]/', ' ', $temp_state);
