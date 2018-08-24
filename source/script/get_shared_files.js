@@ -11,7 +11,7 @@ function get_shared_files() {
             $("#fileList").empty();
             $("#toolBar").hide();
             Object.values(json).forEach(function (data) {
-                if (data[0] != null && (data[7] == 12 || data[7] == 1)) {
+                if (data[0] != null && (data[7] == 2 || data[7] == 1)) {
 
                     var str = '<li>\
             <div id="' + data[0].uuid + '" class="fileItem shared" onclick="triggerFileChoosedTools(this.id);" ondblclick="viewImg(this.id);">\

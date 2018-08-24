@@ -49,6 +49,7 @@ function search() {
         sender.append('type', 'Content');
     }
   
+    specialFolderAction("home");
     $.ajax({
         url: 'php/Business/Search.php',
         cache: false,
